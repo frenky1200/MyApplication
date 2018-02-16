@@ -45,24 +45,6 @@ class FindFragment : Fragment() {
         ListViewFind.adapter = adapter
 
         findbutton.setOnClickListener({onClick()})
-
-        //ListViewFind.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, _, position, _ ->
-            //val media = parent.getItemAtPosition(position) as Media
-            //val intent = Intent(activity, DialogActivity::class.java)
-            //intent.putExtra("name", media.name)
-            //intent.putExtra("id", media.id)
-            //startActivity(intent)
-           // adapter.notifyDataSetChanged()
-            //false
-        //}
-
-        //ListViewFind.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
-            //val media = parent.getItemAtPosition(position) as Media
-            //val intent = Intent(activity, ReadActivity::class.java)
-            //intent.putExtra("name", media.name)
-            //intent.putExtra("id", media.id)
-            //startActivity(intent)
-        //}
     }
 
     private fun onClick(){

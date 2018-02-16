@@ -17,7 +17,7 @@ import com.example.myapplication.data.control.DBController
 import kotlinx.android.synthetic.main.activity_collection.*
 
 class CollectionFragment : Fragment() {
-    private var b: String? = null
+    private var nameString: String? = null
     private lateinit var c: DBController
     private lateinit var list: MutableList<Album>
     private lateinit var anim: Animation
@@ -27,10 +27,10 @@ class CollectionFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_collection, container, false)
         val bundle = arguments
-        b = bundle.getString("z")
+        nameString = bundle.getString("z")
         activity.title = MainActivity.collectionType.name
         c = DBController(activity)
-        list = c.getAllAlbum(b)
+        list = c.getAllAlbum(nameString)
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
         adapter = ArrayAdapter(activity,
                 android.R.layout.simple_list_item_1, list)
@@ -48,16 +48,16 @@ class CollectionFragment : Fragment() {
 
     private fun onAddClick() {
         val newColl = editColl!!.text.toString()
-        c.addAlbum(newColl, b)
+        c.addAlbum(newColl, nameString)
         list.clear()
-        list.addAll(c.getAllAlbum(b))
+        list.addAll(c.getAllAlbum(nameString))
         adapter.notifyDataSetChanged()
     }
 
     private fun onListLongClick(parent: AdapterView<*>, position: Int): Boolean {
         val album = parent.getItemAtPosition(position) as Album
         c.deleteAlbum(album)
-        val list = c.getAllAlbum(b)
+        val list = c.getAllAlbum(nameString)
         val adapter = ArrayAdapter(activity,
                 android.R.layout.simple_list_item_1, list)
         ListView!!.adapter = adapter

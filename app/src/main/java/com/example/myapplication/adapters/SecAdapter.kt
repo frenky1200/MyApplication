@@ -18,11 +18,7 @@ import kotlinx.android.synthetic.main.adapter_excerption.*
 
 class SecAdapter(private val context: Context, private val medias: MutableList<Media>, private val layoutId: Int) : BaseAdapter() {
     private var c: DBController? = null
-    private val inflater: LayoutInflater
-
-    init {
-        inflater = LayoutInflater.from(context)
-    }
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
         return medias.size
@@ -37,6 +33,7 @@ class SecAdapter(private val context: Context, private val medias: MutableList<M
     }
 
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
+        @Suppress("NAME_SHADOWING")
         var view = view
         val holder: ExcerptionAdapter.ViewHolder
 
