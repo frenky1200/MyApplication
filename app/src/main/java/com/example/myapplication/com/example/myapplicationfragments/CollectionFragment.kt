@@ -9,7 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.example.myapplication.MainActivity
+import com.example.myapplication.activities.MainActivity
 
 import com.example.myapplication.R
 import com.example.myapplication.data.Album

@@ -1,20 +1,14 @@
 package com.example.myapplication.com.example.myapplicationfragments
 
 import android.app.Fragment
-import android.content.Intent
-import android.database.DataSetObserver
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 
-import com.example.myapplication.DialogActivity
 import com.example.myapplication.R
-import com.example.myapplication.ReadActivity
 import com.example.myapplication.adapters.ExcerptionAdapter
 import com.example.myapplication.data.Media
 import com.example.myapplication.data.control.DBController

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +8,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.myapplication.data.Anime;
-import com.example.myapplication.data.Book;
-import com.example.myapplication.data.Film;
-import com.example.myapplication.data.interfaces.IHelper;
+import com.example.myapplication.R;
 import com.example.myapplication.data.interfaces.IMediable;
 import com.example.myapplication.data.Media;
-import com.example.myapplication.data.Music;
 import com.example.myapplication.data.control.DBController;
 
 import butterknife.BindView;

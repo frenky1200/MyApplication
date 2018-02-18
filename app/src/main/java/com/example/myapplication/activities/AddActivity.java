@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.activities;
 
 
 import android.content.Intent;
@@ -7,19 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.myapplication.data.Anime;
-import com.example.myapplication.data.Book;
-import com.example.myapplication.data.Film;
+import com.example.myapplication.R;
 import com.example.myapplication.data.Media;
-import com.example.myapplication.data.Music;
 import com.example.myapplication.data.control.DBController;
 import com.example.myapplication.data.interfaces.IMediable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 public class AddActivity extends AppCompatActivity {
 

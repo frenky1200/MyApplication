@@ -10,10 +10,9 @@ import android.widget.BaseAdapter
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import com.example.myapplication.ReadActivity
+import com.example.myapplication.activities.ReadActivity
 import com.example.myapplication.data.Media
 import com.example.myapplication.data.control.DBController
-import kotlinx.android.synthetic.main.adapter_excerption.*
 
 
 class SecAdapter(private val context: Context, private val medias: MutableList<Media>, private val layoutId: Int) : BaseAdapter() {

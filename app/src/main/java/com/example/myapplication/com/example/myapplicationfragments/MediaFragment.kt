@@ -9,12 +9,10 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import com.example.myapplication.DialogActivity
+import com.example.myapplication.activities.DialogActivity
 import com.example.myapplication.R
-import com.example.myapplication.ReadActivity
+import com.example.myapplication.activities.ReadActivity
 import com.example.myapplication.adapters.ExcerptionAdapter
-import com.example.myapplication.adapters.SecAdapter
 import com.example.myapplication.data.Media
 import com.example.myapplication.data.control.DBController
 import kotlinx.android.synthetic.main.activity_media.*

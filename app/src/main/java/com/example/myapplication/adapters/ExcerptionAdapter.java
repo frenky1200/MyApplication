@@ -3,7 +3,6 @@ package com.example.myapplication.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.ReadActivity;
+import com.example.myapplication.activities.ReadActivity;
 import com.example.myapplication.data.Media;
 import com.example.myapplication.data.control.DBController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
