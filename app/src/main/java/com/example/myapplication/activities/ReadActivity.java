@@ -38,7 +38,7 @@ public class ReadActivity extends AppCompatActivity {
         a1 = this;
     }
 
-    private <T extends IMediable> void readInf(T media,int id){
+    private <T extends IMediable> void readInf(T media, int id){
         media = c.getMedia1(media, id);
         s[0] = media.getName();
     }
@@ -111,7 +111,6 @@ public class ReadActivity extends AppCompatActivity {
     @OnClick(R.id.buttonupd)
     void OnClick(){
         Intent intent = new Intent(ReadActivity.this, AddActivity.class);
-        intent.putExtra("name",media.getName());
         intent.putExtra("id",media.getId());
         startActivity(intent);
     }

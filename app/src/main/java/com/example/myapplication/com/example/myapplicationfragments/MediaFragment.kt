@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import com.example.myapplication.activities.DialogActivity
 import com.example.myapplication.R
+import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.activities.ReadActivity
 import com.example.myapplication.adapters.ExcerptionAdapter
 import com.example.myapplication.data.Media
@@ -30,7 +31,7 @@ class MediaFragment : Fragment() {
     private fun init() {
         val bundle = arguments
         Coll = bundle.getString("album")
-        types = bundle.getString("type")
+        types = MainActivity.collectionType.name
         c = DBController(activity)
         list = ArrayList()
         list.addAll(c!!.getAllMedia(Coll))

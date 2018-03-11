@@ -74,16 +74,20 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.music:{
                 collectionType = Nav.Music;
-                bundle.putString("z", "Music");}
+                bundle.putString("z", "Music");
+                break;}
             case R.id.anime:{
                 collectionType = Nav.Anime;
-                bundle.putString("z", "Anime");}
+                bundle.putString("z", "Anime");
+                break;}
             case R.id.excerption:{
                 collectionType = Nav.Excerption;
-                bundle.putString("z", "Film");}
+                bundle.putString("z", "Film");
+                break;}
             case R.id.book:{
                 collectionType = Nav.Book;
-                bundle.putString("z", "Book");}
+                bundle.putString("z", "Book");
+                break;}
             default:{}
         }
 

@@ -30,7 +30,7 @@ class CollectionFragment : Fragment() {
         nameString = bundle.getString("z")
         activity.title = MainActivity.collectionType.name
         c = DBController(activity)
-        list = c.getAllAlbum(nameString)
+        list = c.getAllAlbum(MainActivity.collectionType.name)
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
         adapter = ArrayAdapter(activity,
                 android.R.layout.simple_list_item_1, list)
@@ -48,19 +48,21 @@ class CollectionFragment : Fragment() {
 
     private fun onAddClick() {
         val newColl = editColl!!.text.toString()
-        c.addAlbum(newColl, nameString)
+        c.addAlbum(newColl, MainActivity.collectionType.name)
         list.clear()
-        list.addAll(c.getAllAlbum(nameString))
+        list.addAll(c.getAllAlbum(MainActivity.collectionType.name))
         adapter.notifyDataSetChanged()
     }
 
     private fun onListLongClick(parent: AdapterView<*>, position: Int): Boolean {
         val album = parent.getItemAtPosition(position) as Album
         c.deleteAlbum(album)
-        val list = c.getAllAlbum(nameString)
-        val adapter = ArrayAdapter(activity,
-                android.R.layout.simple_list_item_1, list)
-        ListView!!.adapter = adapter
+        list.removeAt(position)
+        adapter.notifyDataSetChanged()
+        //val list = c.getAllAlbum(nameString)
+        //val adapter = ArrayAdapter(activity,
+        //      android.R.layout.simple_list_item_1, list)
+        //ListView!!.adapter = adapter
         return false
     }
 

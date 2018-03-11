@@ -1,6 +1,5 @@
 package com.example.myapplication.activities;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +23,6 @@ public class AddActivity extends AppCompatActivity {
     @BindView(R.id.editText5) EditText editText3;
     private DBController c;
     protected Integer idInt;
-    protected String nameString;
     private Media media;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,38 +31,12 @@ public class AddActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         c = new DBController(this);
-        nameString = getIntent().getStringExtra("name");
         idInt = getIntent().getIntExtra("id",1);
         media = c.getMedia(idInt);
         editText.setText(media.getName());
         editText2.setText(media.getTags());
         setTitle(media.getName());
-
         readInf(media.mediaType(),media.getId());
-
-        //if(media.getType().equals("Book")){
-        //Book book = new Book();
-        //book = c.getMedia(book, media.getId());
-        //editText3.setText(book.getName());
-        //}
-        //
-        //if(media.getType().equals("Music")){
-        //Music music = new Music();
-        //music = c.getMedia(music, media.getId());
-        //editText3.setText(music.getName());
-        //}
-        //
-        //if(media.getType().equals("Anime")){
-        //Anime anime= new Anime();
-        //anime = c.getMedia(anime, media.getId());
-        //editText3.setText(anime.getName());
-        //}
-        //
-        //if(media.getType().equals("Film")){
-        //Film film = new Film();
-        //film = c.getMedia(film, media.getId());
-        //editText3.setText(film.getName());
-        //}
     }
 
     private <T extends IMediable> void readInf(T media, int id){
@@ -77,60 +49,6 @@ public class AddActivity extends AppCompatActivity {
         media.setName(editText.getText().toString());
         media.setTags(editText2.getText().toString());
         c.updateBook(media);
-
-        //if(media.getType().equals("Book")){
-
-        //Book book = new Book();
-
-        //book = c.getMedia(book, media.getId());
-
-        //book.setTitle(editText3.getText().toString());
-
-        //c.updateBook(book);
-
-        //}
-
-        //
-
-        //if(media.getType().equals("Music")){
-
-        //Music music = new Music();
-
-        //music = c.getMedia(music, media.getId());
-
-        //music.setName(editText3.getText().toString());
-
-        //c.updateBook(music);
-
-        //}
-
-        //
-
-        //if(media.getType().equals("Anime")){
-
-        //Anime anime= new Anime();
-
-        //anime = c.getMedia(anime, media.getId());
-
-        //anime.setName(editText3.getText().toString());
-
-        //c.updateBook(anime);
-
-        //}
-
-        //
-
-        //if(media.getType().equals("Film")){
-
-        //Film music = new Film();
-
-        //music = c.getMedia(music, media.getId());
-
-        //music.setName( editText3.getText().toString());
-
-        //c.updateBook(music);
-
-        //}
 
         IMediable m;
         m = c.getMedia1(media.mediaType(),media.getId());

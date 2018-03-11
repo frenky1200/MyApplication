@@ -6,7 +6,6 @@ import com.example.myapplication.data.Album;
 import com.example.myapplication.data.Anime;
 import com.example.myapplication.data.Book;
 import com.example.myapplication.data.Film;
-import com.example.myapplication.data.interfaces.IHelper;
 import com.example.myapplication.data.interfaces.IMediable;
 import com.example.myapplication.data.Media;
 import com.example.myapplication.data.Music;
@@ -36,7 +35,6 @@ public class DBController extends Activity {
         this.t = new AnimeHelper(activity);
         this.y = new MusicHelper(activity);
     }
-
 
 
     public List<Album> getAllAlbum(String a){
