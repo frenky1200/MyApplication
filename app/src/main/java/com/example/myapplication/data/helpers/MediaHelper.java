@@ -7,17 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.data.Album;
-import com.example.myapplication.data.Media;
+import com.example.myapplication.data.entity.Media;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class MediaHelper extends SQLiteOpenHelper {
 
-    // Database Version
     private static final int DATABASE_VERSION = 1;
-    // Database Name
     private static final String DATABASE_NAME = "MediaDB";
 
     public MediaHelper(Context context) {
@@ -47,10 +44,6 @@ public class MediaHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
     //---------------------------------------------------------------------
-
-    /**
-     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
-     */
 
     // Books table name
     private static final String TABLE_MEDIA = "media";

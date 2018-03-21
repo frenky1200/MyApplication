@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.example.myapplication.R;
-import com.example.myapplication.data.Media;
+import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.control.DBController;
 
 import butterknife.BindView;

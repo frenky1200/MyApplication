@@ -1,17 +1,17 @@
-package com.example.myapplication.data;
+package com.example.myapplication.data.entity;
 
 import com.example.myapplication.data.interfaces.IMediable;
 
-public class Film implements IMediable {
+public class Music implements IMediable {
     private int id;
     private String name;
     private String type;
     private Integer idmedia;
 
-    public Film(){
+    public Music() {
     }
 
-    public Film(String title, Integer a) {
+    public Music(String title, Integer a) {
         super();
         this.name = title;
         this.type = "";
@@ -45,15 +45,15 @@ public class Film implements IMediable {
         return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setType(String type) {
         this.type = type;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

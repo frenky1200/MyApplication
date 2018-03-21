@@ -1,21 +1,17 @@
-package com.example.myapplication.data;
+package com.example.myapplication.data.entity;
 
 import com.example.myapplication.data.interfaces.IMediable;
 
-/**
- * Created by Андрей on 13.05.2017.
- */
-
-public class Music implements IMediable {
+public class Anime implements IMediable {
     private int id;
     private String name;
     private String type;
-    private Integer idmedia;
+    private  Integer idmedia;
 
-    public Music() {
+    public Anime() {
     }
 
-    public Music(String title, Integer a) {
+    public Anime(String title, Integer a) {
         super();
         this.name = title;
         this.type = "";

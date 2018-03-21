@@ -7,20 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.data.Anime;
-import com.example.myapplication.data.Book;
+import com.example.myapplication.data.entity.Anime;
 
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by Андрей on 15.05.2017.
- */
-
 public class AnimeHelper extends SQLiteOpenHelper{
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     // Database Name
     private static final String DATABASE_NAME = "AnimeDB";
 

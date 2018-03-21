@@ -1,7 +1,4 @@
 package com.example.myapplication.data.helpers;
-/**
- * Created by Андрей on 09.05.2017.
- */
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,12 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.data.Book;
+import com.example.myapplication.data.entity.Book;
 
 import java.util.LinkedList;
 import java.util.List;
-
-
 
 public class BookHelper extends SQLiteOpenHelper {
 
@@ -34,8 +29,8 @@ public class BookHelper extends SQLiteOpenHelper {
         String CREATE_BOOK_TABLE = "CREATE TABLE books ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "title TEXT, "+
-                "author TEXT )";
-
+                "author TEXT, "+
+                "idmedia INTEGER )";
         // create books table
         db.execSQL(CREATE_BOOK_TABLE);
     }
@@ -61,11 +56,11 @@ public class BookHelper extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_AUTHOR = "author";
+    private static final String KEY_IDMEDIA = "idmedia";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR};
+    private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR,KEY_IDMEDIA};
 
     public void addBook(Book book){
-        Log.d("addBook", book.toString());
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -73,7 +68,7 @@ public class BookHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, book.getName()); // get title
         values.put(KEY_AUTHOR, book.getAuthor()); // get author
-
+        values.put(KEY_IDMEDIA, book.getIdmedia());
         // 3. insert
         db.insert(TABLE_BOOKS, // table
                 null, //nullColumnHack
@@ -108,6 +103,7 @@ public class BookHelper extends SQLiteOpenHelper {
         book.setId(Integer.parseInt(cursor.getString(0)));
         book.setTitle(cursor.getString(1));
         book.setAuthor(cursor.getString(2));
+        book.setIdmedia(Integer.parseInt(cursor.getString(3)));
 
         Log.d("getBook("+id+")", book.toString());
 
@@ -134,7 +130,7 @@ public class BookHelper extends SQLiteOpenHelper {
                 book.setId(Integer.parseInt(cursor.getString(0)));
                 book.setTitle(cursor.getString(1));
                 book.setAuthor(cursor.getString(2));
-
+                book.setIdmedia(cursor.getInt(3));
                 // Add book to books
                 books.add(book);
             } while (cursor.moveToNext());
@@ -156,6 +152,7 @@ public class BookHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("title", book.getName()); // get title
         values.put("author", book.getAuthor()); // get author
+        values.put("idmedia", book.getIdmedia());
 
         // 3. updating row
         int i = db.update(TABLE_BOOKS, //table

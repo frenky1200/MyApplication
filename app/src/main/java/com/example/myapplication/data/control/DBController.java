@@ -2,13 +2,13 @@ package com.example.myapplication.data.control;
 
 import android.app.Activity;
 
-import com.example.myapplication.data.Album;
-import com.example.myapplication.data.Anime;
-import com.example.myapplication.data.Book;
-import com.example.myapplication.data.Film;
+import com.example.myapplication.data.entity.Album;
+import com.example.myapplication.data.entity.Anime;
+import com.example.myapplication.data.entity.Book;
+import com.example.myapplication.data.entity.Film;
 import com.example.myapplication.data.interfaces.IMediable;
-import com.example.myapplication.data.Media;
-import com.example.myapplication.data.Music;
+import com.example.myapplication.data.entity.Media;
+import com.example.myapplication.data.entity.Music;
 import com.example.myapplication.data.helpers.AlbumHelper;
 import com.example.myapplication.data.helpers.AnimeHelper;
 import com.example.myapplication.data.helpers.BookHelper;
@@ -42,8 +42,8 @@ public class DBController extends Activity {
         return list;
     }
 
-    public void addAlbum(String newColl, String a){
-        q.addAlbum(new Album(newColl, a));
+    public void addAlbum(String newColl, String type){
+        q.addAlbum(new Album(newColl, type));
     }
 
     public void deleteAlbum(Album album){
@@ -87,12 +87,13 @@ public class DBController extends Activity {
         if (media.getType().equals("Film")){r.deleteFilm(r.getFilm(media.getId()));}
     }
 
-    public void addMedia(String newColl, String a, String b){
-        Media media = w.getMedia(w.addMedia(new Media(newColl, a, b)));
-        if (media.getType().equals("Music")){y.addMusic(new Music("",media.getId()));}
-        if (media.getType().equals("Book")){e.addBook(new Book("",media.getId()));}
-        if (media.getType().equals("Anime")){t.addAnime(new Anime("",media.getId()));}
-        if (media.getType().equals("Film")){r.addFilm(new Film("",media.getId()));}
+    public int addMedia(String name, String type, String album){
+        Media media = w.getMedia(w.addMedia(new Media(name, type, album)));
+        if (media.getType().equals("Music")){y.addMusic(new Music("", media.getId()));}
+        if (media.getType().equals("Book")){e.addBook(new Book("", media.getId()));}
+        if (media.getType().equals("Anime")){t.addAnime(new Anime("", media.getId()));}
+        if (media.getType().equals("Film")){r.addFilm(new Film("", media.getId()));}
+        return media.getId();
     }
 
     @SuppressWarnings("unchecked")
@@ -116,6 +117,10 @@ public class DBController extends Activity {
         return w.getMedia(id);
     }
 
+    
+    public Media getLast(){
+        return w.getMedia(w.addMedia(new Media("", "", "")));
+    }
     /////////////////////////////////////////////
     /////////////////////////////////////////////
     /////////////////////////////////////////////

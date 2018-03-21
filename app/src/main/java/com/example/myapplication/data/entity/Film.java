@@ -1,21 +1,17 @@
-package com.example.myapplication.data;
+package com.example.myapplication.data.entity;
 
 import com.example.myapplication.data.interfaces.IMediable;
 
-/**
- * Created by Андрей on 13.05.2017.
- */
-
-public class Anime implements IMediable {
+public class Film implements IMediable {
     private int id;
     private String name;
     private String type;
-    private  Integer idmedia;
+    private Integer idmedia;
 
-    public Anime() {
+    public Film(){
     }
 
-    public Anime(String title, Integer a) {
+    public Film(String title, Integer a) {
         super();
         this.name = title;
         this.type = "";
@@ -49,15 +45,15 @@ public class Anime implements IMediable {
         return name;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setType(String type) {
         this.type = type;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

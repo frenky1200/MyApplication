@@ -1,4 +1,4 @@
-package com.example.myapplication.com.example.myapplicationfragments
+package com.example.myapplication.com.example.fragments
 
 import android.app.Fragment
 import android.os.Bundle
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter
 import com.example.myapplication.activities.MainActivity
 
 import com.example.myapplication.R
-import com.example.myapplication.data.Album
+import com.example.myapplication.data.entity.Album
 import com.example.myapplication.data.control.DBController
 import kotlinx.android.synthetic.main.activity_collection.*
 
@@ -42,7 +42,7 @@ class CollectionFragment : Fragment() {
         ListView.adapter = adapter
         ListView.startAnimation(anim)
         imageButton.setOnClickListener({onAddClick()})
-        ListView.setOnItemLongClickListener({ adapterView: AdapterView<*>, _: View, i: Int, _: Long -> onListLongClick(adapterView, i)})
+        //ListView.setOnItemLongClickListener({ adapterView: AdapterView<*>, _: View, i: Int, _: Long -> onListLongClick(adapterView, i)})
         ListView.setOnItemClickListener({ adapterView: AdapterView<*>, _: View, i: Int, _: Long -> onListClick(adapterView, i)})
     }
 
@@ -70,7 +70,6 @@ class CollectionFragment : Fragment() {
         val album = parent.getItemAtPosition(position) as Album
         val bundle = Bundle()
         bundle.putString("album", album.name)
-        bundle.putString("type", album.type)
         val myFragment = MediaFragment()
         myFragment.arguments = bundle
         val fragmentManager = fragmentManager

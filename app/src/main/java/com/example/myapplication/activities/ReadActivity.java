@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data.interfaces.IMediable;
-import com.example.myapplication.data.Media;
+import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.control.DBController;
 
 import butterknife.BindView;

@@ -1,4 +1,4 @@
-package com.example.myapplication.com.example.myapplicationfragments
+package com.example.myapplication.com.example.fragments
 
 import android.app.Fragment
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.view.animation.AnimationUtils
 
 import com.example.myapplication.R
 import com.example.myapplication.adapters.ExcerptionAdapter
-import com.example.myapplication.data.Media
+import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.control.DBController
 
 import java.util.ArrayList

@@ -1,4 +1,4 @@
-package com.example.myapplication.data;
+package com.example.myapplication.data.entity;
 
 import com.example.myapplication.data.interfaces.IMediable;
 

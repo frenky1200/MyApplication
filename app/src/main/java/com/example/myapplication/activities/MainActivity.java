@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.myapplication.R;
-import com.example.myapplication.com.example.myapplicationfragments.CollectionFragment;
-import com.example.myapplication.com.example.myapplicationfragments.FindFragment;
+import com.example.myapplication.com.example.fragments.CollectionFragment;
+import com.example.myapplication.com.example.fragments.FindFragment;
 
 import static com.example.myapplication.R.id.drawer_layout;
 
@@ -104,10 +104,9 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public static Enum<Nav> collectionType = Nav.Start;
+    public static Enum<Nav> collectionType = Nav.Music;
 
     public enum Nav{
-        Start,
         Music,
         Book,
         Film,

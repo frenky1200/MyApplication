@@ -1,10 +1,6 @@
-package com.example.myapplication.data;
+package com.example.myapplication.data.entity;
 
 import com.example.myapplication.data.interfaces.IMediable;
-
-/**
- * Created by Андрей on 11.05.2017.
- */
 
 public class Album implements IMediable {
     private int id;

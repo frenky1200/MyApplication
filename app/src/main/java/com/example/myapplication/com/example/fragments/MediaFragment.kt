@@ -1,4 +1,4 @@
-package com.example.myapplication.com.example.myapplicationfragments
+package com.example.myapplication.com.example.fragments
 
 import android.app.Fragment
 import android.content.Intent
@@ -14,7 +14,7 @@ import com.example.myapplication.R
 import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.activities.ReadActivity
 import com.example.myapplication.adapters.ExcerptionAdapter
-import com.example.myapplication.data.Media
+import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.control.DBController
 import kotlinx.android.synthetic.main.activity_media.*
 import kotlinx.android.synthetic.main.content_media.*
@@ -73,8 +73,8 @@ class MediaFragment : Fragment() {
     }
 
     private fun onClick() {
-        val newColl = editMedia.text.toString()
-        c!!.addMedia(newColl, types, Coll)
+        val name = editMedia.text.toString()
+        c!!.addMedia(name, types, Coll)
         list.clear()
         list.addAll(c!!.getAllMedia(Coll))
         adapter.notifyDataSetChanged()

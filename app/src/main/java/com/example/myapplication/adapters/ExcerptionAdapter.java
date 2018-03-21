@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.ReadActivity;
-import com.example.myapplication.data.Media;
+import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.control.DBController;
 
 import java.util.List;

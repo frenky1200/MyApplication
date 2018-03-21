@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
-import com.example.myapplication.data.Media;
+import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.control.DBController;
 import com.example.myapplication.data.interfaces.IMediable;
 
@@ -31,12 +31,12 @@ public class AddActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         c = new DBController(this);
-        idInt = getIntent().getIntExtra("id",1);
+        idInt = getIntent().getIntExtra("id",-1);
         media = c.getMedia(idInt);
+        readInf(media.mediaType(),media.getId());
         editText.setText(media.getName());
         editText2.setText(media.getTags());
         setTitle(media.getName());
-        readInf(media.mediaType(),media.getId());
     }
 
     private <T extends IMediable> void readInf(T media, int id){

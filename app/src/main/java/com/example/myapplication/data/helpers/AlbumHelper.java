@@ -1,9 +1,5 @@
 package com.example.myapplication.data.helpers;
 
-/**
- * Created by Андрей on 11.05.2017.
- */
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,14 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.data.Album;
+import com.example.myapplication.data.entity.Album;
 import com.example.myapplication.data.interfaces.IHelper;
 import com.example.myapplication.data.interfaces.IMediable;
 
 import java.util.LinkedList;
 import java.util.List;
-
-
 
 public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 

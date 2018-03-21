@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.data.Anime;
-import com.example.myapplication.data.Film;
+import com.example.myapplication.data.entity.Film;
 
 import java.util.LinkedList;
 import java.util.List;

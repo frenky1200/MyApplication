@@ -2,10 +2,6 @@ package com.example.myapplication.data.interfaces;
 
 import java.util.List;
 
-/**
- * Created by Андрей on 05.12.2017.
- */
-
 public interface IHelper {
    <T extends IMediable> T getById (int id);
    <T extends IMediable> void add (T t);
