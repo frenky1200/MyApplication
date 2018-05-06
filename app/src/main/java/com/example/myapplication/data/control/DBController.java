@@ -6,7 +6,6 @@ import com.example.myapplication.data.entity.Album;
 import com.example.myapplication.data.entity.Anime;
 import com.example.myapplication.data.entity.Book;
 import com.example.myapplication.data.entity.Film;
-import com.example.myapplication.data.interfaces.IMediable;
 import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.entity.Music;
 import com.example.myapplication.data.helpers.AlbumHelper;
@@ -15,6 +14,7 @@ import com.example.myapplication.data.helpers.BookHelper;
 import com.example.myapplication.data.helpers.FilmHelper;
 import com.example.myapplication.data.helpers.MediaHelper;
 import com.example.myapplication.data.helpers.MusicHelper;
+import com.example.myapplication.data.interfaces.IMediable;
 
 import java.util.List;
 
@@ -38,8 +38,7 @@ public class DBController extends Activity {
 
 
     public List<Album> getAllAlbum(String a){
-        List<Album> list = q.getAllAlbums(a);
-        return list;
+        return q.getAllAlbums(a);
     }
 
     public void addAlbum(String newColl, String type){
@@ -51,16 +50,17 @@ public class DBController extends Activity {
     }
 
 
-
     public List<Media> getAllMedia(String a){
         return w.getAllMedia(a);
     }
 
     public List<Media> findTags(String str){
-        List<Media> list = w.findbystr(str);
-        return list;
+        return w.findByStr(str);
     }
 
+    public Media findByName(String name, String album){
+        return w.findByName(name, album);
+    }
 
 
     public void updateBook (Media media){
@@ -121,60 +121,7 @@ public class DBController extends Activity {
     public Media getLast(){
         return w.getMedia(w.addMedia(new Media("", "", "")));
     }
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    public Book getMedia(Book book, int id){
-        book = e.getBook(id);
-        return book;
-    }
 
-    public Music getMedia (Music music, int id){
-        music = y.getMusic(id);
-        return music;
-    }
-
-    public Anime getMedia (Anime anime, int id){
-        anime = t.getAnime(id);
-        return anime;
-    }
-
-    public Film getMedia (Film film, int id){
-        film = r.getFilm(id);
-        return film;
-    }
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    public void updateBook (Book book){
-        e.updateBook(book);
-    }
-
-    public void updateBook (Anime anime){
-        t.updateAnime(anime);
-    }
-
-    public void updateBook (Film film){
-        r.updateFilm(film);
-    }
-
-    public void updateBook (Music music){
-        y.updateMusic(music);
-    }
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    /////////////////////////////////////////////
-    public void  addBook (Book book){
-        e.addBook(book);
-    }
-
-    public void deleteBook (Book book){
-        e.deleteBook(book);
-    }
-
-    public List<Book> getAllBook(){
-        return e.getAllBooks();
-    }
     /////////////////////////////////////////////
     /////////////////////////////////////////////
     /////////////////////////////////////////////
@@ -183,12 +130,8 @@ public class DBController extends Activity {
     /////////////////////////////////////////////
     /////////////////////////////////////////////
 
-
-
-
-
-
-
-
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
+    /////////////////////////////////////////////
 
 }

@@ -108,14 +108,14 @@ public class AnimeHelper extends SQLiteOpenHelper{
         anime.setIdmedia(Integer.parseInt(cursor.getString(3)));
 
         Log.d("getBook("+id+")", anime.toString());
-
+        cursor.close();
         // 5. return book
         return anime;
     }
 
     // Get All Books
     public List<Anime> getAllAnime() {
-        List<Anime> animes = new LinkedList<Anime>();
+        List<Anime> animes = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_ANIMES;
@@ -140,7 +140,7 @@ public class AnimeHelper extends SQLiteOpenHelper{
         }
 
         Log.d("getAllBooks()", anime.toString());
-
+        cursor.close();
         // return books
         return animes;
     }
@@ -165,7 +165,6 @@ public class AnimeHelper extends SQLiteOpenHelper{
 
         // 4. close
         db.close();
-
         return i;
 
     }

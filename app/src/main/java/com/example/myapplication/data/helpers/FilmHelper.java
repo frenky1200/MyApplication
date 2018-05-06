@@ -109,13 +109,13 @@ public class FilmHelper extends SQLiteOpenHelper {
 
         Log.d("getBook("+id+")", film.toString());
 
-        // 5. return book
+        cursor.close();
         return film;
     }
 
     // Get All Books
     public List<Film> getAllFilm() {
-        List<Film> films = new LinkedList<Film>();
+        List<Film> films = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_FILMS;
@@ -141,7 +141,7 @@ public class FilmHelper extends SQLiteOpenHelper {
 
         Log.d("getAllBooks()", film.toString());
 
-        // return books
+        cursor.close();
         return films;
     }
 

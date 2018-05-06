@@ -5,16 +5,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/music"
-            android:title="@+string/music" />
+            android:title="@string/music" />
         <item
             android:id="@+id/anime"
-            android:title="@+string/anime" />
+            android:title="@string/anime" />
         <item
             android:id="@+id/excerption"
-            android:title="@+string/excerption" />
+            android:title="@string/excerption" />
         <item
             android:id="@+id/book"
-            android:title="@+string/book" />
+            android:title="@string/book" />
     </group>
 
 </menu>

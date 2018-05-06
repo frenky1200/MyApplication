@@ -107,14 +107,14 @@ public class MusicHelper extends SQLiteOpenHelper {
         music.setIdmedia(Integer.parseInt(cursor.getString(3)));
 
         Log.d("getBook("+id+")", music.toString());
-
+        cursor.close();
         // 5. return book
         return music;
     }
 
     // Get All Books
     public List<Music> getAllMusic() {
-        List<Music> musics = new LinkedList<Music>();
+        List<Music> musics = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_MUSICS;
@@ -138,7 +138,7 @@ public class MusicHelper extends SQLiteOpenHelper {
         }
 
         Log.d("getAllBooks()", music.toString());
-
+        cursor.close();
         // return books
         return musics;
     }

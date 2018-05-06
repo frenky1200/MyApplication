@@ -4,7 +4,7 @@ import com.example.myapplication.data.interfaces.IMediable;
 
 public class Media {
     private int id;
-    private String name;
+    private String name = "default";
     private String type;
     private String tags;
     private String album;
@@ -35,7 +35,7 @@ public class Media {
 
     @Override
     public String toString() {
-        return name;
+        return album + " - " + name;
     }
 
     public int getId() {

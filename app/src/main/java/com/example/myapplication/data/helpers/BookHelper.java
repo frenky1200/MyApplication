@@ -106,14 +106,14 @@ public class BookHelper extends SQLiteOpenHelper {
         book.setIdmedia(Integer.parseInt(cursor.getString(3)));
 
         Log.d("getBook("+id+")", book.toString());
+        cursor.close();
 
-        // 5. return book
         return book;
     }
 
     // Get All Books
     public List<Book> getAllBooks() {
-        List<Book> books = new LinkedList<Book>();
+        List<Book> books = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_BOOKS;
@@ -123,7 +123,7 @@ public class BookHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Book book = null;
+        Book book;
         if (cursor.moveToFirst()) {
             do {
                 book = new Book();
@@ -137,8 +137,8 @@ public class BookHelper extends SQLiteOpenHelper {
         }
 
         Log.d("getAllBooks()", books.toString());
+        cursor.close();
 
-        // return books
         return books;
     }
 

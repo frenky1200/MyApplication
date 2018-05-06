@@ -1,14 +1,13 @@
 package com.example.myapplication.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
-import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.control.DBController;
+import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.interfaces.IMediable;
 
 import butterknife.BindView;
@@ -54,12 +53,6 @@ public class AddActivity extends AppCompatActivity {
         m = c.getMedia1(media.mediaType(),media.getId());
         m.setName(editText3.getText().toString());
         c.updateMedia(m);
-
-        Intent intent = new Intent(AddActivity.this, ReadActivity.class);
-        intent.putExtra("name",media.getName());
-        intent.putExtra("id",media.getId());
-        ReadActivity.getActivity().finish();
-        startActivity(intent);
         finish();
     }
 }

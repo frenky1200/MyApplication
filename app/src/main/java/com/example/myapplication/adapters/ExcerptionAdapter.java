@@ -1,7 +1,9 @@
 package com.example.myapplication.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +15,8 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.activities.ReadActivity;
-import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.control.DBController;
+import com.example.myapplication.data.entity.Media;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class ExcerptionAdapter extends BaseAdapter{
     private int layoutId;
     private LayoutInflater inflater;
 
-    public ExcerptionAdapter(Context context, List<Media> medias, int layoutId){
+    public ExcerptionAdapter(Context context, int layoutId, List<Media> medias){
         this.medias = medias;
         this.context = context;
         this.layoutId = layoutId;
@@ -73,11 +75,11 @@ public class ExcerptionAdapter extends BaseAdapter{
         String Name = media.getName();
         String Album = media.getAlbum();
 
-        holder.textView3.setText(Name);
-        holder.textView5.setText(Album);
-        holder.imageDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        final AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle("title");  // заголовок
+        ad.setMessage("Delete?"); // сообщение
+        ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
                 c = new DBController((Activity) context);
                 c.deleteMedia(media);
                 Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show();
@@ -85,11 +87,24 @@ public class ExcerptionAdapter extends BaseAdapter{
                 notifyDataSetChanged();
             }
         });
+        ad.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                Toast.makeText(context, "Not deleted", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        holder.textView3.setText(Name);
+        holder.textView5.setText(Album);
+        holder.imageDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ad.show();
+            }
+        });
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ReadActivity.class);
-                intent.putExtra("name", media.getName());
                 intent.putExtra("id", media.getId());
                 context.startActivity(intent);
             }

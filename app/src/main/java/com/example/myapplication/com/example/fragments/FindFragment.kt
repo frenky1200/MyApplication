@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-
 import com.example.myapplication.R
 import com.example.myapplication.adapters.ExcerptionAdapter
-import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.control.DBController
-
-import java.util.ArrayList
+import com.example.myapplication.data.entity.Media
 import kotlinx.android.synthetic.main.activity_find.*
+import java.util.*
 
 class FindFragment : Fragment() {
 
@@ -28,7 +26,7 @@ class FindFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_find, container, false)
         c = DBController(activity)
         list = ArrayList()
-        adapter = ExcerptionAdapter(activity, list, R.layout.adapter_excerption)
+        adapter = ExcerptionAdapter(activity, R.layout.adapter_excerption, list)
         return view
     }
 
@@ -45,6 +43,7 @@ class FindFragment : Fragment() {
         ListViewFind.startAnimation(anim)
         list.clear()
         list.addAll(c.findTags(EditTextFind.text.toString()))
+        for ((i, item) in list.withIndex()) item.name = "$i. " + item.name
         adapter.notifyDataSetChanged()
     }
 }

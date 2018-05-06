@@ -51,14 +51,12 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 
     @Override
     public Album get(int id){
-        Album album = new Album();
-        return album;
+        return new Album();
     }
 
     @Override
     public List<Album> getAll(String id){
-        List<Album> albums = new LinkedList<Album>();
-        return albums;
+        return new LinkedList<>();
     }
 
     @Override
@@ -109,6 +107,7 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
                 // 4. close
             }
                 db.close();
+            cursor.close();
         }
     }
 
@@ -139,13 +138,13 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         album.setType(cursor.getString(2));
 
         Log.d("getBook("+id+")", album.toString());
-
+        cursor.close();
         // 5. return book
         return album;
     }
 
     public List<Album> getAllAlbums(String type) {
-        List<Album> albums = new LinkedList<Album>();
+        List<Album> albums = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_ALBUMS + " WHERE `type` = '" + type + "'";
@@ -155,7 +154,7 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Album album = null;
+        Album album;
         if (cursor.moveToFirst()) {
             do {
                 album = new Album();
@@ -169,7 +168,7 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         }
 
         Log.d("getAllAlbums()", albums.toString());
-
+        cursor.close();
         // return books
         return albums;
     }
@@ -215,7 +214,7 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
     }
     @Override
     public List<Album> findbystr(String str){
-        List<Album> albums = new LinkedList<Album>();
+        List<Album> albums = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_ALBUMS + " WHERE `name` LIKE '%" + str + "%'";
@@ -225,7 +224,7 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Album album = null;
+        Album album;
         if (cursor.moveToFirst()) {
             do {
                 album = new Album();
@@ -239,7 +238,7 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         }
 
         Log.d("getAllAlbums()", albums.toString());
-
+        cursor.close();
         // return books
         return albums;
     }

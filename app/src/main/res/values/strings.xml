@@ -12,5 +12,7 @@
     <string name="book">Book</string>
     <string name="anime">Anime</string>
     <string name="excerption">Excerption</string>
+    <string name="languages">Language</string>
+    <string name="choose">Choose language</string>
 
 </resources>

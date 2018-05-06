@@ -109,14 +109,14 @@ public class MediaHelper extends SQLiteOpenHelper {
         media.setAlbum(cursor.getString(4));
 
         Log.d("getBook("+id+")", media.toString());
-
+        cursor.close();
         // 5. return book
         return media;
     }
 
     // Get All Books
     public List<Media> getAllMedia(String album) {
-        List<Media> medias = new LinkedList<Media>();
+        List<Media> medias = new LinkedList<>();
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `albums` LIKE '" + album + "'";
 
@@ -125,7 +125,7 @@ public class MediaHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Media media = null;
+        Media media;
         if (cursor.moveToFirst()) {
             do {
                 media = new Media();
@@ -141,7 +141,7 @@ public class MediaHelper extends SQLiteOpenHelper {
         }
 
         Log.d("getAllAlbums()", "");
-
+        cursor.close();
         // return books
         return medias;
     }
@@ -190,8 +190,8 @@ public class MediaHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<Media> findbystr(String str){
-        List<Media> medias = new LinkedList<Media>();
+    public List<Media> findByStr(String str){
+        List<Media> medias = new LinkedList<>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `tags` GLOB '*" + str + "*'";
@@ -202,7 +202,7 @@ public class MediaHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Media media = null;
+        Media media;
         if (cursor.moveToFirst()) {
             do {
                 media = new Media();
@@ -216,10 +216,34 @@ public class MediaHelper extends SQLiteOpenHelper {
                 medias.add(media);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         Log.d("getAllAlbums()", medias.toString());
 
         // return books
         return medias;
+    }
+
+    public Media findByName(String name, String album){
+
+        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE upper(name) GLOB upper(\"" + name +"\") and  upper(albums) GLOB upper(\"" + album + "\")";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        Media media = new Media();
+        if (cursor.moveToFirst()) {
+            do {
+                media = new Media();
+                media.setId(Integer.parseInt(cursor.getString(0)));
+                media.setName(cursor.getString(1));
+                media.setType(cursor.getString(2));
+                media.setTags(cursor.getString(3));
+                media.setAlbum(cursor.getString(4));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return media;
     }
 }

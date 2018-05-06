@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="test_style"
+        android:title="@string/languages"
+        android:summary="change language"
+        android:defaultValue="1"
+        android:entries="@array/languages"
+        android:entryValues="@array/languages"
+        android:dialogTitle="@string/choose" />
+    <CheckBoxPreference
+        android:key="enabled"
+        android:summary="Отображать логин"
+        android:title="Отображать" />
+</PreferenceScreen>

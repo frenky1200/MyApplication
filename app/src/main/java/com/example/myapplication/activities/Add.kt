@@ -1,21 +1,17 @@
 package com.example.myapplication.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.preference.Preference
 import android.support.v7.app.AppCompatActivity
-import android.text.Editable
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.example.myapplication.R
 import com.example.myapplication.data.control.DBController
 import com.example.myapplication.data.entity.Album
 import com.example.myapplication.data.interfaces.IMediable
 import kotlinx.android.synthetic.main.music_edit.*
-import java.sql.PreparedStatement
-import java.util.prefs.Preferences
 
 class Add : AppCompatActivity() {
 
@@ -26,15 +22,26 @@ class Add : AppCompatActivity() {
     private lateinit var album : String
     private lateinit var name : String
     private lateinit var albums : List<Album>
+    private lateinit var uri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_edit)
 
         val intent = intent
-        val data = intent.extras["android.intent.extra.INTENT"]
-        val text = (data as Intent).clipData.getItemAt(0).text
-        editText5.setText(text)
+        if(intent.hasExtra("android.intent.extra.INTENT")){
+            val data = intent.extras["android.intent.extra.INTENT"]
+            if ((data as Intent).data!=null){
+                uri = data.data
+            }else {
+                val text = data.clipData.getItemAt(0).text
+                editText5.setText(text)
+            }
+        }
+
+        //val playAudioIntent = Intent(Intent.ACTION_VIEW)
+        //playAudioIntent.setDataAndType((uri), "audio/*")
+        //startActivity(playAudioIntent)
 
         buttonsave.setOnClickListener { addClick() }
         c = DBController(this)
@@ -63,6 +70,11 @@ class Add : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+    }
+
     private fun addClick(){
 
         type = spinner.selectedItem.toString()
@@ -77,10 +89,10 @@ class Add : AppCompatActivity() {
         m.name = editText5.text.toString().trim()
         c.updateMedia(m)
 
-        val pref = getPreferences(MODE_PRIVATE)
-        val ed = pref.edit().putInt("type", spinner.selectedItemPosition).commit()
-        val ed2 = pref.edit().putInt("name", spinner2.selectedItemPosition).commit()
-
+        val pref = getPreferences(MODE_PRIVATE).apply {
+            edit().putInt("type", spinner.selectedItemPosition).apply()
+            edit().putInt("name", spinner2.selectedItemPosition).apply()
+        }
         finish()
     }
 }

@@ -9,15 +9,14 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.example.myapplication.activities.MainActivity
-
 import com.example.myapplication.R
-import com.example.myapplication.data.entity.Album
+import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.data.control.DBController
+import com.example.myapplication.data.entity.Album
 import kotlinx.android.synthetic.main.activity_collection.*
 
 class CollectionFragment : Fragment() {
-    private var nameString: String? = null
+
     private lateinit var c: DBController
     private lateinit var list: MutableList<Album>
     private lateinit var anim: Animation
@@ -26,14 +25,11 @@ class CollectionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_collection, container, false)
-        val bundle = arguments
-        nameString = bundle.getString("z")
         activity.title = MainActivity.collectionType.name
         c = DBController(activity)
         list = c.getAllAlbum(MainActivity.collectionType.name)
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
-        adapter = ArrayAdapter(activity,
-                android.R.layout.simple_list_item_1, list)
+        adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, list)
         return view
     }
 
@@ -60,8 +56,7 @@ class CollectionFragment : Fragment() {
         list.removeAt(position)
         adapter.notifyDataSetChanged()
         //val list = c.getAllAlbum(nameString)
-        //val adapter = ArrayAdapter(activity,
-        //      android.R.layout.simple_list_item_1, list)
+        //val adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, list)
         //ListView!!.adapter = adapter
         return false
     }

@@ -1,7 +1,13 @@
 package com.example.myapplication.activities;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -25,12 +31,36 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
 
         FindFragment youFragment = new FindFragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()          // получаем экземпляр FragmentTransaction
                 .replace(R.id.content_main, youFragment)
+                .addToBackStack("a")
                 .commit();
+
+        startService(new Intent(this, MyService.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!MyService.isNotificationAccessEnabled(this)) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setPositiveButton(
+                        android.R.string.ok,
+                        (dialogInterface, i) -> {
+                            String action;
+                            if (Build.VERSION.SDK_INT >= 22) {
+                                action = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;
+                            } else {
+                                action = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+                            }
+                            startActivity(new Intent(action));
+                        })
+                .show();
+        }
     }
 
     @Override
@@ -59,6 +89,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -68,35 +100,28 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        Bundle bundle = new Bundle();
         int id = item.getItemId();
-
         switch (id){
             case R.id.music:{
                 collectionType = Nav.Music;
-                bundle.putString("z", "Music");
                 break;}
             case R.id.anime:{
                 collectionType = Nav.Anime;
-                bundle.putString("z", "Anime");
                 break;}
             case R.id.excerption:{
                 collectionType = Nav.Excerption;
-                bundle.putString("z", "Film");
                 break;}
             case R.id.book:{
                 collectionType = Nav.Book;
-                bundle.putString("z", "Book");
                 break;}
             default:{}
         }
 
         CollectionFragment youFragment = new CollectionFragment();
-        youFragment.setArguments(bundle);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()// получаем экземпляр FragmentTransaction
                 .replace(R.id.content_main, youFragment)
-                .addToBackStack("myStack")
+                .addToBackStack("a")
                 .commit();
 
         DrawerLayout drawer = findViewById(drawer_layout);
