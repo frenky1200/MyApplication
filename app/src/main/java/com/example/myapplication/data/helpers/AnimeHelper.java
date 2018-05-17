@@ -96,20 +96,16 @@ public class AnimeHelper extends SQLiteOpenHelper{
                         null, // g. order by
                         null); // h. limit
 
-        // 3. if we got results get the first one
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        // 4. build book object
         Anime anime = new Anime();
-        anime.setId(Integer.parseInt(cursor.getString(0)));
-        anime.setName(cursor.getString(1));
-        anime.setType(cursor.getString(2));
-        anime.setIdmedia(Integer.parseInt(cursor.getString(3)));
-
+        if (cursor != null) {
+            cursor.moveToFirst();
+            anime.setId(Integer.parseInt(cursor.getString(0)));
+            anime.setName(cursor.getString(1));
+            anime.setType(cursor.getString(2));
+            anime.setIdmedia(Integer.parseInt(cursor.getString(3)));
+            cursor.close();
+        }
         Log.d("getBook("+id+")", anime.toString());
-        cursor.close();
-        // 5. return book
         return anime;
     }
 
@@ -139,7 +135,7 @@ public class AnimeHelper extends SQLiteOpenHelper{
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllBooks()", anime.toString());
+        Log.d("getAllBooks()", anime != null ? anime.toString() : null);
         cursor.close();
         // return books
         return animes;

@@ -87,18 +87,21 @@ public class MediaHelper extends SQLiteOpenHelper {
                         null, // f. having
                         null, // g. order by
                         null); // h. limit
-        if (cursor != null)
-            cursor.moveToFirst();
+
         Media media = new Media();
-        media.setId(Integer.parseInt(cursor.getString(0)));
-        media.setName(cursor.getString(1));
-        media.setType(cursor.getString(2));
-        media.setTags(cursor.getString(3));
-        media.setInsideUri(cursor.getString(4));
-        media.setOutsideUri(cursor.getString(5));
-        media.setAlbum(cursor.getString(6));
+
+        if (cursor != null){
+            cursor.moveToFirst();
+            media.setId(Integer.parseInt(cursor.getString(0)));
+            media.setName(cursor.getString(1));
+            media.setType(cursor.getString(2));
+            media.setTags(cursor.getString(3));
+            media.setInsideUri(cursor.getString(4));
+            media.setOutsideUri(cursor.getString(5));
+            media.setAlbum(cursor.getString(6));
+            cursor.close();
+        }
         Log.d("getBook("+id+")", media.toString());
-        cursor.close();
         return media;
     }
 

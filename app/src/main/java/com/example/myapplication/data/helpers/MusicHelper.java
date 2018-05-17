@@ -95,20 +95,17 @@ public class MusicHelper extends SQLiteOpenHelper {
                         null, // g. order by
                         null); // h. limit
 
-        // 3. if we got results get the first one
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        // 4. build book object
         Music music = new Music();
-        music.setId(Integer.parseInt(cursor.getString(0)));
-        music.setName(cursor.getString(1));
-        music.setType(cursor.getString(2));
-        music.setIdmedia(Integer.parseInt(cursor.getString(3)));
-
+        // 3. if we got results get the first one
+        if (cursor != null){
+            cursor.moveToFirst();
+            music.setId(Integer.parseInt(cursor.getString(0)));
+            music.setName(cursor.getString(1));
+            music.setType(cursor.getString(2));
+            music.setIdmedia(Integer.parseInt(cursor.getString(3)));
+            cursor.close();
+        }
         Log.d("getBook("+id+")", music.toString());
-        cursor.close();
-        // 5. return book
         return music;
     }
 

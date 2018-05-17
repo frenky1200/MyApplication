@@ -128,19 +128,16 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
                         null, // g. order by
                         null); // h. limit
 
-        // 3. if we got results get the first one
-        if (cursor != null)
-            cursor.moveToFirst();
 
-        // 4. build book object
         Album album = new Album();
-        album.setId(Integer.parseInt(cursor.getString(0)));
-        album.setName(cursor.getString(1));
-        album.setType(cursor.getString(2));
-
+        if (cursor != null){
+            cursor.moveToFirst();
+            album.setId(Integer.parseInt(cursor.getString(0)));
+            album.setName(cursor.getString(1));
+            album.setType(cursor.getString(2));
+            cursor.close();
+        }
         Log.d("getBook("+id+")", album.toString());
-        cursor.close();
-        // 5. return book
         return album;
     }
 

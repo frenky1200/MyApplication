@@ -88,7 +88,7 @@ class Add : AppCompatActivity() {
         m.name = editText5.text.toString().trim()
         c.updateMedia(m)
 
-        val pref = getPreferences(MODE_PRIVATE).apply {
+        getPreferences(MODE_PRIVATE).apply {
             edit().putInt("type", spinner.selectedItemPosition).apply()
             edit().putInt("name", spinner2.selectedItemPosition).apply()
         }

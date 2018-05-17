@@ -94,19 +94,17 @@ public class BookHelper extends SQLiteOpenHelper {
                         null, // g. order by
                         null); // h. limit
 
-        // 3. if we got results get the first one
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        // 4. build book object
         Book book = new Book();
-        book.setId(Integer.parseInt(cursor.getString(0)));
-        book.setTitle(cursor.getString(1));
-        book.setAuthor(cursor.getString(2));
-        book.setIdmedia(Integer.parseInt(cursor.getString(3)));
-
+        // 3. if we got results get the first one
+        if (cursor != null) {
+            cursor.moveToFirst();
+            book.setId(Integer.parseInt(cursor.getString(0)));
+            book.setTitle(cursor.getString(1));
+            book.setAuthor(cursor.getString(2));
+            book.setIdmedia(Integer.parseInt(cursor.getString(3)));
+            cursor.close();
+        }
         Log.d("getBook("+id+")", book.toString());
-        cursor.close();
 
         return book;
     }

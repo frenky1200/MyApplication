@@ -96,20 +96,17 @@ public class FilmHelper extends SQLiteOpenHelper {
                         null, // g. order by
                         null); // h. limit
 
-        // 3. if we got results get the first one
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        // 4. build book object
         Film film = new Film();
-        film.setId(Integer.parseInt(cursor.getString(0)));
-        film.setName(cursor.getString(1));
-        film.setType(cursor.getString(2));
-        film.setIdmedia(Integer.parseInt(cursor.getString(3)));
-
-        Log.d("getBook("+id+")", film.toString());
-
-        cursor.close();
+        // 3. if we got results get the first one
+        if (cursor != null){
+            cursor.moveToFirst();
+            film.setId(Integer.parseInt(cursor.getString(0)));
+            film.setName(cursor.getString(1));
+            film.setType(cursor.getString(2));
+            film.setIdmedia(Integer.parseInt(cursor.getString(3)));
+            cursor.close();
+            Log.d("getBook("+id+")", film.toString());
+        }
         return film;
     }
 

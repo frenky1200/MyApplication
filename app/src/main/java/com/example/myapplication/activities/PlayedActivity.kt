@@ -138,7 +138,7 @@ class PlayedActivity : AppCompatActivity() {
         media =  c.findByName(name, artist)
         title = media.toString()
         if(media.name != "default") {
-            var m: Music = c.getMedia1(media.mediaType(), media.id)
+            val m: Music = c.getMedia1(media.mediaType(), media.id)
             texttv.text = m.name
         }else {
             Toast.makeText(this@PlayedActivity, "New Track?",Toast.LENGTH_SHORT).show()
