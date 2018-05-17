@@ -17,7 +17,7 @@ import java.util.List;
 public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "AlbumDB";
+    private static final String DATABASE_NAME = "MediaDB.sqlite";
 
     public AlbumHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,7 +27,8 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         String CREATE_ALBUM_TABLE = "CREATE TABLE albums ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, "+
-                "type TEXT )";
+                "type TEXT, "+
+                "alternate TEXT )";
 
         db.execSQL(CREATE_ALBUM_TABLE);
     }

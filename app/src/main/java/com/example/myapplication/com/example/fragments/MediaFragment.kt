@@ -31,6 +31,7 @@ class MediaFragment : Fragment() {
         c = DBController(activity)
         list = c!!.getAllMedia(coll)
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
+        list.sortBy { media: Media -> media.name }
         adapter = ExcerptionAdapter(activity, R.layout.adapter_excerption, list)
     }
 

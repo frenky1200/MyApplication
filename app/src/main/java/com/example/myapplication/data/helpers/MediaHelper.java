@@ -15,7 +15,7 @@ import java.util.List;
 public class MediaHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "MediaDB";
+    private static final String DATABASE_NAME = "MediaDB.sqlite";
 
     public MediaHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,69 +23,61 @@ public class MediaHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // SQL statement to create book table
+
         String CREATE_MEDIA_TABLE = "CREATE TABLE media ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, "+
                 "type TEXT, "+
                 "tags TEXT, "+
+                "inside TEXT, "+
+                "outside TEXT, "+
                 "albums TEXT )";
 
-        // create books table
         db.execSQL(CREATE_MEDIA_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older books table if existed
+
         db.execSQL("DROP TABLE IF EXISTS media");
 
-        // create fresh books table
         this.onCreate(db);
     }
     //---------------------------------------------------------------------
 
-    // Books table name
     private static final String TABLE_MEDIA = "media";
 
-    // Books Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_TYPE = "type";
     private static final String KEY_TAGS = "tags";
+    private static final String KEY_INSIDE = "inside";
+    private static final String KEY_OUTSIDE = "outside";
     private static final String KEY_ALBUMS = "albums";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE,KEY_TAGS,KEY_ALBUMS};
+    private static final String[] COLUMNS = {KEY_ID, KEY_NAME, KEY_TYPE, KEY_TAGS, KEY_INSIDE, KEY_OUTSIDE, KEY_ALBUMS};
 
     public int addMedia(Media media){
-        Log.d("addAlbum", media.toString());
-        // 1. get reference to writable DB
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
+        Log.d("addAlbum", media.toString());
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, media.getName()); // get title
         values.put(KEY_TYPE, media.getType()); // get author
-        values.put(KEY_TAGS, media.getTags());
+        values.put(KEY_TAGS, media.getTags()); // get title
+        values.put(KEY_INSIDE, media.getInsideUri()); // get author
+        values.put(KEY_OUTSIDE, media.getOutsideUri());
         values.put(KEY_ALBUMS, media.getAlbum());
-
-        // 3. insert
         long id =  db.insert(TABLE_MEDIA, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
-
-        // 4. close
-
         db.close();
         return (int)id;
     }
 
     public Media getMedia(int id){
 
-        // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
-
-        // 2. build query
         Cursor cursor =
                 db.query(TABLE_MEDIA, // a. table
                         COLUMNS, // b. column names
@@ -95,36 +87,28 @@ public class MediaHelper extends SQLiteOpenHelper {
                         null, // f. having
                         null, // g. order by
                         null); // h. limit
-
-        // 3. if we got results get the first one
         if (cursor != null)
             cursor.moveToFirst();
-
-        // 4. build book object
         Media media = new Media();
         media.setId(Integer.parseInt(cursor.getString(0)));
         media.setName(cursor.getString(1));
         media.setType(cursor.getString(2));
         media.setTags(cursor.getString(3));
-        media.setAlbum(cursor.getString(4));
-
+        media.setInsideUri(cursor.getString(4));
+        media.setOutsideUri(cursor.getString(5));
+        media.setAlbum(cursor.getString(6));
         Log.d("getBook("+id+")", media.toString());
         cursor.close();
-        // 5. return book
         return media;
     }
 
     // Get All Books
     public List<Media> getAllMedia(String album) {
-        List<Media> medias = new LinkedList<>();
-        // 1. build the query
-        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `albums` LIKE '" + album + "'";
 
-        // 2. get reference to writable DB
+        List<Media> medias = new LinkedList<>();
+        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `albums` LIKE '" + album + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-
-        // 3. go over each row, build book and add it to list
         Media media;
         if (cursor.moveToFirst()) {
             do {
@@ -133,75 +117,55 @@ public class MediaHelper extends SQLiteOpenHelper {
                 media.setName(cursor.getString(1));
                 media.setType(cursor.getString(2));
                 media.setTags(cursor.getString(3));
-                media.setAlbum(cursor.getString(4));
-
-                // Add book to books
+                media.setInsideUri(cursor.getString(4));
+                media.setOutsideUri(cursor.getString(5));
+                media.setAlbum(cursor.getString(6));
                 medias.add(media);
             } while (cursor.moveToNext());
         }
-
         Log.d("getAllAlbums()", "");
         cursor.close();
-        // return books
         return medias;
     }
 
     // Updating single book
     public int updateMedia(Media media) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put("name", media.getName()); // get title
         values.put("type", media.getType()); // get author
         values.put("tags", media.getTags());
-        values.put("albums", media.getAlbum());
-
-        // 3. updating row
+        values.put(KEY_INSIDE, media.getInsideUri()); // get author
+        values.put(KEY_OUTSIDE, media.getOutsideUri());
+        values.put(KEY_ALBUMS, media.getAlbum());
         int i = db.update(TABLE_MEDIA, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
                 new String[] { String.valueOf(media.getId()) }); //selection args
-
-        // 4. close
         db.close();
-
         return i;
-
     }
 
     // Deleting single book
     public void deleteMedia(Media media) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. delete
         db.delete(TABLE_MEDIA,
                 KEY_ID+" = ?",
                 new String[] { String.valueOf(media.getId()) });
-
-        // 3. close
         db.close();
-
         Log.d("deleteAlbum", media.toString());
-
     }
 
     public List<Media> findByStr(String str){
         List<Media> medias = new LinkedList<>();
 
-        // 1. build the query
         String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `tags` GLOB '*" + str + "*'";
         //String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `tags` IN '" + str + "'";
 
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-
-        // 3. go over each row, build book and add it to list
         Media media;
         if (cursor.moveToFirst()) {
             do {
@@ -210,25 +174,30 @@ public class MediaHelper extends SQLiteOpenHelper {
                 media.setName(cursor.getString(1));
                 media.setType(cursor.getString(2));
                 media.setTags(cursor.getString(3));
-                media.setAlbum(cursor.getString(4));
-
-                // Add book to books
+                media.setInsideUri(cursor.getString(4));
+                media.setOutsideUri(cursor.getString(5));
+                media.setAlbum(cursor.getString(6));
                 medias.add(media);
             } while (cursor.moveToNext());
         }
         cursor.close();
         Log.d("getAllAlbums()", medias.toString());
-
-        // return books
         return medias;
     }
 
     public Media findByName(String name, String album){
 
-        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE upper(name) GLOB upper(\"" + name +"\") and  upper(albums) GLOB upper(\"" + album + "\")";
+        String query = "SELECT  * FROM " + TABLE_MEDIA + " " +
+                "WHERE upper(name) GLOB upper(\"*" + name +"*\") and" +
+                "  " + "upper(albums) GLOB upper(\"*" + album + "*\")";
+
+        String query2 = "SELECT * FROM " + TABLE_MEDIA + " WHERE upper(media.name) GLOB upper(\"*"+name+
+                "*\") AND media.albums==(select name from albums WHERE upper(albums.alternate) GLOB upper(\"*"+album+
+                "*\") OR upper(albums.name) GLOB upper(\"*"+album+"*\"))";
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
+
+        Cursor cursor = db.rawQuery(query2, null);
 
         // 3. go over each row, build book and add it to list
         Media media = new Media();
@@ -239,7 +208,9 @@ public class MediaHelper extends SQLiteOpenHelper {
                 media.setName(cursor.getString(1));
                 media.setType(cursor.getString(2));
                 media.setTags(cursor.getString(3));
-                media.setAlbum(cursor.getString(4));
+                media.setInsideUri(cursor.getString(4));
+                media.setOutsideUri(cursor.getString(5));
+                media.setAlbum(cursor.getString(6));
 
             } while (cursor.moveToNext());
         }

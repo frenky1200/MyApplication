@@ -1,6 +1,7 @@
 package com.example.myapplication.activities;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import com.example.myapplication.R;
 import com.example.myapplication.com.example.fragments.CollectionFragment;
 import com.example.myapplication.com.example.fragments.FindFragment;
+import com.example.myapplication.services.MyService;
 
 import static com.example.myapplication.R.id.drawer_layout;
 
@@ -32,7 +34,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        //ImageButton im = findViewById(R.id.imageButton5);
+        //im.setOnClickListener(view -> {
+        //    onFind();
+        //});
+        //startService(new Intent(this, qwe.class));
+    }
 
+    private void onFind(){
         FindFragment youFragment = new FindFragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()          // получаем экземпляр FragmentTransaction
@@ -61,6 +70,7 @@ public class MainActivity extends AppCompatActivity
                         })
                 .show();
         }
+        startService(new Intent(this, MyService.class));
     }
 
     @Override
@@ -88,10 +98,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        switch (id){
+            case R.id.action_settings: {
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
-            return true;
+            return true;}
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -101,31 +113,42 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
+        DrawerLayout drawer = findViewById(drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        Fragment fr;
         switch (id){
             case R.id.music:{
                 collectionType = Nav.Music;
+                fr = new CollectionFragment();
                 break;}
             case R.id.anime:{
                 collectionType = Nav.Anime;
+                fr = new CollectionFragment();
                 break;}
             case R.id.excerption:{
                 collectionType = Nav.Excerption;
+                fr = new CollectionFragment();
                 break;}
-            case R.id.book:{
-                collectionType = Nav.Book;
+            case R.id.setting:{
+                fr = new SettingActivity.SettingsFragment();
                 break;}
-            default:{}
+            case R.id.find:{
+                fr = new FindFragment();
+                break;}
+            case R.id.nav_send:{
+                startActivity(new Intent(this, Add.class));
+                return true;
+            }
+            default:{
+                fr = new FindFragment();}
         }
 
-        CollectionFragment youFragment = new CollectionFragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()// получаем экземпляр FragmentTransaction
-                .replace(R.id.content_main, youFragment)
+                .replace(R.id.content_main, fr)
                 .addToBackStack("a")
                 .commit();
 
-        DrawerLayout drawer = findViewById(drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

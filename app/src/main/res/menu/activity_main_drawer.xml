@@ -1,20 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--suppress ALL -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/music"
-            android:title="@string/music" />
-        <item
-            android:id="@+id/anime"
-            android:title="@string/anime" />
-        <item
+    <item android:title="Collections">
+        <menu>
+            <item
+                android:id="@+id/music"
+                android:icon="@drawable/muss"
+                android:title="Musics" />
+            <item
+                android:id="@+id/anime"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Images" />
+            <item
             android:id="@+id/excerption"
-            android:title="@string/excerption" />
-        <item
-            android:id="@+id/book"
-            android:title="@string/book" />
-    </group>
+            android:icon="@drawable/exer"
+            android:title="Excerption" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Films" />
+
+        </menu>
+    </item>
+
+    <item android:title="Application">
+        <menu>
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+            <item
+                android:id="@+id/find"
+                android:icon="@android:drawable/ic_menu_search"
+                android:title="Find" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="New" />
+        </menu>
+    </item>
 
 </menu>

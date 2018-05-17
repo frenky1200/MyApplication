@@ -17,6 +17,8 @@ import butterknife.OnClick;
 public class AddActivity extends AppCompatActivity {
 
     @BindView(R.id.buttonsave) Button button;
+    @BindView(R.id.editText) EditText inside;
+    @BindView(R.id.editText2) EditText outside;
     @BindView(R.id.editText3) EditText editText;
     @BindView(R.id.editText4) EditText editText2;
     @BindView(R.id.editText5) EditText editText3;
@@ -47,6 +49,8 @@ public class AddActivity extends AppCompatActivity {
     public void OnSaveClick(){
         media.setName(editText.getText().toString());
         media.setTags(editText2.getText().toString());
+        media.setInsideUri(inside.getText().toString());
+        media.setOutsideUri(outside.getText().toString());
         c.updateBook(media);
 
         IMediable m;

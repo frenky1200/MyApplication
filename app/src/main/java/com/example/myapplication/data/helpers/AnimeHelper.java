@@ -17,7 +17,7 @@ public class AnimeHelper extends SQLiteOpenHelper{
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "AnimeDB";
+    private static final String DATABASE_NAME = "MediaDB.sqlite";
 
     public AnimeHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

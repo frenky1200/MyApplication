@@ -33,15 +33,12 @@ class Add : AppCompatActivity() {
             val data = intent.extras["android.intent.extra.INTENT"]
             if ((data as Intent).data!=null){
                 uri = data.data
+                editText.setText(uri.toString())
             }else {
                 val text = data.clipData.getItemAt(0).text
                 editText5.setText(text)
             }
         }
-
-        //val playAudioIntent = Intent(Intent.ACTION_VIEW)
-        //playAudioIntent.setDataAndType((uri), "audio/*")
-        //startActivity(playAudioIntent)
 
         buttonsave.setOnClickListener { addClick() }
         c = DBController(this)
@@ -84,6 +81,8 @@ class Add : AppCompatActivity() {
         val m: IMediable
         val media = c.getMedia(id)
         media.tags = editText4.text.toString()
+        media.insideUri = editText.text.toString()
+        media.outsideUri = editText2.text.toString()
         c.updateBook(media)
         m = c.getMedia1(media.mediaType(), media.id)
         m.name = editText5.text.toString().trim()

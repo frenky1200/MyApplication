@@ -17,7 +17,7 @@ public class BookHelper extends SQLiteOpenHelper {
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "BookDB";
+    private static final String DATABASE_NAME = "MediaDB.sqlite";
 
     public BookHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -170,15 +170,10 @@ public class BookHelper extends SQLiteOpenHelper {
     // Deleting single book
     public void deleteBook(Book book) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. delete
         db.delete(TABLE_BOOKS,
                 KEY_ID+" = ?",
                 new String[] { String.valueOf(book.getId()) });
-
-        // 3. close
         db.close();
 
         Log.d("deleteBook", book.toString());

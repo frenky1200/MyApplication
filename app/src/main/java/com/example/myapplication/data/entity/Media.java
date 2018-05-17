@@ -8,6 +8,8 @@ public class Media {
     private String type;
     private String tags;
     private String album;
+    private String insideUri;
+    private String outsideUri;
 
     public Media(){
 
@@ -78,4 +80,19 @@ public class Media {
         this.album = album;
     }
 
+    public String getInsideUri() {
+        return insideUri;
+    }
+
+    public void setInsideUri(String insideUri) {
+        this.insideUri = insideUri;
+    }
+
+    public String getOutsideUri() {
+        return outsideUri;
+    }
+
+    public void setOutsideUri(String outsideUri) {
+        this.outsideUri = outsideUri;
+    }
 }

@@ -43,7 +43,7 @@ class FindFragment : Fragment() {
         ListViewFind.startAnimation(anim)
         list.clear()
         list.addAll(c.findTags(EditTextFind.text.toString()))
-        for ((i, item) in list.withIndex()) item.name = "$i. " + item.name
+        for ((i, item) in list.withIndex()) item.name = "${i + 1} .${item.name}"
         adapter.notifyDataSetChanged()
     }
 }
