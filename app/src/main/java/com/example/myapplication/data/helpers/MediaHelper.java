@@ -132,7 +132,7 @@ public class MediaHelper extends SQLiteOpenHelper {
     }
 
     // Updating single book
-    public int updateMedia(Media media) {
+    public void updateMedia(Media media) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -142,12 +142,11 @@ public class MediaHelper extends SQLiteOpenHelper {
         values.put(KEY_INSIDE, media.getInsideUri()); // get author
         values.put(KEY_OUTSIDE, media.getOutsideUri());
         values.put(KEY_ALBUMS, media.getAlbum());
-        int i = db.update(TABLE_MEDIA, //table
+        db.update(TABLE_MEDIA, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
                 new String[] { String.valueOf(media.getId()) }); //selection args
         db.close();
-        return i;
     }
 
     // Deleting single book
@@ -161,11 +160,11 @@ public class MediaHelper extends SQLiteOpenHelper {
         Log.d("deleteAlbum", media.toString());
     }
 
-    public List<Media> findByStr(String str){
+    public List<Media> findByStr(String s, String str){
         List<Media> medias = new LinkedList<>();
 
-        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `tags` GLOB '*" + str + "*'";
-        //String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `tags` IN '" + str + "'";
+        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE " + s + " GLOB upper('*" + str + "*'))";
+        //String query2 = "SELECT  * FROM " + TABLE_MEDIA + " WHERE id == (SELECT idMedia FROM musics where name glob upper())";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -190,19 +189,14 @@ public class MediaHelper extends SQLiteOpenHelper {
 
     public Media findByName(String name, String album){
 
-        String query = "SELECT  * FROM " + TABLE_MEDIA + " " +
-                "WHERE upper(name) GLOB upper(\"*" + name +"*\") and" +
-                "  " + "upper(albums) GLOB upper(\"*" + album + "*\")";
-
-        String query2 = "SELECT * FROM " + TABLE_MEDIA + " WHERE upper(media.name) GLOB upper(\"*"+name+
+        String query = "SELECT * FROM " + TABLE_MEDIA + " WHERE upper(media.name) GLOB upper(\"*"+name+
                 "*\") AND media.albums==(select name from albums WHERE upper(albums.alternate) GLOB upper(\"*"+album+
                 "*\") OR upper(albums.name) GLOB upper(\"*"+album+"*\"))";
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery(query2, null);
+        Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         Media media = new Media();
         if (cursor.moveToFirst()) {
             do {

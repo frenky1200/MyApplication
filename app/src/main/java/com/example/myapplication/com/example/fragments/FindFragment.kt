@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
 import com.example.myapplication.R
+import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.adapters.ExcerptionAdapter
+import com.example.myapplication.adapters.SecAdapter
 import com.example.myapplication.data.control.DBController
+import com.example.myapplication.data.entity.Album
 import com.example.myapplication.data.entity.Media
 import kotlinx.android.synthetic.main.activity_find.*
+import kotlinx.android.synthetic.main.music_edit.*
 import java.util.*
 
 class FindFragment : Fragment() {
@@ -20,6 +25,32 @@ class FindFragment : Fragment() {
     private lateinit var c :DBController
     private lateinit var list : ArrayList<Media>
     private lateinit var adapter : ExcerptionAdapter
+    private lateinit var adapter2: SecAdapter
+
+    enum class Finder{
+
+        Tags{
+            override fun toString(): String {
+                return "id in (SELECT id FROM media where upper(tags)"
+            }
+        },
+        Name{
+            override fun toString(): String {
+                return "id in (SELECT id FROM media where upper(name)"
+            }
+        },
+        Descriptions{
+            override fun toString(): String {
+                return "id in (SELECT idMedia FROM musics where upper(name)"
+            }
+        },
+        Collections{
+            override fun toString(): String {
+                return "id in (SELECT id FROM media where upper(albums)"
+            }
+        };
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -27,6 +58,7 @@ class FindFragment : Fragment() {
         c = DBController(activity)
         list = ArrayList()
         adapter = ExcerptionAdapter(activity, R.layout.adapter_excerption, list)
+
         return view
     }
 
@@ -37,12 +69,21 @@ class FindFragment : Fragment() {
         ListViewFind.adapter = adapter
 
         findbutton.setOnClickListener({onClick()})
+
+        val types: Array<Finder> = Finder.values()
+        for ((i:Int, s) in Finder.values().withIndex())
+            types[i] = s
+        adapter2 = SecAdapter(activity, R.layout.ada, types)
+        spinner4.adapter = adapter2
+        spinner4.setSelection(0)
     }
 
+    private var rew = Finder.Collections
     private fun onClick(){
         ListViewFind.startAnimation(anim)
         list.clear()
-        list.addAll(c.findTags(EditTextFind.text.toString()))
+        rew = spinner4.selectedItem as Finder
+        list.addAll(c.findTags(rew.toString(), EditTextFind.text.toString()))
         for ((i, item) in list.withIndex()) item.name = "${i + 1} .${item.name}"
         adapter.notifyDataSetChanged()
     }

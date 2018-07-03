@@ -113,70 +113,54 @@ public class AnimeHelper extends SQLiteOpenHelper{
     public List<Anime> getAllAnime() {
         List<Anime> animes = new LinkedList<>();
 
-        // 1. build the query
         String query = "SELECT  * FROM " + TABLE_ANIMES;
 
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
-        Anime anime = null;
+        Anime anime = new Anime();
         if (cursor.moveToFirst()) {
             do {
-                anime = new Anime();
                 anime.setId(Integer.parseInt(cursor.getString(0)));
                 anime.setName(cursor.getString(1));
                 anime.setType(cursor.getString(2));
                 anime.setIdmedia(Integer.parseInt(cursor.getString(3)));
-
-                // Add book to books
                 animes.add(anime);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllBooks()", anime != null ? anime.toString() : null);
+        Log.d("getAllBooks()", anime.toString());
         cursor.close();
-        // return books
+
         return animes;
     }
 
     // Updating single book
-    public int updateAnime(Anime anime) {
+    public void updateAnime(Anime anime) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put("title", anime.getName()); // get title
         values.put("author", anime.getType()); // get author
         values.put("idmedia", anime.getIdmedia());
 
-        // 3. updating row
-        int i = db.update(TABLE_ANIMES, //table
+        db.update(TABLE_ANIMES, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
                 new String[] { String.valueOf(anime.getId()) }); //selection args
 
-        // 4. close
         db.close();
-        return i;
-
     }
 
     // Deleting single book
     public void deleteAnime(Anime anime) {
-
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. delete
         db.delete(TABLE_ANIMES,
                 KEY_ID+" = ?",
                 new String[] { String.valueOf(anime.getId()) });
 
-        // 3. close
         db.close();
 
         Log.d("deleteBook", anime.toString());

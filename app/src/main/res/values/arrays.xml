@@ -4,4 +4,23 @@
         <item>Русский</item>
         <item>English</item>
     </string-array>
+    <string-array name="colors">
+        <item>@string/gray</item>
+        <item>@string/red</item>
+        <item>@string/green</item>
+        <item>@string/blue</item>
+        <item>@string/yellow</item>
+    </string-array>
+    <string-array name="colorValues">
+        <item>Серый</item>
+        <item>Красный</item>
+        <item>Зеленый</item>
+        <item>Синий</item>
+        <item>Желтый</item>
+    </string-array>
+    <string-array name="database">
+        <item>Только локальное</item>
+        <item>Только внешнее</item>
+        <item>Совместное</item>
+    </string-array>
 </resources>

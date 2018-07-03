@@ -1,24 +1,30 @@
 package com.example.myapplication.services;
 
 import android.app.DownloadManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.media.MediaMetadata;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.widget.ImageView;
+
+import com.example.myapplication.R;
+import com.example.myapplication.activities.Add;
+import com.example.myapplication.activities.PlayedActivity;
 
 
 public class qwe extends Service {
-
-    private static final String IMAGE_URL = "https://yandex.by/images/search?text=%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B8&img_url=https%3A%2F%2Ffullhdpictures.com%2Fwp-content%2Fuploads%2F2016%2F04%2FDubai-HD-Wallpaper.jpg&pos=0&rpt=simage";
-
-    ImageView imageView;
-    DownloadManager downloadManager;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -29,29 +35,14 @@ public class qwe extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        //setContentView(R.layout.activity_main);
-
-        //imageView = (ImageView)findViewById(R.id.imageView);
-
-        //Получаем ссылку на DownloadManager сервис
-        downloadManager = (DownloadManager) this.getSystemService(Context.DOWNLOAD_SERVICE);
-
-
-        //Создаем новый запрос
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(IMAGE_URL));
-        request.setTitle("Title.jpg"); //заголовок будущей нотификации
-        request.setDescription("My description"); //описание будущей нотификации
-        request.setMimeType("image"); //mine type загружаемого файла
-
-        //Установите следующий флаг, если хотите,
-        //что-бы уведомление осталось по окончании загрузки
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        //Добавляем запрос в очередь
-        downloadManager.enqueue(request);
-
         registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
         registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
-        //unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 
     public BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -59,39 +50,38 @@ public class qwe extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-
             //Сообщение о том, что загрузка закончена
             if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)){
                 long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
                 DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
                 DownloadManager.Query query = new DownloadManager.Query();
                 query.setFilterById(downloadId);
+                assert dm != null;
                 Cursor cursor = dm.query(query);
                 if (cursor.moveToFirst()){
                     int columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
                     if (DownloadManager.STATUS_SUCCESSFUL == cursor.getInt(columnIndex)) {
-                        String uriString = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-                        //imageView.setImageURI(Uri.parse(uriString));
+                        String uriLocalString = cursor.getString(16);
+                        String uriString = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI));
+                        Intent intent1 = new Intent(context, Add.class);
+                        intent1.setData(Uri.parse(uriLocalString));
+                        intent1.putExtra("outsideUri", uriString);
+                        PendingIntent pendingIntent =
+                                PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_CANCEL_CURRENT);
+                        Notification.Builder notification =
+                                new Notification.Builder(context)
+                                        .setSmallIcon(R.drawable.ic_menu_camera)
+                                        .setContentTitle("downloaded")
+                                        .setCategory(Notification.CATEGORY_STATUS)
+                                        .setOngoing(true)
+                                        .setColor(Color.argb(255, 242, 72, 63))
+                                        .setContentIntent(pendingIntent);
+                        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                        if (notificationManager != null) {
+                            notificationManager.notify(3, notification.build());
+                        }
                     }
-                }
-                //Сообщение о клике по нотификации
-            } else if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(action)){
-                DownloadManager dm = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-                //несколько параллельных загрузок могут быть объеденены в одну нотификацию,
-                //по этому мы пытаемся получить список всех загрузок, связанных с
-                //выбранной нотификацией
-                long[] ids = intent.getLongArrayExtra(DownloadManager.EXTRA_NOTIFICATION_CLICK_DOWNLOAD_IDS);
-                DownloadManager.Query query = new DownloadManager.Query();
-                query.setFilterById(ids);
-                Cursor cursor = dm.query(query);
-                int idIndex = cursor.getColumnIndex(DownloadManager.COLUMN_ID);
-                if (cursor.moveToFirst()){
-                    do {
-                        //здесь вы можете получить id загрузки и
-                        //реализовать свое поведение
-                        long downloadId = cursor.getLong(idIndex);
-
-                    } while (cursor.moveToNext());
+                    cursor.close();
                 }
             }
         }

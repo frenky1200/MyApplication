@@ -109,7 +109,6 @@ public class MusicHelper extends SQLiteOpenHelper {
         return music;
     }
 
-    // Get All Books
     public List<Music> getAllMusic() {
         List<Music> musics = new LinkedList<>();
 
@@ -121,10 +120,9 @@ public class MusicHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build book and add it to list
-        Music music = null;
+        Music music = new Music();
         if (cursor.moveToFirst()) {
             do {
-                music = new Music();
                 music.setId(Integer.parseInt(cursor.getString(0)));
                 music.setName(cursor.getString(1));
                 music.setType(cursor.getString(2));
@@ -141,42 +139,32 @@ public class MusicHelper extends SQLiteOpenHelper {
     }
 
     // Updating single book
-    public int updateMusic(Music music) {
+    public void updateMusic(Music music) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put("name", music.getName()); // get title
         values.put("type", music.getType()); // get author
         values.put("idmedia", music.getIdmedia());
 
-        // 3. updating row
-        int i = db.update(TABLE_MUSICS, //table
+        db.update(TABLE_MUSICS, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
                 new String[] { String.valueOf(music.getId()) }); //selection args
 
-        // 4. close
         db.close();
-
-        return i;
-
     }
 
     // Deleting single book
     public void deleteMusic(Music music) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. delete
         db.delete(TABLE_MUSICS,
                 KEY_ID+" = ?",
                 new String[] { String.valueOf(music.getId()) });
 
-        // 3. close
         db.close();
 
         Log.d("deleteBook", music.toString());

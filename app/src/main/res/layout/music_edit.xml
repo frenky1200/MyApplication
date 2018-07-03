@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/editText4"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Tags"
+                android:hint="@string/tags"
                 android:inputType="textPersonName"
                 app:layout_constraintBottom_toTopOf="@+id/editText5"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Text"
+                android:hint="@string/text"
                 android:inputType="textMultiLine"
                 android:maxLines="10"
                 android:minLines="1"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="InsideUri" />
+                android:hint="@string/insideuri" />
 
             <EditText
                 android:id="@+id/editText2"
@@ -101,13 +101,13 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:hint="OutsideUri" />
+                android:hint="@string/outsideuri" />
 
             <Button
                 android:id="@+id/buttonsave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Done"
+                android:text="@string/done"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

@@ -26,20 +26,19 @@ public class FilmHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // SQL statement to create book table
-        String CREATE_ANIME_TABLE = "CREATE TABLE films ( " +
+        String CREATE_BOOK_TABLE = "CREATE TABLE books ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "title TEXT, "+
                 "author TEXT, "+
                 "idmedia INTEGER )";
-
         // create books table
-        db.execSQL(CREATE_ANIME_TABLE);
+        db.execSQL(CREATE_BOOK_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older books table if existed
-        db.execSQL("DROP TABLE IF EXISTS films");
+        db.execSQL("DROP TABLE IF EXISTS books");
 
         // create fresh books table
         this.onCreate(db);
@@ -51,15 +50,15 @@ public class FilmHelper extends SQLiteOpenHelper {
      */
 
     // Books table name
-    private static final String TABLE_FILMS = "films";
+    private static final String TABLE_BOOKS = "films";
 
     // Books Table Columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "title";
-    private static final String KEY_TYPE = "author";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_AUTHOR = "author";
     private static final String KEY_IDMEDIA = "idmedia";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE,KEY_IDMEDIA};
+    private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR,KEY_IDMEDIA};
 
     public void addFilm(Film film){
         // 1. get reference to writable DB
@@ -67,12 +66,11 @@ public class FilmHelper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, film.getName()); // get title
-        values.put(KEY_TYPE, film.getType()); // get author
+        values.put(KEY_TITLE, film.getName()); // get title
+        values.put(KEY_AUTHOR, film.getAuthor()); // get author
         values.put(KEY_IDMEDIA, film.getIdmedia());
-
         // 3. insert
-        db.insert(TABLE_FILMS, // table
+        db.insert(TABLE_BOOKS, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
 
@@ -87,7 +85,7 @@ public class FilmHelper extends SQLiteOpenHelper {
 
         // 2. build query
         Cursor cursor =
-                db.query(TABLE_FILMS, // a. table
+                db.query(TABLE_BOOKS, // a. table
                         COLUMNS, // b. column names
                         " idmedia = ?", // c. selections
                         new String[] { String.valueOf(id) }, // d. selections args
@@ -98,52 +96,51 @@ public class FilmHelper extends SQLiteOpenHelper {
 
         Film film = new Film();
         // 3. if we got results get the first one
-        if (cursor != null){
+        if (cursor != null) {
             cursor.moveToFirst();
             film.setId(Integer.parseInt(cursor.getString(0)));
-            film.setName(cursor.getString(1));
-            film.setType(cursor.getString(2));
+            film.setTitle(cursor.getString(1));
+            film.setAuthor(cursor.getString(2));
             film.setIdmedia(Integer.parseInt(cursor.getString(3)));
             cursor.close();
-            Log.d("getBook("+id+")", film.toString());
         }
+        Log.d("getBook("+id+")", film.toString());
+
         return film;
     }
 
     // Get All Books
-    public List<Film> getAllFilm() {
+    public List<Film> getAllFilms() {
         List<Film> films = new LinkedList<>();
 
         // 1. build the query
-        String query = "SELECT  * FROM " + TABLE_FILMS;
+        String query = "SELECT  * FROM " + TABLE_BOOKS;
 
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
-        Film film = null;
+        // 3. go over each row, build film and add it to list
+        Film film;
         if (cursor.moveToFirst()) {
             do {
                 film = new Film();
                 film.setId(Integer.parseInt(cursor.getString(0)));
-                film.setName(cursor.getString(1));
-                film.setType(cursor.getString(2));
-                film.setIdmedia(Integer.parseInt(cursor.getString(3)));
-
-                // Add book to books
+                film.setTitle(cursor.getString(1));
+                film.setAuthor(cursor.getString(2));
+                film.setIdmedia(cursor.getInt(3));
                 films.add(film);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllBooks()", film.toString());
-
+        Log.d("getAllBooks()", films.toString());
         cursor.close();
+
         return films;
     }
 
-    // Updating single book
-    public int updateFilm(Film film) {
+    // Updating single film
+    public void updateFilm(Film film) {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -151,34 +148,26 @@ public class FilmHelper extends SQLiteOpenHelper {
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
         values.put("title", film.getName()); // get title
-        values.put("author", film.getType()); // get author
+        values.put("author", film.getAuthor()); // get author
         values.put("idmedia", film.getIdmedia());
 
         // 3. updating row
-        int i = db.update(TABLE_FILMS, //table
+        db.update(TABLE_BOOKS, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
                 new String[] { String.valueOf(film.getId()) }); //selection args
 
         // 4. close
         db.close();
-
-        return i;
-
     }
 
-    // Deleting single book
+    // Deleting single film
     public void deleteFilm(Film film) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-
-        // 2. delete
-        db.delete(TABLE_FILMS,
+        db.delete(TABLE_BOOKS,
                 KEY_ID+" = ?",
                 new String[] { String.valueOf(film.getId()) });
-
-        // 3. close
         db.close();
 
         Log.d("deleteBook", film.toString());

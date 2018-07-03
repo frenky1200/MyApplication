@@ -25,7 +25,7 @@ class CollectionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_collection, container, false)
-        activity.title = MainActivity.collectionType.name
+        activity.title = MainActivity.collectionType.toString()
         c = DBController(activity)
         list = c.getAllAlbum(MainActivity.collectionType.name)
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
@@ -38,7 +38,7 @@ class CollectionFragment : Fragment() {
         ListView.adapter = adapter
         ListView.startAnimation(anim)
         imageButton.setOnClickListener({onAddClick()})
-        //ListView.setOnItemLongClickListener({ adapterView: AdapterView<*>, _: View, i: Int, _: Long -> onListLongClick(adapterView, i)})
+        ListView.setOnItemLongClickListener({ _: AdapterView<*>, _: View, _: Int, _: Long -> onListLongClick()})
         ListView.setOnItemClickListener({ adapterView: AdapterView<*>, _: View, i: Int, _: Long -> onListClick(adapterView, i)})
     }
 
@@ -50,14 +50,7 @@ class CollectionFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun onListLongClick(parent: AdapterView<*>, position: Int): Boolean {
-        val album = parent.getItemAtPosition(position) as Album
-        c.deleteAlbum(album)
-        list.removeAt(position)
-        adapter.notifyDataSetChanged()
-        //val list = c.getAllAlbum(nameString)
-        //val adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, list)
-        //ListView!!.adapter = adapter
+    private fun onListLongClick(): Boolean {
         return false
     }
 

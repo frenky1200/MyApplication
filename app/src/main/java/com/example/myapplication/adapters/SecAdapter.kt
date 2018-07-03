@@ -1,22 +1,17 @@
 package com.example.myapplication.adapters
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
-import com.example.myapplication.activities.ReadActivity
-import com.example.myapplication.data.entity.Media
-import com.example.myapplication.data.control.DBController
+import com.example.myapplication.R
+import com.example.myapplication.com.example.fragments.FindFragment
 
 
-class SecAdapter(private val context: Context, private val medias: MutableList<Media>, private val layoutId: Int) : BaseAdapter() {
-    private var c: DBController? = null
+class SecAdapter(private val context: Context, private val layoutId: Int, private val medias: Array<FindFragment.Finder>) : BaseAdapter() {
+
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
@@ -34,13 +29,13 @@ class SecAdapter(private val context: Context, private val medias: MutableList<M
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         @Suppress("NAME_SHADOWING")
         var view = view
-        val holder: ExcerptionAdapter.ViewHolder
+        val holder: SecAdapter.ViewHolder
 
         if (view != null) {
-            holder = view.tag as ExcerptionAdapter.ViewHolder
+            holder = view.tag as SecAdapter.ViewHolder
         } else {
             view = inflater.inflate(layoutId, parent, false)
-            holder = ExcerptionAdapter.ViewHolder(view)
+            holder = SecAdapter.ViewHolder(view)
             view!!.tag = holder
         }
 
@@ -50,30 +45,14 @@ class SecAdapter(private val context: Context, private val medias: MutableList<M
     }
 
 
-    private fun customizeView(view: View, holder: ExcerptionAdapter.ViewHolder, media: Media) {
-        val Name = media.name
-        val Album = media.album
+    private fun customizeView(view: View, holder: SecAdapter.ViewHolder, media: FindFragment.Finder) {
 
-        holder.textView3.text = Name
-        holder.textView5.text = Album
-        holder.imageDelete.setOnClickListener {
-            c = DBController(context as Activity)
-            c!!.deleteMedia(media)
-            Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show()
-            medias.remove(media)
-            notifyDataSetChanged()
-        }
-        view.setOnClickListener {
-            val intent = Intent(context, ReadActivity::class.java)
-            intent.putExtra("name", media.name)
-            intent.putExtra("id", media.id)
-            context.startActivity(intent)
-        }
+        val name = media.name
+
+        holder.textView3.text = name
     }
 
     internal class ViewHolder(view: View) {
-        var textView5: TextView? = null
-        var imageDelete: ImageButton? = null
-
+        var textView3: TextView = view.findViewById(R.id.textView3)
     }
 }

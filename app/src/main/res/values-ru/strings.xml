@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Настройки</string>
+    <string name="name">Название</string>
+    <string name="languages">Язык</string>
+    <string name="choose">Выберите язык</string>
+    <string name="search">Искать</string>
+    <string name="update">Обновить</string>
+    <string name="done">Готово</string>
+    <string name="text">Текст</string>
+    <string name="tags">Теги</string>
+    <string name="play">играть</string>
+    <string name="action_quit">Выход</string>
+    <string name="delete">Удалить</string>
+    <string name="music" translatable="false">Музыка</string>
+    <string name="film" translatable="false">Фильмы</string>
+    <string name="anime" translatable="false">Аниме</string>
+    <string name="excerption" translatable="false">Цитаты</string>
+    <string name="New">Добавить</string>
+    <string name="brouser">Браузер</string>
+    <string name="chooselang">Выберите цвет</string>
+    <string name="service">Отключить службы</string>
+    <string name="storage">Выберите режим хранения</string>
+    <string name="serv">Службы приложения</string>
+    <string name="gray">Серый</string>
+    <string name="red">Красный</string>
+    <string name="green">Зеленый</string>
+    <string name="blue">Синий</string>
+    <string name="yellow">Желтый</string>
+    <string name="book">Книги</string>
+    <string name="image">Изображения</string>
+</resources>

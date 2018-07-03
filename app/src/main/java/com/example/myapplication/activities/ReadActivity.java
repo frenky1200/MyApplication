@@ -1,10 +1,11 @@
 package com.example.myapplication.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,6 @@ public class ReadActivity extends AppCompatActivity {
     String s = "";
     protected Integer idInt;
     Media media;
-    ArrayAdapter<String> adapter;
 
     void Init(){
         c = new DBController(this);
@@ -41,6 +41,14 @@ public class ReadActivity extends AppCompatActivity {
     }
 
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        switch (prefs.getString("colors","Зеленый")){
+            case "Серый":{setTheme(R.style.AppTheme);break;}
+            case "Красный":{setTheme(R.style.Red);break;}
+            case "Зеленый":{setTheme(R.style.Green);break;}
+            case "Синий":{setTheme(R.style.Blue);break;}
+            case "Желтый":{setTheme(R.style.Yellow);break;}
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_present);
         ButterKnife.bind(this);
@@ -59,19 +67,29 @@ public class ReadActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonplay)
     void OnPlayClick(){
-        if (media.getInsideUri() == null && media.getOutsideUri() == null) {
+        String type ;
+
+        switch (media.getType()){
+            case "Music":{ type = "audio/*" ; break;}
+            case "Image":{ type = "image/*" ; break;}
+            case "Film":{ type = "video/*" ; break;}
+            case "Excerption":{ type = "text/*" ; break;}
+            default:{ type = "image/*";}
+        }
+
+        if ((media.getInsideUri() == null||media.getInsideUri().equals("") )&&
+                ( media.getOutsideUri().equals("")||media.getOutsideUri() == null)) {
             Toast.makeText(this,"Вы не сохранили источник",Toast.LENGTH_SHORT).show();
-        }else{
+        }
+        else{
             if (media.getInsideUri()!=null){
                 Intent playAudioIntent = new Intent(Intent.ACTION_VIEW);
-                Uri uri = Uri.parse(media.getInsideUri());
-                uri.getEncodedSchemeSpecificPart();
-                playAudioIntent.setDataAndType(Uri.parse(media.getInsideUri()), "audio/*");
-
+                playAudioIntent.setDataAndType(Uri.parse(media.getInsideUri()), type);
                 startActivity(playAudioIntent);
-            }else{
+            }
+            else{
                 Intent playAudioIntent = new Intent(Intent.ACTION_VIEW);
-                playAudioIntent.setDataAndType(Uri.parse(media.getOutsideUri()), "audio/*");
+                playAudioIntent.setDataAndType(Uri.parse(media.getOutsideUri()), type);
                 startActivity(playAudioIntent);
             }
         }

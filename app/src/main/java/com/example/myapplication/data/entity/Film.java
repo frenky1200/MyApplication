@@ -3,18 +3,18 @@ package com.example.myapplication.data.entity;
 import com.example.myapplication.data.interfaces.IMediable;
 
 public class Film implements IMediable {
+
     private int id;
-    private String name;
-    private String type;
+    private String title;
+    private String author;
     private Integer idmedia;
 
-    public Film(){
-    }
+    public Film(){}
 
     public Film(String title, Integer a) {
         super();
-        this.name = title;
-        this.type = "";
+        this.title = title;
+        this.author = "";
         this.idmedia = a;
     }
 
@@ -22,7 +22,26 @@ public class Film implements IMediable {
 
     @Override
     public String toString() {
-        return id + ". " + name;
+        return "Film [id=" + id + ", title=" + title + ", author=" + author
+                + "]";
+    }
+
+
+    public String getName() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.title = name;
     }
 
     public int getIdmedia(){
@@ -33,27 +52,19 @@ public class Film implements IMediable {
         this.idmedia = idmedia;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthor(String author) {
+        this.author = author;
     }
+
+
+
+
 }

@@ -14,6 +14,7 @@ import com.example.myapplication.data.interfaces.IMediable;
 import java.util.LinkedList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 
     private static final int DATABASE_VERSION = 1;
@@ -75,9 +76,8 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 
     }
 
-    public void addAlbum(Album album){
-        Log.d("addAlbum", album.toString());
-        // 1. get reference to writable DB
+    public long addAlbum(Album album){
+        long Id = 0;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor =
                 db.query(TABLE_ALBUMS, // a. table
@@ -91,25 +91,20 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 
         if (cursor!=null){
             db = this.getWritableDatabase();
-
-            // 2. create ContentValues to add key "column"/value
             cursor.moveToFirst();
             if(cursor.getCount()==0) {
-
                 ContentValues values = new ContentValues();
                 values.put(KEY_NAME, album.getName()); // get title
                 values.put(KEY_TYPE, album.getType()); // get author
-
-                // 3. insert
-                db.insert(TABLE_ALBUMS, // table
+                Id = db.insert(TABLE_ALBUMS, // table
                         null, //nullColumnHack
                         values); // key/value -> keys = column names/ values = column values
 
-                // 4. close
             }
                 db.close();
             cursor.close();
         }
+        return Id;
     }
 
     public Album getAlbum(int id){

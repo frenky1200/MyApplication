@@ -1,5 +1,6 @@
 package com.example.myapplication.data.helpers;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,38 +8,39 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.myapplication.data.entity.Book;
+import com.example.myapplication.data.entity.Image;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class BookHelper extends SQLiteOpenHelper {
+public class ImageHelper extends SQLiteOpenHelper{
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
     // Database Name
     private static final String DATABASE_NAME = "MediaDB.sqlite";
 
-    public BookHelper(Context context) {
+    public ImageHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // SQL statement to create book table
-        String CREATE_BOOK_TABLE = "CREATE TABLE books ( " +
+        String CREATE_ANIME_TABLE = "CREATE TABLE images ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "title TEXT, "+
                 "author TEXT, "+
                 "idmedia INTEGER )";
+
         // create books table
-        db.execSQL(CREATE_BOOK_TABLE);
+        db.execSQL(CREATE_ANIME_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older books table if existed
-        db.execSQL("DROP TABLE IF EXISTS books");
+        db.execSQL("DROP TABLE IF EXISTS images");
 
         // create fresh books table
         this.onCreate(db);
@@ -50,27 +52,28 @@ public class BookHelper extends SQLiteOpenHelper {
      */
 
     // Books table name
-    private static final String TABLE_BOOKS = "books";
+    private static final String TABLE_IMAGES = "images";
 
     // Books Table Columns names
     private static final String KEY_ID = "id";
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_AUTHOR = "author";
+    private static final String KEY_NAME = "title";
+    private static final String KEY_TYPE = "author";
     private static final String KEY_IDMEDIA = "idmedia";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_TITLE,KEY_AUTHOR,KEY_IDMEDIA};
+    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE,KEY_IDMEDIA};
 
-    public void addBook(Book book){
+    public void addImage(Image image){
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, book.getName()); // get title
-        values.put(KEY_AUTHOR, book.getAuthor()); // get author
-        values.put(KEY_IDMEDIA, book.getIdmedia());
+        values.put(KEY_NAME, image.getName()); // get title
+        values.put(KEY_TYPE, image.getType()); // get author
+        values.put(KEY_IDMEDIA, image.getIdmedia());
+
         // 3. insert
-        db.insert(TABLE_BOOKS, // table
+        db.insert(TABLE_IMAGES, // table
                 null, //nullColumnHack
                 values); // key/value -> keys = column names/ values = column values
 
@@ -78,14 +81,14 @@ public class BookHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Book getBook(int id){
+    public Image getImage(int id){
 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
 
         // 2. build query
         Cursor cursor =
-                db.query(TABLE_BOOKS, // a. table
+                db.query(TABLE_IMAGES, // a. table
                         COLUMNS, // b. column names
                         " idmedia = ?", // c. selections
                         new String[] { String.valueOf(id) }, // d. selections args
@@ -94,87 +97,75 @@ public class BookHelper extends SQLiteOpenHelper {
                         null, // g. order by
                         null); // h. limit
 
-        Book book = new Book();
-        // 3. if we got results get the first one
+        Image image = new Image();
         if (cursor != null) {
             cursor.moveToFirst();
-            book.setId(Integer.parseInt(cursor.getString(0)));
-            book.setTitle(cursor.getString(1));
-            book.setAuthor(cursor.getString(2));
-            book.setIdmedia(Integer.parseInt(cursor.getString(3)));
+            image.setId(Integer.parseInt(cursor.getString(0)));
+            image.setName(cursor.getString(1));
+            image.setType(cursor.getString(2));
+            image.setIdmedia(Integer.parseInt(cursor.getString(3)));
             cursor.close();
         }
-        Log.d("getBook("+id+")", book.toString());
-
-        return book;
+        Log.d("getBook("+id+")", image.toString());
+        return image;
     }
 
     // Get All Books
-    public List<Book> getAllBooks() {
-        List<Book> books = new LinkedList<>();
+    public List<Image> getAllImage() {
+        List<Image> images = new LinkedList<>();
 
-        // 1. build the query
-        String query = "SELECT  * FROM " + TABLE_BOOKS;
+        String query = "SELECT  * FROM " + TABLE_IMAGES;
 
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
-        Book book;
+        Image image = new Image();
         if (cursor.moveToFirst()) {
             do {
-                book = new Book();
-                book.setId(Integer.parseInt(cursor.getString(0)));
-                book.setTitle(cursor.getString(1));
-                book.setAuthor(cursor.getString(2));
-                book.setIdmedia(cursor.getInt(3));
-                // Add book to books
-                books.add(book);
+                image.setId(Integer.parseInt(cursor.getString(0)));
+                image.setName(cursor.getString(1));
+                image.setType(cursor.getString(2));
+                image.setIdmedia(Integer.parseInt(cursor.getString(3)));
+                images.add(image);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllBooks()", books.toString());
+        Log.d("getAllBooks()", image.toString());
         cursor.close();
 
-        return books;
+        return images;
     }
 
     // Updating single book
-    public int updateBook(Book book) {
+    public void updateImage(Image image) {
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put("title", book.getName()); // get title
-        values.put("author", book.getAuthor()); // get author
-        values.put("idmedia", book.getIdmedia());
+        values.put("title", image.getName()); // get title
+        values.put("author", image.getType()); // get author
+        values.put("idmedia", image.getIdmedia());
 
-        // 3. updating row
-        int i = db.update(TABLE_BOOKS, //table
+        db.update(TABLE_IMAGES, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
-                new String[] { String.valueOf(book.getId()) }); //selection args
+                new String[] { String.valueOf(image.getId()) }); //selection args
 
-        // 4. close
         db.close();
-
-        return i;
-
     }
 
     // Deleting single book
-    public void deleteBook(Book book) {
-
+    public void deleteImage(Image image) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_BOOKS,
+
+        db.delete(TABLE_IMAGES,
                 KEY_ID+" = ?",
-                new String[] { String.valueOf(book.getId()) });
+                new String[] { String.valueOf(image.getId()) });
+
         db.close();
 
-        Log.d("deleteBook", book.toString());
+        Log.d("deleteBook", image.toString());
 
     }
 }
+

@@ -1,8 +1,12 @@
 package com.example.myapplication.activities
 
+import android.app.NotificationManager
+import android.content.ContentProvider
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
@@ -25,19 +29,37 @@ class Add : AppCompatActivity() {
     private lateinit var uri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        when (prefs.getString("colors", "")) {
+            "Серый" -> {
+                setTheme(R.style.AppTheme)
+            }
+            "Красный" -> {
+                setTheme(R.style.Red)
+            }
+            "Зеленый" -> {
+                setTheme(R.style.Green)
+            }
+            "Синий" -> {
+                setTheme(R.style.Blue)
+            }
+            "Желтый" -> {
+                setTheme(R.style.Yellow)
+            }
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_edit)
 
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(3)
         val intent = intent
-        if(intent.hasExtra("android.intent.extra.INTENT")){
-            val data = intent.extras["android.intent.extra.INTENT"]
-            if ((data as Intent).data!=null){
-                uri = data.data
-                editText.setText(uri.toString())
-            }else {
-                val text = data.clipData.getItemAt(0).text
-                editText5.setText(text)
-            }
+        if (intent.hasExtra("outsideUri")) editText2.setText(intent.getStringExtra("outsideUri"))
+        if (intent.data!=null){
+            uri = intent.data
+            editText.setText(uri.toString())
+        }else {
+            val text = intent.clipData.getItemAt(0).text
+            editText5.setText(text)
         }
 
         buttonsave.setOnClickListener { addClick() }
@@ -53,7 +75,7 @@ class Add : AppCompatActivity() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                albums = c.getAllAlbum(spinner.selectedItem.toString())
+                albums = c.getAllAlbum((spinner.selectedItem as MainActivity.Nav).name)
                 adapter2 = ArrayAdapter(this@Add, android.R.layout.simple_expandable_list_item_1, albums)
                 spinner2.adapter = adapter2
                 adapter2.notifyDataSetChanged()
@@ -67,14 +89,9 @@ class Add : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-
-    }
-
     private fun addClick(){
 
-        type = spinner.selectedItem.toString()
+        type = (spinner.selectedItem as MainActivity.Nav).name
         album = spinner2.selectedItem.toString()
         name  = editText3.text.toString()
         val id = c.addMedia(name, type, album)

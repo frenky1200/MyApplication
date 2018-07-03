@@ -27,10 +27,11 @@ public class Media {
     @SuppressWarnings("unchecked")
     public <T extends IMediable> T mediaType (){
         switch (type){
-            case "Book" : return (T) new Book();
+            case "Film" : return (T) new Film();
             case "Anime" : return (T) new Anime();
             case "Music" : return (T) new Music();
-            case "Exception" : return (T) new Film();
+            case "Image" : return (T) new Image();
+            case "Excerption" : return (T) new Excerption();
             default: return (T) new Media();
         }
     }

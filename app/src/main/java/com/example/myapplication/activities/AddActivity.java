@@ -1,6 +1,8 @@
 package com.example.myapplication.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +29,14 @@ public class AddActivity extends AppCompatActivity {
     private Media media;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        switch (prefs.getString("colors","")){
+            case "Серый":{setTheme(R.style.AppTheme);break;}
+            case "Красный":{setTheme(R.style.Red);break;}
+            case "Зеленый":{setTheme(R.style.Green);break;}
+            case "Синий":{setTheme(R.style.Blue);break;}
+            case "Желтый":{setTheme(R.style.Yellow);break;}
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_edit);
         ButterKnife.bind(this);
@@ -37,6 +47,8 @@ public class AddActivity extends AppCompatActivity {
         readInf(media.mediaType(),media.getId());
         editText.setText(media.getName());
         editText2.setText(media.getTags());
+        inside.setText(media.getInsideUri());
+        outside.setText(media.getOutsideUri());
         setTitle(media.getName());
     }
 

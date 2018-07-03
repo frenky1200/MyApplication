@@ -9,19 +9,23 @@
             <item
                 android:id="@+id/music"
                 android:icon="@drawable/muss"
-                android:title="Musics" />
+                android:title="@string/music" />
             <item
                 android:id="@+id/anime"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="Images" />
+                android:title="@string/anime" />
             <item
-            android:id="@+id/excerption"
-            android:icon="@drawable/exer"
-            android:title="Excerption" />
+                android:id="@+id/excerption"
+                android:icon="@drawable/exer"
+                android:title="@string/excerption" />
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/film"
                 android:icon="@drawable/ic_menu_slideshow"
-                android:title="Films" />
+                android:title="@string/film" />
+            <item
+                android:id="@+id/image"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/image" />
 
         </menu>
     </item>
@@ -31,15 +35,19 @@
             <item
                 android:id="@+id/setting"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="Settings" />
+                android:title="@string/action_settings" />
             <item
                 android:id="@+id/find"
                 android:icon="@android:drawable/ic_menu_search"
-                android:title="Find" />
+                android:title="@string/search" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
-                android:title="New" />
+                android:title="@string/New" />
+            <item
+                android:id="@+id/browser"
+                android:icon="@android:drawable/ic_menu_search"
+                android:title="@string/brouser" />
         </menu>
     </item>
 

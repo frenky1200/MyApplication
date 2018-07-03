@@ -3,7 +3,6 @@ package com.example.myapplication.adapters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,36 +77,22 @@ public class ExcerptionAdapter extends BaseAdapter{
         final AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setTitle("title");  // заголовок
         ad.setMessage("Delete?"); // сообщение
-        ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                c = new DBController((Activity) context);
-                c.deleteMedia(media);
-                Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show();
-                medias.remove(media);
-                notifyDataSetChanged();
-            }
+        ad.setPositiveButton("Yes", (dialog, arg1) -> {
+            c = new DBController((Activity) context);
+            c.deleteMedia(media);
+            Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show();
+            medias.remove(media);
+            notifyDataSetChanged();
         });
-        ad.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int arg1) {
-                Toast.makeText(context, "Not deleted", Toast.LENGTH_LONG).show();
-            }
-        });
+        ad.setNegativeButton("No", (dialog, arg1) -> Toast.makeText(context, "Not deleted", Toast.LENGTH_LONG).show());
 
         holder.textView3.setText(Name);
         holder.textView5.setText(Album);
-        holder.imageDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ad.show();
-            }
-        });
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ReadActivity.class);
-                intent.putExtra("id", media.getId());
-                context.startActivity(intent);
-            }
+        holder.imageDelete.setOnClickListener(view1 -> ad.show());
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ReadActivity.class);
+            intent.putExtra("id", media.getId());
+            context.startActivity(intent);
         });
     }
     static class ViewHolder {

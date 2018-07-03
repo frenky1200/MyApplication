@@ -1,15 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Внешний вид">
+
     <ListPreference
-        android:key="test_style"
+        android:key="languages"
         android:title="@string/languages"
         android:summary="change language"
-        android:defaultValue="1"
+        android:defaultValue="0"
         android:entries="@array/languages"
         android:entryValues="@array/languages"
         android:dialogTitle="@string/choose" />
-    <CheckBoxPreference
-        android:key="enabled"
-        android:summary="Отображать логин"
-        android:title="Отображать" />
+    <ListPreference
+        android:key="colors"
+        android:title="@string/chooselang"
+        android:summary="change language"
+        android:defaultValue="1"
+        android:entries="@array/colors"
+        android:entryValues="@array/colorValues"
+        android:dialogTitle="@string/choose" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Службы">
+
+        <ListPreference
+            android:key="database"
+            android:title="@string/storage"
+            android:summary="change language"
+            android:defaultValue="1"
+            android:entries="@array/database"
+            android:entryValues="@array/database"
+            android:dialogTitle="@string/choose" />
+
+        <CheckBoxPreference
+            android:key="services"
+            android:summary="@string/service"
+            android:title="@string/serv"/>
+
+    </PreferenceCategory>
+<!--
+    <PreferenceScreen
+        android:key="screen_preference"
+        android:title="Другое окно"
+        android:summary="настроек">
+
+        <CheckBoxPreference
+            android:key="next_screen_checkbox_preference"
+            android:title="яяя"
+            android:summary="яяя" />
+
+        <intent android:action="android.intent.action.VIEW"
+            android:data="http://www.android.com" />
+
+    </PreferenceScreen>
+
+    <EditTextPreference
+        android:key="edittext_preference"
+        android:title="Введите что-нибудь"
+        android:summary="ууу"
+        android:dialogTitle="ууу" />
+-->
 </PreferenceScreen>

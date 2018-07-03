@@ -3,5 +3,16 @@
     <color name="colorPrimary">#aaaaaa</color>
     <color name="colorPrimaryDark">#CCCCCC</color>
     <color name="colorAccent">#cccccc</color>
-    <color name="coloraaAccent">#3F51B5</color>
+    <color name="colorRed">#aa0000</color>
+    <color name="colorPrimaryRed">#cc0000</color>
+    <color name="colorAccentRed">#ff0000</color>
+    <color name="colorGreen">#00aa00</color>
+    <color name="colorPrimaryGreen">#00CC00</color>
+    <color name="colorAccentGreen">#00ff33</color>
+    <color name="colorBlue">#0000aa</color>
+    <color name="colorPrimaryBlue">#0000CC</color>
+    <color name="colorAccentBlue">#0044ff</color>
+    <color name="colorYellow">#dddd00</color>
+    <color name="colorPrimaryYellow">#eeee00</color>
+    <color name="colorAccentYellow">#eeee00</color>
 </resources>

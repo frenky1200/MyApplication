@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="14"
-        android:hint="@string/edit_default"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
