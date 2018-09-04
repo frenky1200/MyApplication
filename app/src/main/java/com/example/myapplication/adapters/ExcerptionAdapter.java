@@ -72,13 +72,13 @@ public class ExcerptionAdapter extends BaseAdapter{
 
     private void customizeView(View view, ViewHolder holder, final Media media) {
         String Name = media.getName();
-        String Album = media.getAlbum();
 
+        c = new DBController((Activity) context);
+        String Album = c.getAlbum(media.getAlbum()).getName();
         final AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setTitle("title");  // заголовок
         ad.setMessage("Delete?"); // сообщение
         ad.setPositiveButton("Yes", (dialog, arg1) -> {
-            c = new DBController((Activity) context);
             c.deleteMedia(media);
             Toast.makeText(context, "Deleted", Toast.LENGTH_LONG).show();
             medias.remove(media);
@@ -100,7 +100,7 @@ public class ExcerptionAdapter extends BaseAdapter{
         @BindView(R.id.textView5) TextView textView5;
         @BindView(R.id.imageDelete) ImageButton imageDelete;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

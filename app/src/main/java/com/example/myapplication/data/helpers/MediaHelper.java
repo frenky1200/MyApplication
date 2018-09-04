@@ -98,7 +98,7 @@ public class MediaHelper extends SQLiteOpenHelper {
             media.setTags(cursor.getString(3));
             media.setInsideUri(cursor.getString(4));
             media.setOutsideUri(cursor.getString(5));
-            media.setAlbum(cursor.getString(6));
+            media.setAlbum(cursor.getInt(6));
             cursor.close();
         }
         Log.d("getBook("+id+")", media.toString());
@@ -106,7 +106,7 @@ public class MediaHelper extends SQLiteOpenHelper {
     }
 
     // Get All Books
-    public List<Media> getAllMedia(String album) {
+    public List<Media> getAllMedia(int album) {
 
         List<Media> medias = new LinkedList<>();
         String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE `albums` LIKE '" + album + "'";
@@ -122,7 +122,7 @@ public class MediaHelper extends SQLiteOpenHelper {
                 media.setTags(cursor.getString(3));
                 media.setInsideUri(cursor.getString(4));
                 media.setOutsideUri(cursor.getString(5));
-                media.setAlbum(cursor.getString(6));
+                media.setAlbum(cursor.getInt(6));
                 medias.add(media);
             } while (cursor.moveToNext());
         }
@@ -178,7 +178,7 @@ public class MediaHelper extends SQLiteOpenHelper {
                 media.setTags(cursor.getString(3));
                 media.setInsideUri(cursor.getString(4));
                 media.setOutsideUri(cursor.getString(5));
-                media.setAlbum(cursor.getString(6));
+                media.setAlbum(cursor.getInt(6));
                 medias.add(media);
             } while (cursor.moveToNext());
         }
@@ -190,7 +190,7 @@ public class MediaHelper extends SQLiteOpenHelper {
     public Media findByName(String name, String album){
 
         String query = "SELECT * FROM " + TABLE_MEDIA + " WHERE upper(media.name) GLOB upper(\"*"+name+
-                "*\") AND media.albums==(select name from albums WHERE upper(albums.alternate) GLOB upper(\"*"+album+
+                "*\") AND media.albums==(select id from albums WHERE upper(albums.alternate) GLOB upper(\"*"+album+
                 "*\") OR upper(albums.name) GLOB upper(\"*"+album+"*\"))";
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -207,7 +207,7 @@ public class MediaHelper extends SQLiteOpenHelper {
                 media.setTags(cursor.getString(3));
                 media.setInsideUri(cursor.getString(4));
                 media.setOutsideUri(cursor.getString(5));
-                media.setAlbum(cursor.getString(6));
+                media.setAlbum(cursor.getInt(6));
 
             } while (cursor.moveToNext());
         }

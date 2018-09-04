@@ -2,7 +2,6 @@ package com.example.myapplication.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -22,13 +21,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.myapplication.R;
-import com.example.myapplication.com.example.fragments.CollectionFragment;
-import com.example.myapplication.com.example.fragments.FindFragment;
+import com.example.myapplication.fragments.CollectionFragment;
+import com.example.myapplication.fragments.FindFragment;
 import com.example.myapplication.services.MyService;
-import com.example.myapplication.services.qwe;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 import static com.example.myapplication.R.id.drawer_layout;
 
@@ -47,7 +42,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         super.onCreate(savedInstanceState);
-        App = this;
         setContentView(R.layout.activity_main);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -74,9 +68,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
         startService(new Intent(this, MyService.class));
-        startService(new Intent(this, qwe.class));
     }
 
     @Override
@@ -98,9 +90,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         Fragment fr;
         switch (id){
@@ -183,10 +172,8 @@ public class MainActivity extends AppCompatActivity
 
     public static Enum<Nav> collectionType = Nav.Music;
 
-    static Context App;
-
     public enum Nav{
-        
+
         Music(R.string.music),
         Book(R.string.book),
         Film(R.string.film),
@@ -196,15 +183,14 @@ public class MainActivity extends AppCompatActivity
 
         private int mResourceId;
 
+        public final String value(Context App){
+            return App.getString(mResourceId);
+        }
+
         Nav(int id) {
             mResourceId = id;
         }
 
-        @Override
-        public String toString() {
-            return App.getString(mResourceId);
-        }
     }
 }
-
 

@@ -8,7 +8,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controller {
-    static final String BASE_URL = "https://api.musixmatch.com/";
+    private static final String BASE_URL = "https://api.musixmatch.com/";
 
     public static MusixApi getApi() {
         Gson gson = new GsonBuilder()
@@ -20,8 +20,7 @@ public class Controller {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        MusixApi musixApi = retrofit.create(MusixApi.class);
-        return musixApi;
+        return retrofit.create(MusixApi.class);
 
     }
 }

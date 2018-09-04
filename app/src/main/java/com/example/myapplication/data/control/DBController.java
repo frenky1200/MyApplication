@@ -19,7 +19,6 @@ import com.example.myapplication.data.helpers.MediaHelper;
 import com.example.myapplication.data.helpers.MusicHelper;
 import com.example.myapplication.data.interfaces.IMediable;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @SuppressLint("Registered")
@@ -52,8 +51,16 @@ public class DBController extends Activity {
         return list;
     }
 
-    public void addAlbum(String newColl, String type){
-        long id =
+    public Album getAlbum(int a){
+
+        //List<Album> list2 = DocumentController.Companion.getAllAlbums(a);
+        //list.removeAll(list2);
+        //list.addAll(list2);
+        return q.getAlbum(a);
+    }
+
+    public long addAlbum(String newColl, String type){
+        return
         q.addAlbum(new Album(newColl, type));
         //DocumentController.Companion.addAlbum(newColl, type, id);
     }
@@ -64,7 +71,7 @@ public class DBController extends Activity {
     }
 
 
-    public List<Media> getAllMedia(String a){
+    public List<Media> getAllMedia(int a){
         return w.getAllMedia(a);
     }
 
@@ -104,7 +111,7 @@ public class DBController extends Activity {
         if (media.getType().equals("Image")){u.deleteImage(u.getImage(media.getId()));}
     }
 
-    public int addMedia(String name, String type, String album){
+    public int addMedia(String name, String type, int album){
         Media media = w.getMedia(w.addMedia(new Media(name, type, album)));
         if (media.getType().equals("Music")){y.addMusic(new Music("", media.getId()));}
         if (media.getType().equals("Film")){e.addFilm(new Film("", media.getId()));}

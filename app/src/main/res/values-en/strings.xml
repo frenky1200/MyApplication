@@ -29,4 +29,7 @@
     <string name="yellow">Yellow</string>
     <string name="image">Image</string>
     <string name="book">Book</string>
+    <string name="local">local</string>
+    <string name="out">out</string>
+    <string name="mix">mixed</string>
 </resources>

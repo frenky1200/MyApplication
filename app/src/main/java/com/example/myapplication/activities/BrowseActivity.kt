@@ -112,47 +112,28 @@ class BrowseActivity : Activity() {
 
         }
 
-        override fun onConsoleMessage(cm: ConsoleMessage): Boolean {
-
-            onConsoleMessage(cm.message(), cm.lineNumber(), cm.sourceId())
-            return true
-        }
-
-        override fun onConsoleMessage(message: String, lineNumber: Int, sourceID: String) {
-            //Log.d("androidruntime", "Show console messages, Used for debugging: " + message);
-
-        }
     }
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            when (action){
-                DownloadManager.ACTION_DOWNLOAD_COMPLETE -> {
-                    loadEnd()
-                }
-            }
-        }
-    }
+
     public override fun onCreate(savedInstanceState: Bundle?) {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         when (prefs.getString("colors", "")) {
 
-            "Серый" -> setTheme(R.style.AppThemeN)
-            "Красный" -> setTheme(R.style.RedN)
-            "Зеленый" -> setTheme(R.style.GreenN)
-            "Синий" -> setTheme(R.style.BlueN)
-            "Желтый" -> setTheme(R.style.YellowN)
+            "Серый" -> setTheme(R.style.AppTheme)
+            "Красный" -> setTheme(R.style.Red)
+            "Зеленый" -> setTheme(R.style.Green)
+            "Синий" -> setTheme(R.style.Blue)
+            "Желтый" -> setTheme(R.style.Yellow)
         }
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.brouse)
 
-        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         mWebView = findViewById(R.id.web_view)
         mFullScreenContainer = findViewById(R.id.fullscreen_container)
         mWebView!!.webChromeClient = mWebChromeClient
-        mWebView!!.loadUrl("http://yandex.ru")
+        val search = intent.extras?.getString("search", "")?:""
+        mWebView!!.loadUrl("https://yandex.by/$search")
         handleIntent(intent)
 
         class HelloWebViewClient : WebViewClient() {
@@ -274,17 +255,12 @@ class BrowseActivity : Activity() {
         }
     }
 
-    fun loadEnd() {
-        Toast.makeText(this, "Файл Загружен в папку Download", Toast.LENGTH_SHORT).show()
-    }
-
     public override fun onDestroy() {
         super.onDestroy()
         mWebView!!.stopLoading()
         mWebView!!.clearCache(true)
         mWebView!!.destroy()
         mWebView = null
-        unregisterReceiver(receiver)
     }
 
     override fun onBackPressed() {

@@ -29,4 +29,7 @@
     <string name="yellow">Желтый</string>
     <string name="book">Книги</string>
     <string name="image">Изображения</string>
+    <string name="mix">Совместное</string>
+    <string name="out">Внешнее</string>
+    <string name="local">Локальное</string>
 </resources>

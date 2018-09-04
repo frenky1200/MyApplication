@@ -7,7 +7,7 @@ public class Media {
     private String name = "default";
     private String type;
     private String tags;
-    private String album;
+    private int album;
     private String insideUri;
     private String outsideUri;
 
@@ -15,7 +15,7 @@ public class Media {
 
     }
 
-    public Media(String names, String types, String albums) {
+    public Media(String names, String types, int albums) {
         super();
         this.name = names;
         this.type = types;
@@ -57,7 +57,7 @@ public class Media {
         return tags;
     }
 
-    public String getAlbum(){
+    public int getAlbum(){
         return album;
     }
 
@@ -77,7 +77,7 @@ public class Media {
         this.tags = tags;
     }
 
-    public void setAlbum(String album){
+    public void setAlbum(int album){
         this.album = album;
     }
 

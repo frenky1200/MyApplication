@@ -44,7 +44,8 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_TYPE = "type";
-    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE};
+    private static final String KEY_ALTERNATE = "alternate";
+    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE,KEY_ALTERNATE};
 
     @Override
     public Album getById(int id){
@@ -82,8 +83,8 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         Cursor cursor =
                 db.query(TABLE_ALBUMS, // a. table
                         COLUMNS, // b. column names
-                        " name = ?", // c. selections
-                        new String[] {album.getName()}, // d. selections args
+                        " name = ? OR alternate GLOB ?", // c. selections
+                        new String[] {album.getName(), album.getName()}, // d. selections args
                         null, // e. group by
                         null, // f. having
                         null, // g. order by
@@ -100,7 +101,8 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
                         null, //nullColumnHack
                         values); // key/value -> keys = column names/ values = column values
 
-            }
+            }else
+                Id = cursor.getInt(0);
                 db.close();
             cursor.close();
         }
@@ -205,18 +207,16 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         Log.d("deleteAlbum", album.toString());
 
     }
+
     @Override
     public List<Album> findbystr(String str){
         List<Album> albums = new LinkedList<>();
 
-        // 1. build the query
         String query = "SELECT  * FROM " + TABLE_ALBUMS + " WHERE `name` LIKE '%" + str + "%'";
 
-        // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
-        // 3. go over each row, build book and add it to list
         Album album;
         if (cursor.moveToFirst()) {
             do {
@@ -224,15 +224,12 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
                 album.setId(Integer.parseInt(cursor.getString(0)));
                 album.setName(cursor.getString(1));
                 album.setType(cursor.getString(2));
-
-                // Add book to books
                 albums.add(album);
             } while (cursor.moveToNext());
         }
 
         Log.d("getAllAlbums()", albums.toString());
         cursor.close();
-        // return books
         return albums;
     }
 

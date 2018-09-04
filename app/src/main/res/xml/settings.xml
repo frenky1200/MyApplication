@@ -32,7 +32,7 @@
             android:summary="change language"
             android:defaultValue="1"
             android:entries="@array/database"
-            android:entryValues="@array/database"
+            android:entryValues="@array/databaseValues"
             android:dialogTitle="@string/choose" />
 
         <CheckBoxPreference

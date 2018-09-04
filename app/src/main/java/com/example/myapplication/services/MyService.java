@@ -99,8 +99,6 @@ public class MyService extends NotificationListenerService
                 controllerCallbacks.put(controller, callback);
                 controller.registerCallback(callback);
 
-                // Media may already be playing - update with current state.
-
                 controllerPlaybackStateChanged(controller, controller.getPlaybackState());
                 controllerMetadataChanged(controller, controller.getMetadata());
             }

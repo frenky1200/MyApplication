@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.myapplication.R
-import com.example.myapplication.fragments.FindFragment
+import com.example.myapplication.activities.MainActivity
 
-
-class SecAdapter(private val context: Context, private val layoutId: Int, private val medias: Array<FindFragment.Finder>) : BaseAdapter() {
+class NavAdapter (private val context: Context, private val layoutId: Int, private val navs: Array<MainActivity.Nav>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
-        return medias.size
+        return navs.size
     }
 
     override fun getItem(i: Int): Any {
-        return medias[i]
+        return navs[i]
     }
 
     override fun getItemId(i: Int): Long {
@@ -29,25 +28,25 @@ class SecAdapter(private val context: Context, private val layoutId: Int, privat
     override fun getView(position: Int, view: View?, parent: ViewGroup): View {
         @Suppress("NAME_SHADOWING")
         var view = view
-        val holder: SecAdapter.ViewHolder
+        val holder: NavAdapter.ViewHolder
 
         if (view != null) {
-            holder = view.tag as SecAdapter.ViewHolder
+            holder = view.tag as NavAdapter.ViewHolder
         } else {
             view = inflater.inflate(layoutId, parent, false)
-            holder = SecAdapter.ViewHolder(view)
+            holder = NavAdapter.ViewHolder(view)
             view!!.tag = holder
         }
 
-        customizeView(view, holder, medias[position])
+        customizeView(view, holder, navs[position])
 
         return view
     }
 
 
-    private fun customizeView(view: View, holder: SecAdapter.ViewHolder, media: FindFragment.Finder) {
+    private fun customizeView(view: View, holder: NavAdapter.ViewHolder, nav: MainActivity.Nav) {
 
-        val name = media.name
+        val name = nav.value(context)
 
         holder.textView3.text = name
     }

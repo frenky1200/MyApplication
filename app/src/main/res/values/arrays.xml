@@ -19,8 +19,13 @@
         <item>Желтый</item>
     </string-array>
     <string-array name="database">
-        <item>Только локальное</item>
-        <item>Только внешнее</item>
-        <item>Совместное</item>
+        <item>@string/local</item>
+        <item>@string/out</item>
+        <item>@string/mix</item>
     </string-array>
+    <string-array name="databaseValues">
+    <item>local</item>
+    <item>out</item>
+    <item>mix</item>
+</string-array>
 </resources>

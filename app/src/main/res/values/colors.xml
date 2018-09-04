@@ -3,6 +3,7 @@
     <color name="colorPrimary">#aaaaaa</color>
     <color name="colorPrimaryDark">#CCCCCC</color>
     <color name="colorAccent">#cccccc</color>
+
     <color name="colorRed">#aa0000</color>
     <color name="colorPrimaryRed">#cc0000</color>
     <color name="colorAccentRed">#ff0000</color>
