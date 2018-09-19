@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.activities.ReadActivity;
 import com.example.myapplication.data.control.DBController;
+import com.example.myapplication.data.entity.Excerption;
 import com.example.myapplication.data.entity.Media;
 
 import java.util.List;
@@ -87,7 +88,14 @@ public class ExcerptionAdapter extends BaseAdapter{
         ad.setNegativeButton("No", (dialog, arg1) -> Toast.makeText(context, "Not deleted", Toast.LENGTH_LONG).show());
 
         holder.textView3.setText(Name);
-        holder.textView5.setText(Album);
+
+        holder.textView2.setText("");
+        holder.textView5.setText("");
+        if (media.mediaType() instanceof Excerption) {
+            holder.textView2.setText(Album);
+        }else{
+            holder.textView5.setText(Album);
+        }
         holder.imageDelete.setOnClickListener(view1 -> ad.show());
         view.setOnClickListener(v -> {
             Intent intent = new Intent(context, ReadActivity.class);
@@ -98,6 +106,7 @@ public class ExcerptionAdapter extends BaseAdapter{
     static class ViewHolder {
         @BindView(R.id.textView3) TextView textView3;
         @BindView(R.id.textView5) TextView textView5;
+        @BindView(R.id.textView2) TextView textView2;
         @BindView(R.id.imageDelete) ImageButton imageDelete;
 
         ViewHolder(View view) {

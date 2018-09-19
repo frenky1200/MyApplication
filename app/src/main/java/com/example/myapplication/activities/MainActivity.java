@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
                 fr = new FindFragment();}
         }
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()// получаем экземпляр FragmentTransaction
+        fragmentManager.beginTransaction()
                 .replace(R.id.content_main, fr)
                 .addToBackStack("a")
                 .commit();
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()// получаем экземпляр FragmentTransaction
+        fragmentManager.beginTransaction()
                 .replace(R.id.content_main, fr)
                 .addToBackStack("a")
                 .commit();
