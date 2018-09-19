@@ -115,7 +115,7 @@ class PlayedActivity : AppCompatActivity() {
 
     private fun brouse(){
         val ii = Intent(this, BrowseActivity::class.java)
-        ii.putExtra("search", "yandsearch?text=$media")
+        ii.putExtra("search", "yandsearch?text=$artist - $name")
         startActivity(ii)
     }
 
