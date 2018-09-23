@@ -25,12 +25,33 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_ALBUM_TABLE = "CREATE TABLE albums ( " +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name TEXT, "+
-                "type TEXT, "+
-                "alternate TEXT )";
 
+        String CREATE_ALBUM_TABLE =
+                "CREATE TABLE albums (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, type TEXT, alternate TEXT);\n" ;
+        db.execSQL(CREATE_ALBUM_TABLE);
+
+        CREATE_ALBUM_TABLE =
+                "CREATE TABLE animes (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, idmedia INTEGER);\n" ;
+        db.execSQL(CREATE_ALBUM_TABLE);
+
+        CREATE_ALBUM_TABLE =
+                "CREATE TABLE excerptions (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, idmedia INTEGER);\n" ;
+        db.execSQL(CREATE_ALBUM_TABLE);
+
+        CREATE_ALBUM_TABLE =
+                "CREATE TABLE films (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, idmedia INTEGER);\n" ;
+        db.execSQL(CREATE_ALBUM_TABLE);
+
+        CREATE_ALBUM_TABLE =
+                "CREATE TABLE images (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, idmedia INTEGER);\n" ;
+        db.execSQL(CREATE_ALBUM_TABLE);
+
+        CREATE_ALBUM_TABLE =
+                "CREATE TABLE media (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, type TEXT, tags TEXT, inside TEXT, outside TEXT, albums TEXT);\n" ;
+        db.execSQL(CREATE_ALBUM_TABLE);
+
+        CREATE_ALBUM_TABLE =
+                "CREATE TABLE musics (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, type TEXT, idmedia INTEGER);\n";
         db.execSQL(CREATE_ALBUM_TABLE);
     }
     @Override

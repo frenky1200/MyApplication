@@ -8,7 +8,7 @@
         android:key="languages"
         android:title="@string/languages"
         android:summary="change language"
-        android:defaultValue="0"
+        android:defaultValue="Русский"
         android:entries="@array/languages"
         android:entryValues="@array/languages"
         android:dialogTitle="@string/choose" />
@@ -16,7 +16,7 @@
         android:key="colors"
         android:title="@string/chooselang"
         android:summary="change language"
-        android:defaultValue="1"
+        android:defaultValue="Зеленый"
         android:entries="@array/colors"
         android:entryValues="@array/colorValues"
         android:dialogTitle="@string/choose" />

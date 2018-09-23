@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        switch (prefs.getString("colors","")){
+        switch (prefs.getString("colors","Зеленый")){
             case "Серый":{setTheme(R.style.AppTheme);break;}
             case "Красный":{setTheme(R.style.Red);break;}
             case "Зеленый":{setTheme(R.style.Green);break;}
@@ -48,27 +48,34 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (!MyService.isNotificationAccessEnabled(this)) {
-        new AlertDialog.Builder(this)
-                .setPositiveButton(
-                        android.R.string.ok,
-                        (dialogInterface, i) -> {
-                            String action;
-                            if (Build.VERSION.SDK_INT >= 22) {
-                                action = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;
-                            } else {
-                                action = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
-                            }
-                            startActivity(new Intent(action));
-                        })
-                .show();
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+    protected void onStart() {
+        super.onStart();
 
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        if (!MyService.isNotificationAccessEnabled(this)) {
+            new AlertDialog.Builder(this)
+                    .setPositiveButton(
+                            android.R.string.ok,
+                            (dialogInterface, i) -> {
+                                String action;
+                                if (Build.VERSION.SDK_INT >= 22) {
+                                    action = Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;
+                                } else {
+                                    action = "android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS";
+                                }
+                                startActivity(new Intent(action));
+                            })
+                    .show();
+        } else {
+            startService(new Intent(this, MyService.class));
         }
 
-        startService(new Intent(this, MyService.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
