@@ -4,7 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.ListPreference
 import android.preference.PreferenceFragment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 import com.example.myapplication.R
 

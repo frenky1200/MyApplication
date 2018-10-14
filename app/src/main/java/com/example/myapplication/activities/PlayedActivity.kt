@@ -9,20 +9,14 @@ import android.media.session.PlaybackState
 import android.os.Bundle
 import android.os.IBinder
 import android.preference.PreferenceManager
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
-import com.example.myapplication.controller.Controller
 import com.example.myapplication.data.control.DBController
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.entity.Music
-import com.example.myapplication.model.TrackSearch
-import com.example.myapplication.modelLyr.LyricsGet
 import com.example.myapplication.services.MyService
 import kotlinx.android.synthetic.main.activity_played.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PlayedActivity : AppCompatActivity() {
 
@@ -117,30 +111,6 @@ class PlayedActivity : AppCompatActivity() {
         val ii = Intent(this, BrowseActivity::class.java)
         ii.putExtra("search", "yandsearch?text=$artist - $name")
         startActivity(ii)
-    }
-
-    private fun browse(){
-        val musixApi = Controller.getApi()
-        val api = "8b9ac547ea42965dc98d4649b551de96"
-        musixApi.getData(name, artist, 1, api ).enqueue(object : Callback<TrackSearch> {
-            override fun onResponse(call: Call<TrackSearch>, response: Response<TrackSearch>) {
-                val id = response.body().message.body.trackList[0].track.trackId
-                musixApi.getLyric(id, api).enqueue(object : Callback<LyricsGet> {
-                    override fun onResponse(call: Call<LyricsGet>, response: Response<LyricsGet>) {
-                        texttv.text = response.body().message.body.lyrics.lyricsBody
-                    }
-
-                    override fun onFailure(call: Call<LyricsGet>?, t: Throwable?) {
-                        Toast.makeText(this@PlayedActivity, "An error occurred during networking", Toast.LENGTH_SHORT).show()
-
-                    }
-                })
-            }
-
-            override fun onFailure(call: Call<TrackSearch>, t: Throwable) {
-                Toast.makeText(this@PlayedActivity, "An error occurred during networking", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     private fun addClick(){
