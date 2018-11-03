@@ -172,7 +172,7 @@ public class ReadActivity extends AppCompatActivity {
     @OnClick(R.id.buttonsearch)
     void brouse(){
         Intent ii = new Intent(this, BrowseActivity.class);
-        ii.putExtra("search", "yandsearch?text=" + c.getAlbum(media.getId()) + " " + media.getName());
+        ii.putExtra("search", "yandsearch?text=" + c.getAlbum(media.getAlbum()) + " " + media.getName());
         startActivity(ii);
     }
 
