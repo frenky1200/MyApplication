@@ -197,18 +197,18 @@ class BrowseActivity : Activity() {
 
         mWebView!!.webViewClient = HelloWebViewClient()
 
-        mWebView!!.setDownloadListener { url, userAgent,
-                                         contentDisposition, mimetype, contentLength ->
+        mWebView!!.setDownloadListener { url, _,
+                                         contentDisposition, mimetype, _ ->
             val fileName = URLUtil.guessFileName(url, contentDisposition, mimetype)
 
             val downloadDialog = AlertDialog.Builder(this@BrowseActivity)
             downloadDialog.setTitle("Менеджер загрузок")
             downloadDialog.setMessage("Загрузить этот файл в папку Download ?" + 'n'.toString() + mimetype + 'n'.toString() + url)
-            downloadDialog.setPositiveButton("Да") { dialogInterface, i ->
+            downloadDialog.setPositiveButton("Да") { dialogInterface, _ ->
                 doDownload(url, fileName, mimetype)
                 dialogInterface.dismiss()
             }
-            downloadDialog.setNegativeButton("Нет") { dialogInterface, i -> }
+            downloadDialog.setNegativeButton("Нет") { _, _ -> }
             downloadDialog.show()
         }
 

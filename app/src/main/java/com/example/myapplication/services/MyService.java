@@ -16,8 +16,8 @@ import android.net.ConnectivityManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.service.notification.NotificationListenerService;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.myapplication.R;
@@ -26,6 +26,7 @@ import com.example.myapplication.activities.PlayedActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.WeakHashMap;
 
 public class MyService extends NotificationListenerService
@@ -73,7 +74,7 @@ public class MyService extends NotificationListenerService
 
         for (MediaController controller : mediaControllers) {
             if(controllerCallbacks.size()>0){
-                controller.unregisterCallback(controllerCallbacks.get(controller));
+                controller.unregisterCallback(Objects.requireNonNull(controllerCallbacks.get(controller)));
                 controllerCallbacks.remove(controller);
             }
         }
@@ -86,7 +87,7 @@ public class MyService extends NotificationListenerService
                 MediaController.Callback callback =
                         new MediaController.Callback() {
                             @Override
-                            public void onPlaybackStateChanged(@NonNull PlaybackState state) {
+                            public void onPlaybackStateChanged(PlaybackState state) {
                                 controllerPlaybackStateChanged(controller, state);
                             }
 

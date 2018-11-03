@@ -2,7 +2,6 @@ package com.example.myapplication.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.app.FragmentActivity
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import com.example.myapplication.R

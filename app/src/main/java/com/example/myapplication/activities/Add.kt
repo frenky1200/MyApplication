@@ -77,7 +77,7 @@ class Add : AppCompatActivity() {
 
         if (intent.hasExtra("outsideUri")) editText2.setText(intent.getStringExtra("outsideUri"))
         if (intent.data!=null){
-            uri = intent.data
+            uri = intent.data!!
             editText.setText(uri.toString())
         }else {
             val text = intent.clipData?.getItemAt(0)?.text?:""
@@ -123,8 +123,7 @@ class Add : AppCompatActivity() {
         media.outsideUri = editText2.text.toString()
         c.updateBook(media)
 
-        val m: IMediable
-        m = c.getMedia1(media.mediaType(), media.id)
+        val m: IMediable = c.getMedia1(media.mediaType(), media.id)
         m.name = editText5.text.toString()
         c.updateMedia(m)
         finish()

@@ -11,12 +11,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
-import androidx.core.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -24,6 +25,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.fragments.CollectionFragment;
 import com.example.myapplication.fragments.FindFragment;
 import com.example.myapplication.services.MyService;
+import com.google.android.material.navigation.NavigationView;
 
 import static com.example.myapplication.R.id.drawer_layout;
 

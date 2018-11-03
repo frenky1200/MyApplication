@@ -12,6 +12,8 @@ import com.example.myapplication.data.control.DBController;
 import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.interfaces.IMediable;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,7 +32,7 @@ public class AddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
-        switch (prefs.getString("colors","")){
+        switch (Objects.requireNonNull(prefs.getString("colors", ""))){
             case "Серый":{setTheme(R.style.AppTheme);break;}
             case "Красный":{setTheme(R.style.Red);break;}
             case "Зеленый":{setTheme(R.style.Green);break;}

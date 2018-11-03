@@ -1,19 +1,14 @@
 package com.example.myapplication.data.control
 
-import android.os.AsyncTask
-import android.support.annotation.IntegerRes
-import android.widget.Toast
-import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.data.entity.Album
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackDocumentSaved
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackFindDocument
 import ru.profit_group.scorocode_sdk.Callbacks.CallbackRemoveDocument
+import ru.profit_group.scorocode_sdk.Responses.data.ResponseRemove
 import ru.profit_group.scorocode_sdk.scorocode_objects.Document
 import ru.profit_group.scorocode_sdk.scorocode_objects.DocumentInfo
 import ru.profit_group.scorocode_sdk.scorocode_objects.Query
-import ru.profit_group.scorocode_sdk.Responses.data.ResponseRemove
 import java.util.*
-import javax.security.auth.callback.Callback
 
 
 class DocumentController{

@@ -32,12 +32,12 @@ class PlayedActivity : AppCompatActivity() {
             ms.setAct(this@PlayedActivity)
             for(m in ms.mediaControllers){
                 if(m.playbackState!=null)
-                    if(m.playbackState.state==PlaybackState.STATE_PLAYING){
-                        doIt(m.metadata)
+                    if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
+                        doIt(m.metadata!!)
                     }
                     else{
-                        if(m.playbackState.state==PlaybackState.STATE_PAUSED)
-                            doIt(m.metadata)
+                        if(m.playbackState!!.state==PlaybackState.STATE_PAUSED)
+                            doIt(m.metadata!!)
                     }
             }
         }
@@ -77,7 +77,7 @@ class PlayedActivity : AppCompatActivity() {
     private fun prevSkipClick(){
         for(m in ms.mediaControllers){
             if(m.playbackState!=null)
-                if(m.playbackState.state==PlaybackState.STATE_PLAYING){
+                if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
                     m.transportControls.skipToPrevious()
                 }
         }
@@ -86,12 +86,12 @@ class PlayedActivity : AppCompatActivity() {
     private fun stopStartClick(){
         for(m in ms.mediaControllers){
             if(m.playbackState!=null)
-                if(m.playbackState.state==PlaybackState.STATE_PLAYING){
+                if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
                     m.transportControls.pause()
                     imageButton4.setImageResource(android.R.drawable.ic_media_play)
                 }
                 else{
-                    if(m.playbackState.state==PlaybackState.STATE_PAUSED)
+                    if(m.playbackState!!.state==PlaybackState.STATE_PAUSED)
                      m.transportControls.play()
                     imageButton4.setImageResource(android.R.drawable.ic_media_pause)
                 }
@@ -101,7 +101,7 @@ class PlayedActivity : AppCompatActivity() {
     private fun skipClick(){
         for(m in ms.mediaControllers){
             if(m.playbackState!=null)
-            if(m.playbackState.state==PlaybackState.STATE_PLAYING){
+            if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
                 m.transportControls.skipToNext()
             }
         }
