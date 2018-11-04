@@ -61,7 +61,7 @@ class Add : AppCompatActivity() {
                 editText.setText(media.insideUri)
                 editText2.setText(media.outsideUri)
                 title = media.name
-                buttonsave.setOnClickListener { OnSaveClick(media) }
+                buttonsave.setOnClickListener { onSaveClick(media) }
             }
             intent.data!=null -> {
                 uri = intent.data
