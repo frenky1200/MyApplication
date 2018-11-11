@@ -110,25 +110,6 @@ class Add : AppCompatActivity() {
         }
     }
 
-    private fun <T : IMediable> readInf(media: T, id: Int) {
-        var media = media
-        media = c.getMedia1(media, id)
-        editText5.setText(media.name)
-    }
-
-    fun OnSaveClick(media: Media) {
-        media.name = editText3.text.toString()
-        media.tags = editText4.text.toString()
-        media.insideUri = editText.text.toString()
-        media.outsideUri = editText2.text.toString()
-        c.updateBook(media)
-
-        val m: IMediable = c.getMedia1(media.mediaType(), media.id)
-        m.name = editText5.text.toString()
-        c.updateMedia(m)
-        finish()
-    }
-
     private fun addClick(){
 
         type = (spinner.selectedItem as MainActivity.Nav).name

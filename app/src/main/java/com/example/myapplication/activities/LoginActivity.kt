@@ -60,9 +60,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveUserInfo(login: String, pass: String) {
-        getPreferences(Context.MODE_PRIVATE).edit().putString("login", login).apply()
-        getPreferences(Context.MODE_PRIVATE).edit().putString("pass", pass).apply()
-        getPreferences(Context.MODE_PRIVATE).edit().putBoolean("authorization", true).apply()
+        getPreferences(Context.MODE_PRIVATE).run {
+            edit().putString("login", login).apply()
+            edit().putString("pass", pass).apply()
+            edit().putBoolean("authorization", true).apply()
+        }
     }
 
     companion object {

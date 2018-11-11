@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.music_edit.*
 
 class AddActivity : AppCompatActivity() {
 
-    private var c: DBController? = null
+    private var c: DBController = DBController(this)
     private var idInt: Int? = null
     private var media: Media? = null
 
@@ -34,7 +34,7 @@ class AddActivity : AppCompatActivity() {
 
         c = DBController(this)
         idInt = intent.getIntExtra("id", -1)
-        media = c!!.getMedia(idInt!!)
+        media = c.getMedia(idInt!!)
         readInf(media!!.mediaType<IMediable>(), media!!.id)
         editText3.setText(media!!.name)
         editText4.setText(media!!.tags)
@@ -44,7 +44,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun <T : IMediable> readInf(media: T, id: Int) {
-        editText5!!.setText(c!!.getMedia1(media, id).name)
+        editText5!!.setText(c.getMedia1(media, id).name)
     }
 
     fun onSaveClick() {
@@ -52,11 +52,11 @@ class AddActivity : AppCompatActivity() {
         media!!.tags = editText4.text.toString()
         media!!.insideUri = editText.text.toString()
         media!!.outsideUri = editText2.text.toString()
-        c!!.updateBook(media)
+        c.updateBook(media)
 
-        val m: IMediable = c!!.getMedia1(media!!.mediaType(), media!!.id)
-        m.name = editText5!!.text.toString()
-        c!!.updateMedia(m)
+        val m: IMediable = c.getMedia1(media!!.mediaType(), media!!.id)
+        m.name = editText5.text.toString()
+        c.updateMedia(m)
         finish()
     }
 }

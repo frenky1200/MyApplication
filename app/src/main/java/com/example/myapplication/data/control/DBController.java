@@ -1,8 +1,6 @@
 package com.example.myapplication.data.control;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-
 import com.example.myapplication.data.entity.Album;
 import com.example.myapplication.data.entity.Anime;
 import com.example.myapplication.data.entity.Excerption;
@@ -21,16 +19,15 @@ import com.example.myapplication.data.interfaces.IMediable;
 
 import java.util.List;
 
-@SuppressLint("Registered")
-public class DBController extends Activity {
+public class DBController {
 
-    final AlbumHelper q;
-    final MediaHelper w;
-    final FilmHelper e;
-    final ExcerptionHelper r;
-    final AnimeHelper t;
-    final MusicHelper y;
-    final ImageHelper u;
+    private final AlbumHelper q;
+    private final MediaHelper w;
+    private final FilmHelper e;
+    private final ExcerptionHelper r;
+    private final AnimeHelper t;
+    private final MusicHelper y;
+    private final ImageHelper u;
 
     public DBController(Activity activity){
         this.q = new AlbumHelper(activity);

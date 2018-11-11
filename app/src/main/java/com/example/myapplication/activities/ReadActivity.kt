@@ -23,6 +23,11 @@ import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.interfaces.IMediable
 
 import kotlinx.android.synthetic.main.music_present.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import org.jetbrains.anko.startActivity
+import java.net.URL
 
 class ReadActivity : AppCompatActivity() {
 
@@ -45,11 +50,12 @@ class ReadActivity : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_present)
-        buttonupd.setOnClickListener { onClick() }
+        buttonupd.setOnClickListener {
+            startActivity<AddActivity>("id" to media.id) }
         buttonplay.setOnClickListener { onPlayClick() }
-        buttonsearch.setOnClickListener { browse() }
-        media = c.getMedia(
-                intent.getIntExtra("id", 1))
+        buttonsearch.setOnClickListener {
+            startActivity<BrowseActivity>("search" to "yandsearch?text=${c.getAlbum(media.album)} ${media.name}") }
+        media = c.getMedia(intent.getIntExtra("id", 1))
         imageView2.visibility = View.INVISIBLE
         videoView.visibility = View.INVISIBLE
     }
@@ -116,8 +122,15 @@ class ReadActivity : AppCompatActivity() {
                 scrollView2.addView(textView2)
             }
             "Image" -> {
-                DownloadImageTask(imageView2)
-                        .execute(media.insideUri)
+                //DownloadImageTask(imageView2).execute(media.insideUri)
+                GlobalScope.launch {
+                    val b = GlobalScope.async {
+                        BitmapFactory.decodeStream(URL(media.outsideUri)
+                                .openStream())
+                    }.await()
+                    runOnUiThread{imageView2.visibility = View.VISIBLE
+                    imageView2.setImageBitmap(b)}
+                }
             }
             "Film" -> {
                 if (media.insideUri != null && media.insideUri != "")
@@ -133,12 +146,6 @@ class ReadActivity : AppCompatActivity() {
             }//scrollView.addView(videoView);
         }
 
-    }
-
-    private fun browse() {
-        val ii = Intent(this, BrowseActivity::class.java)
-        ii.putExtra("search", "yandsearch?text=" + c.getAlbum(media.album) + " " + media.name)
-        startActivity(ii)
     }
 
     private fun onPlayClick() {
@@ -163,11 +170,5 @@ class ReadActivity : AppCompatActivity() {
                 startActivity(playAudioIntent)
             }
         }
-    }
-
-    internal fun onClick() {
-        val intent = Intent(this@ReadActivity, AddActivity::class.java)
-        intent.putExtra("id", media.id)
-        startActivity(intent)
     }
 }
