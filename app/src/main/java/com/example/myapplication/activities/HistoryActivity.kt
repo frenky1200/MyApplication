@@ -5,8 +5,8 @@ import android.preference.PreferenceManager
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.dsl.SomeActivity
 import com.example.myapplication.R
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView

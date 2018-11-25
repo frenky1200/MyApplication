@@ -17,7 +17,9 @@ import com.example.myapplication.data.entity.Excerption
 import com.example.myapplication.data.entity.Media
 
 import com.example.myapplication.MyApp.Companion.c
+import com.example.myapplication.dsl.Ada
 import com.example.myapplication.data.interfaces.IMediable
+import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find
 
 class ExcerptionAdapter(private val context: Context, private val layoutId: Int, private val medias: MutableList<Media>) : BaseAdapter() {
@@ -42,9 +44,9 @@ class ExcerptionAdapter(private val context: Context, private val layoutId: Int,
         if (view != null) {
             holder = view.tag as ViewHolder
         } else {
-            view = inflater.inflate(layoutId, parent, false)
+            view = Ada().createView(AnkoContext.create(context, this, false))
             holder = ViewHolder(view)
-            view!!.tag = holder
+            view.tag = holder
         }
 
         customizeView(view, holder, medias[position])
