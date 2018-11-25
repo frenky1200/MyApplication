@@ -32,4 +32,5 @@
     <string name="mix">Совместное</string>
     <string name="out">Внешнее</string>
     <string name="local">Локальное</string>
+    <string name="history">История</string>
 </resources>

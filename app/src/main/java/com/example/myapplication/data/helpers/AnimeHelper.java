@@ -14,10 +14,14 @@ import java.util.List;
 
 public class AnimeHelper extends SQLiteOpenHelper{
 
-    // Database Version
     private static final int DATABASE_VERSION = 1;
-    // Database Name
     private static final String DATABASE_NAME = "MediaDB.sqlite";
+    private static final String TABLE_ANIMES = "animes";
+    private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "title";
+    private static final String KEY_TYPE = "author";
+    private static final String KEY_IDMEDIA = "idmedia";
+    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE,KEY_IDMEDIA};
 
     public AnimeHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,41 +29,23 @@ public class AnimeHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // SQL statement to create book table
+
         String CREATE_ANIME_TABLE = "CREATE TABLE animes ( " +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "title TEXT, "+
                 "author TEXT, "+
                 "idmedia INTEGER )";
 
-        // create books table
         db.execSQL(CREATE_ANIME_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older books table if existed
+
         db.execSQL("DROP TABLE IF EXISTS animes");
-
-        // create fresh books table
         this.onCreate(db);
+
     }
-    //---------------------------------------------------------------------
-
-    /**
-     * CRUD operations (create "add", read "get", update, delete) book + get all books + delete all books
-     */
-
-    // Books table name
-    private static final String TABLE_ANIMES = "animes";
-
-    // Books Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "title";
-    private static final String KEY_TYPE = "author";
-    private static final String KEY_IDMEDIA = "idmedia";
-
-    private static final String[] COLUMNS = {KEY_ID,KEY_NAME,KEY_TYPE,KEY_IDMEDIA};
 
     public void addAnime(Anime anime){
         // 1. get reference to writable DB
@@ -109,7 +95,6 @@ public class AnimeHelper extends SQLiteOpenHelper{
         return anime;
     }
 
-    // Get All Books
     public List<Anime> getAllAnime() {
         List<Anime> animes = new LinkedList<>();
 
@@ -135,7 +120,6 @@ public class AnimeHelper extends SQLiteOpenHelper{
         return animes;
     }
 
-    // Updating single book
     public void updateAnime(Anime anime) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -153,7 +137,6 @@ public class AnimeHelper extends SQLiteOpenHelper{
         db.close();
     }
 
-    // Deleting single book
     public void deleteAnime(Anime anime) {
         SQLiteDatabase db = this.getWritableDatabase();
 

@@ -12,7 +12,7 @@ import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
-import com.example.myapplication.data.control.DBController
+import com.example.myapplication.MyApp.Companion.c
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.entity.Music
 import com.example.myapplication.services.MyService
@@ -23,7 +23,6 @@ class PlayedActivity : AppCompatActivity() {
     private lateinit var name:String
     private lateinit var artist:String
     private lateinit var ms: MyService
-    val c : DBController = DBController(this)
 
     private val conn = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, binder: IBinder) {
@@ -57,21 +56,21 @@ class PlayedActivity : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_played)
-        addnew.setOnClickListener{addClick()}
+        addnew.setOnClickListener{ addClick() }
         imageButton3.setOnClickListener { prevSkipClick() }
         imageButton4.setOnClickListener { stopStartClick() }
         imageButton5.setOnClickListener { skipClick() }
-        imageButton6.setOnClickListener { brouse()}
+        imageButton6.setOnClickListener { brouse() }
     }
 
     override fun onResume() {
         super.onResume()
-        bindService(Intent(this, MyService::class.java),conn,Context.BIND_AUTO_CREATE)
+        bindService( Intent(this, MyService::class.java ), conn, Context.BIND_AUTO_CREATE )
     }
 
     override fun onPause() {
         super.onPause()
-        unbindService(conn)
+        unbindService( conn )
     }
 
     private fun prevSkipClick(){

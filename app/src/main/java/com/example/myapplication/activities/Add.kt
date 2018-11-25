@@ -10,16 +10,14 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.myapplication.R
+import com.example.myapplication.MyApp.Companion.c
 import com.example.myapplication.adapters.NavAdapter
-import com.example.myapplication.data.control.DBController
 import com.example.myapplication.data.entity.Album
-import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.interfaces.IMediable
 import kotlinx.android.synthetic.main.music_edit.*
 
 class Add : AppCompatActivity() {
 
-    private lateinit var c : DBController
     private lateinit var adapter : NavAdapter
     private lateinit var adapter2 : ArrayAdapter<Album>
     private lateinit var type : String
@@ -42,7 +40,6 @@ class Add : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_edit)
 
-        c = DBController(this)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(3)
         val intent = intent

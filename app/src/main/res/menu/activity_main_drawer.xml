@@ -37,6 +37,10 @@
                 android:icon="@drawable/ic_menu_manage"
                 android:title="@string/action_settings" />
             <item
+                android:id="@+id/history"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/history" />
+            <item
                 android:id="@+id/find"
                 android:icon="@android:drawable/ic_menu_search"
                 android:title="@string/search" />

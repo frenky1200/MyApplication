@@ -18,7 +18,7 @@ import android.widget.Toast
 import android.widget.VideoView
 
 import com.example.myapplication.R
-import com.example.myapplication.data.control.DBController
+import com.example.myapplication.MyApp.Companion.c
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.interfaces.IMediable
 
@@ -31,7 +31,6 @@ import java.net.URL
 
 class ReadActivity : AppCompatActivity() {
 
-    private var c: DBController = DBController(this)
     internal var s = ""
     internal lateinit var media: Media
 

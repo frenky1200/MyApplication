@@ -148,6 +148,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, BrowseActivity::class.java))
                 return true
             }
+            R.id.history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                return true
+            }
             else -> {
                 fr = FindFragment()
             }

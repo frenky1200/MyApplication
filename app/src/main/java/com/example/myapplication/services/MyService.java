@@ -55,6 +55,7 @@ public class MyService extends NotificationListenerService
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+
         MediaSessionManager mediaSessionManager =
                 (MediaSessionManager)
                         getApplicationContext().getSystemService(Context.MEDIA_SESSION_SERVICE);

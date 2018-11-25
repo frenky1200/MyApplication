@@ -1,6 +1,8 @@
 package com.example.myapplication.data.control;
 
 import android.app.Activity;
+import android.content.Context;
+
 import com.example.myapplication.data.entity.Album;
 import com.example.myapplication.data.entity.Anime;
 import com.example.myapplication.data.entity.Excerption;
@@ -29,7 +31,7 @@ public class DBController {
     private final MusicHelper y;
     private final ImageHelper u;
 
-    public DBController(Activity activity){
+    public DBController(Context activity){
         this.q = new AlbumHelper(activity);
         this.w = new MediaHelper(activity);
         this.e = new FilmHelper(activity);

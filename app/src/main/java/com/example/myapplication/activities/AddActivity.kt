@@ -5,7 +5,7 @@ import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 
 import com.example.myapplication.R
-import com.example.myapplication.data.control.DBController
+import com.example.myapplication.MyApp.Companion.c
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.interfaces.IMediable
 
@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.music_edit.*
 
 class AddActivity : AppCompatActivity() {
 
-    private var c: DBController = DBController(this)
     private var idInt: Int? = null
     private var media: Media? = null
 
@@ -32,7 +31,6 @@ class AddActivity : AppCompatActivity() {
         setContentView(R.layout.music_edit)
         buttonsave.setOnClickListener { onSaveClick() }
 
-        c = DBController(this)
         idInt = intent.getIntExtra("id", -1)
         media = c.getMedia(idInt!!)
         readInf(media!!.mediaType<IMediable>(), media!!.id)
