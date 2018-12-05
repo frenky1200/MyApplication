@@ -47,12 +47,11 @@ class SecAdapter(private val context: Context, private val layoutId: Int, privat
 
     private fun customizeView(view: View, holder: SecAdapter.ViewHolder, media: FindFragment.Finder) {
 
-        val name = media.name
-
-        holder.textView3.text = name
+        holder.textView3.text = media.name
     }
 
     internal class ViewHolder(view: View) {
+
         var textView3: TextView = view.findViewById(R.id.textView3)
     }
 }

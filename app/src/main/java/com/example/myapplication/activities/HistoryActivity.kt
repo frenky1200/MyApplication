@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.dsl.SomeActivity
+import com.example.myapplication.dsl.HistoryDsl
 import com.example.myapplication.R
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
@@ -25,8 +25,8 @@ class HistoryActivity : AppCompatActivity() {
             "Желтый" -> setTheme(R.style.Yellow)
         }
         super.onCreate(savedInstanceState)
-        q = SomeActivity().setContentView(this)
-        val listView = q.find<ListView>(SomeActivity.listView)
+        q = HistoryDsl().setContentView(this)
+        val listView = q.find<ListView>(HistoryDsl.listView)
         val list = arrayListOf("ads", "ewq", "qwe")
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, list)
         listView.adapter = adapter

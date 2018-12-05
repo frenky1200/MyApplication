@@ -51,7 +51,7 @@ class FindFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_find, container, false)
         list = ArrayList()
-        adapter = ExcerptionAdapter(activity, R.layout.adapter_excerption, list)
+        adapter = ExcerptionAdapter(activity, list)
 
         return view
     }

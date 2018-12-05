@@ -43,7 +43,6 @@ class Ada : AnkoComponent<ExcerptionAdapter> {
 
             imageButton (android.R.drawable.ic_menu_delete) {
                 id = Ids.imageDelete
-
             }.lparams(width = dip(45), height = dip(45)){
                 endToEnd = PARENT_ID
                 topToTop = PARENT_ID

@@ -31,7 +31,7 @@ class MediaFragment : Fragment() {
         list = c.getAllMedia(coll.id)
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
         list.sortBy { media -> media.name }
-        adapter = ExcerptionAdapter( activity, R.layout.adapter_excerption, list )
+        adapter = ExcerptionAdapter( activity, list )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

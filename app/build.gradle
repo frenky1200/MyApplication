@@ -30,11 +30,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.media:media:1.0.0'
     //androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'com.google.android.material:material:1.0.0'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
+    //implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
+    //annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -46,13 +46,14 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$anko_version"
     implementation "org.jetbrains.anko:anko-constraint-layout:$anko_version"
     implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-design:$anko_version"
 
-    implementation 'com.github.florent37:runtime-permission:1.1.0'
+    //implementation 'com.github.florent37:runtime-permission:1.1.0'
 
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    //implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    //implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }
 

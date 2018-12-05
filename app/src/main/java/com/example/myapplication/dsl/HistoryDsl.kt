@@ -7,7 +7,7 @@ import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
 import org.jetbrains.anko.constraint.layout.matchConstraint
 
-class SomeActivity : AnkoComponent<HistoryActivity> {
+class HistoryDsl : AnkoComponent<HistoryActivity> {
     override fun createView(ui: AnkoContext<HistoryActivity>): View = with(ui){
 
         constraintLayout {
