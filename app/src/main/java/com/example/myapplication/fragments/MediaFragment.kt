@@ -14,7 +14,6 @@ import com.example.myapplication.adapters.ExcerptionAdapter
 import com.example.myapplication.data.entity.Album
 import com.example.myapplication.data.entity.Media
 import kotlinx.android.synthetic.main.activity_media.*
-import kotlinx.android.synthetic.main.content_media.*
 
 class MediaFragment : Fragment() {
 

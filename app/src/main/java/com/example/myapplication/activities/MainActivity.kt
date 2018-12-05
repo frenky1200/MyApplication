@@ -25,7 +25,6 @@ import com.example.myapplication.services.MyService
 import com.google.android.material.navigation.NavigationView
 
 import com.example.myapplication.dsl.MainDsl
-import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.find
 import org.jetbrains.anko.setContentView
 import org.jetbrains.anko.startActivity
@@ -44,11 +43,11 @@ lateinit var a: View
         }
 
         super.onCreate(savedInstanceState)
-        //a = MainDsl().setContentView(this)
-        setContentView(R.layout.activity_main)
+        a = MainDsl().setContentView(this)
+        //setContentView(R.layout.activity_main)
         val navigationView =
-                //a.find<NavigationView>(MainDsl.nav_view)
-                findViewById<NavigationView>(R.id.nav_view)
+                a.find<NavigationView>(MainDsl.nav_view)
+
         navigationView.setNavigationItemSelectedListener(this)
     }
 
@@ -77,9 +76,9 @@ lateinit var a: View
 
     override fun onBackPressed() {
 
-        val drawer = drawer_layout
-                //a.find<DrawerLayout>(MainDsl.drawer_layout)
-                //findViewById<DrawerLayout>(drawer_layout)
+        val drawer = //drawer_layout
+                a.find<DrawerLayout>(MainDsl.drawer_layout)
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
@@ -122,9 +121,9 @@ lateinit var a: View
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         val id = item.itemId
-        val drawer = drawer_layout
-                //a.find<DrawerLayout>(MainDsl.drawer_layout)
-                //findViewById<DrawerLayout>(drawer_layout)
+        val drawer = //drawer_layout
+                a.find<DrawerLayout>(MainDsl.drawer_layout)
+
         drawer.closeDrawer(GravityCompat.START)
         val fr: Fragment
         when (id) {
@@ -174,7 +173,7 @@ lateinit var a: View
 
         val fragmentManager = fragmentManager
         fragmentManager.beginTransaction()
-                .replace(R.id.drawer_layout, fr)
+                .replace(R.id.content_main, fr)
                 .addToBackStack("a")
                 .commit()
         return true
