@@ -9,7 +9,7 @@
     <string name="done">Done</string>
     <string name="text">Text</string>
     <string name="tags">Tags</string>
-    <string name="play">play</string>
+    <string name="play">Play</string>
     <string name="action_quit">Log out</string>
     <string name="delete" translatable="false">Delete</string>
     <string name="excerption" translatable="false">Excerptions</string>
@@ -33,4 +33,5 @@
     <string name="out">out</string>
     <string name="mix">mixed</string>
     <string name="history">History</string>
+    <string name="share">Share</string>
 </resources>

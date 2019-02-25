@@ -6,48 +6,6 @@
     android:layout_height="match_parent"
     tools:layout_editor_absoluteY="81dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomNavigationView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/buttonupd"
-            android:layout_width="112dp"
-            android:layout_height="wrap_content"
-            android:text="@string/update"
-            app:layout_constraintEnd_toStartOf="@+id/buttonsearch"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_constraintBaseline_creator="1"
-            tools:layout_constraintRight_creator="1" />
-
-        <Button
-            android:id="@+id/buttonplay"
-            android:layout_width="112dp"
-            android:layout_height="wrap_content"
-            android:text="@string/play"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonsearch" />
-
-        <Button
-            android:id="@+id/buttonsearch"
-            android:layout_width="112dp"
-            android:layout_height="wrap_content"
-            android:text="@string/search"
-            app:layout_constraintEnd_toStartOf="@+id/buttonplay"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/buttonupd" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
@@ -58,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <VideoView
         android:id="@+id/videoView"
@@ -68,7 +26,7 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView2"

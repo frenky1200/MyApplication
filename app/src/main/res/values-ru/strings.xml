@@ -9,7 +9,7 @@
     <string name="done">Готово</string>
     <string name="text">Текст</string>
     <string name="tags">Теги</string>
-    <string name="play">играть</string>
+    <string name="play">Играть</string>
     <string name="action_quit">Выход</string>
     <string name="delete">Удалить</string>
     <string name="music" translatable="false">Музыка</string>
@@ -33,4 +33,5 @@
     <string name="out">Внешнее</string>
     <string name="local">Локальное</string>
     <string name="history">История</string>
+    <string name="share">Поделиться</string>
 </resources>

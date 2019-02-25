@@ -29,7 +29,7 @@ public class Excerption implements IMediable {
         return idmedia;
     }
 
-    public void setIdmedia (Integer idmedia){
+    public void setIdmedia (int idmedia){
         this.idmedia = idmedia;
     }
 

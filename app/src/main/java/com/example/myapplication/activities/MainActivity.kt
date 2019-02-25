@@ -7,33 +7,30 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.provider.Settings
-import androidx.core.app.ActivityCompat
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.drawerlayout.widget.DrawerLayout
-
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.example.myapplication.MyApp.Companion.prefs
 import com.example.myapplication.R
+import com.example.myapplication.dsl.MainDsl
 import com.example.myapplication.fragments.CollectionFragment
 import com.example.myapplication.fragments.FindFragment
 import com.example.myapplication.services.MyService
 import com.google.android.material.navigation.NavigationView
-
-import com.example.myapplication.dsl.MainDsl
-import org.jetbrains.anko.find
-import org.jetbrains.anko.setContentView
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.startService
+import org.jetbrains.anko.*
+import ru.profit_group.scorocode_sdk.Callbacks.CallbackLoginUser
+import ru.profit_group.scorocode_sdk.Responses.user.ResponseLogin
+import ru.profit_group.scorocode_sdk.scorocode_objects.User
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 lateinit var a: View
     override fun onCreate(savedInstanceState: Bundle?) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+
         when (prefs.getString("colors", "Зеленый")) {
             "Серый" -> setTheme(R.style.AppTheme)
             "Красный" -> setTheme(R.style.Red)
@@ -49,6 +46,31 @@ lateinit var a: View
                 a.find<NavigationView>(MainDsl.nav_view)
 
         navigationView.setNavigationItemSelectedListener(this)
+
+        val login = prefs.getString("login", "")
+        val pass = prefs.getString("pass", "")
+        User().login(login, pass, object : CallbackLoginUser {
+            override fun onLoginSucceed(responseLogin: ResponseLogin) {
+                toast("Зашел ${responseLogin.result.userInfo.id}")
+            }
+
+            override fun onLoginFailed(errorCode: String, errorMessage: String) {
+                startActivityForResult<LoginActivity>(1)
+            }
+        })
+
+        //if (!prefs.getBoolean("authorization", true)) {
+         //   startActivityForResult<LoginActivity>(1)
+        //}
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (resultCode){
+            1 -> {  }
+            2 -> { finish() }
+        }
     }
 
     override fun onStart() {
@@ -69,7 +91,7 @@ lateinit var a: View
                     }
                     .show()
         } else {
-            startService<MyService>()
+            startService(Intent(this, MyService::class.java))
         }
 
     }
@@ -100,11 +122,10 @@ lateinit var a: View
                 SettingActivity.SettingsFragment()
             }
             R.id.action_quit -> {
-                val pref = getSharedPreferences("activities.LoginActivity", Context.MODE_PRIVATE)
-                pref.getBoolean("authorization", false)
-                pref.edit().putBoolean("authorization", false).apply()
+                prefs.getBoolean("authorization", false)
+                prefs.edit().putBoolean("authorization", false).apply()
                 LoginActivity.logout(this)
-                return true
+                return super.onOptionsItemSelected(item)
             }
             else -> {
                 FindFragment()
@@ -195,10 +216,6 @@ lateinit var a: View
     }
 
     companion object {
-
-        fun display(context: Context) {
-            context.startActivity(Intent(context, MainActivity::class.java))
-        }
 
         var collectionType: Enum<Nav> = Nav.Music
     }

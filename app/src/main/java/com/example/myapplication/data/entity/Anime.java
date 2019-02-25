@@ -29,7 +29,7 @@ public class Anime implements IMediable {
         return idmedia;
     }
 
-    public void setIdmedia (Integer idmedia){
+    public void setIdmedia (int idmedia){
         this.idmedia = idmedia;
     }
 
@@ -37,23 +37,24 @@ public class Anime implements IMediable {
         return id;
     }
 
-    public String getType() {
-        return type;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

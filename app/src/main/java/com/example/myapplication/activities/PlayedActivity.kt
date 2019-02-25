@@ -11,8 +11,8 @@ import android.os.IBinder
 import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.R
 import com.example.myapplication.MyApp.Companion.c
+import com.example.myapplication.R
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.entity.Music
 import com.example.myapplication.services.MyService
@@ -26,17 +26,12 @@ class PlayedActivity : AppCompatActivity() {
 
     private val conn = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, binder: IBinder) {
-            ms = (MyService().MyBinder()).service
-            //Toast.makeText(this@PlayedActivity,"created",Toast.LENGTH_SHORT).show()
+            ms = MyService().MyBinder().service
             ms.setAct(this@PlayedActivity)
-            for(m in ms.mediaControllers){
+            for(m in ms.getMediaControllers()){
                 if(m.playbackState!=null)
-                    if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
+                    if(m.playbackState!!.state==PlaybackState.STATE_PLAYING || m.playbackState!!.state==PlaybackState.STATE_PAUSED){
                         doIt(m.metadata!!)
-                    }
-                    else{
-                        if(m.playbackState!!.state==PlaybackState.STATE_PAUSED)
-                            doIt(m.metadata!!)
                     }
             }
         }
@@ -69,12 +64,13 @@ class PlayedActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        super.onPause()
         unbindService( conn )
+        ms.setAct(null)
+        super.onPause()
     }
 
     private fun prevSkipClick(){
-        for(m in ms.mediaControllers){
+        for(m in ms.getMediaControllers()){
             if(m.playbackState!=null)
                 if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
                     m.transportControls.skipToPrevious()
@@ -83,7 +79,7 @@ class PlayedActivity : AppCompatActivity() {
     }
 
     private fun stopStartClick(){
-        for(m in ms.mediaControllers){
+        for(m in ms.getMediaControllers()){
             if(m.playbackState!=null)
                 if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
                     m.transportControls.pause()
@@ -98,7 +94,7 @@ class PlayedActivity : AppCompatActivity() {
     }
 
     private fun skipClick(){
-        for(m in ms.mediaControllers){
+        for(m in ms.getMediaControllers()){
             if(m.playbackState!=null)
             if(m.playbackState!!.state==PlaybackState.STATE_PLAYING){
                 m.transportControls.skipToNext()
@@ -115,8 +111,8 @@ class PlayedActivity : AppCompatActivity() {
     private fun addClick(){
         val a = c.addAlbum(artist,"Music")
         c.addMedia(name, "Music", a.toInt())
-        unbindService(conn)
-        bindService(Intent(this, MyService::class.java),conn,Context.BIND_AUTO_CREATE)
+        //unbindService(conn)
+        //bindService(Intent(this, MyService::class.java),conn,Context.BIND_AUTO_CREATE)
     }
 
     private fun reg(str: String):String{

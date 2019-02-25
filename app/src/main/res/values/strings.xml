@@ -21,7 +21,7 @@
     <string name="outsideuri" translatable="false">OutsideUri</string>
     <string name="tags">Tags</string>
     <string name="text">Text</string>
-    <string name="play">play</string>
+    <string name="play">Play</string>
     <string name="action_quit">Log out</string>
     <string name="New">New</string>
     <string name="brouser">Browser</string>
@@ -40,4 +40,5 @@
     <string name="out">out</string>
     <string name="local">local</string>
     <string name="history">History</string>
+    <string name="share" >Share</string>
 </resources>

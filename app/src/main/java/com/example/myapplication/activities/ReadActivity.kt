@@ -1,5 +1,7 @@
 package com.example.myapplication.activities
 
+//import com.example.myapplication.dsl.ExampleActivity
+
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,25 +9,21 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatActivity
-
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
-import android.widget.MediaController
-import android.widget.TextView
-import android.widget.Toast
-import android.widget.VideoView
-
-import com.example.myapplication.R
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.MyApp.Companion.c
+import com.example.myapplication.R
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.interfaces.IMediable
-
 import kotlinx.android.synthetic.main.music_present.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
 import java.net.URL
 
@@ -33,10 +31,6 @@ class ReadActivity : AppCompatActivity() {
 
     internal var s = ""
     internal lateinit var media: Media
-
-    private fun <T : IMediable> readInf(media: T, id: Int) {
-        s = c.getMedia1(media, id).name
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -49,14 +43,35 @@ class ReadActivity : AppCompatActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_present)
-        buttonupd.setOnClickListener {
-            startActivity<AddActivity>("id" to media.id) }
-        buttonplay.setOnClickListener { onPlayClick() }
-        buttonsearch.setOnClickListener {
-            startActivity<BrowseActivity>("search" to "yandsearch?text=${c.getAlbum(media.album)} ${media.name}") }
+
+        //val a = ExampleActivity().setContentView(this)
         media = c.getMedia(intent.getIntExtra("id", 1))
         imageView2.visibility = View.INVISIBLE
         videoView.visibility = View.INVISIBLE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_readmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.action_search -> {
+                startActivity<BrowseActivity>("search" to "yandsearch?text=${c.getAlbum(media.album)} ${media.name}")
+            }
+            R.id.action_update -> {
+                startActivity<AddActivity>("id" to media.id)
+            }
+            R.id.action_share -> {
+                share(media.outsideUri)
+            }
+            else -> {
+                onPlayClick()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private class DownloadImageTask internal constructor(bmImage: ImageView) : AsyncTask<String, Void, Bitmap>() {
@@ -105,7 +120,7 @@ class ReadActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         title = media.name
-        readInf(media.mediaType<IMediable>(), media.id)
+        s = c.getMedia1(media.mediaType<IMediable>(), media.id).name
         when (media.type) {
             "Music" -> {
                 val textView2 = TextView(this)
@@ -127,8 +142,10 @@ class ReadActivity : AppCompatActivity() {
                         BitmapFactory.decodeStream(URL(media.outsideUri)
                                 .openStream())
                     }.await()
-                    runOnUiThread{imageView2.visibility = View.VISIBLE
-                    imageView2.setImageBitmap(b)}
+                    runOnUiThread{
+                        imageView2.visibility = View.VISIBLE
+                        imageView2.setImageBitmap(b)
+                    }
                 }
             }
             "Film" -> {
@@ -156,7 +173,11 @@ class ReadActivity : AppCompatActivity() {
             else -> "image/*"
         }
 
-        if ((media.insideUri == null || media.insideUri == "") && (media.outsideUri == "" || media.outsideUri == null)) {
+
+        media.insideUri?.play(type)?:media.outsideUri?.play(type)
+
+
+        /*if ((media.insideUri == null || media.insideUri == "") && (media.outsideUri == "" || media.outsideUri == null)) {
             Toast.makeText(this, "Вы не сохранили источник", Toast.LENGTH_SHORT).show()
         } else {
             if (media.insideUri != null && media.insideUri != "") {
@@ -168,6 +189,17 @@ class ReadActivity : AppCompatActivity() {
                 playAudioIntent.setDataAndType(Uri.parse(media.outsideUri), type)
                 startActivity(playAudioIntent)
             }
+        }*/
+    }
+
+    private fun String.play(type: String):Boolean {
+        if (this != "") {
+            val playAudioIntent = Intent(Intent.ACTION_VIEW)
+            playAudioIntent.setDataAndType(Uri.parse(this), type)
+            startActivity(playAudioIntent)
+            return true
         }
+        Toast.makeText(this@ReadActivity, "Вы не сохранили источник", Toast.LENGTH_SHORT).show()
+        return false
     }
 }

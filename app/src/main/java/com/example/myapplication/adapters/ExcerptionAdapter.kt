@@ -2,9 +2,6 @@ package com.example.myapplication.adapters
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
-import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -12,17 +9,16 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
-
+import com.example.myapplication.MyApp.Companion.c
 import com.example.myapplication.R
 import com.example.myapplication.activities.ReadActivity
 import com.example.myapplication.data.entity.Excerption
 import com.example.myapplication.data.entity.Media
-
-import com.example.myapplication.MyApp.Companion.c
-import com.example.myapplication.dsl.Ada
 import com.example.myapplication.data.interfaces.IMediable
+import com.example.myapplication.dsl.Ada
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 
 class ExcerptionAdapter(private val context: Context, private val medias: MutableList<Media>) : BaseAdapter() {
 
@@ -82,26 +78,21 @@ class ExcerptionAdapter(private val context: Context, private val medias: Mutabl
         holder.imageDelete.setOnClickListener { view1 ->
             val popupMenu = PopupMenu(this.context, holder.imageDelete)
             popupMenu.inflate(R.menu.option_menu)
-            popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
-                override fun onMenuItemClick(item: MenuItem): Boolean {
-
-                    when (item.itemId) {
-                        R.id.action_update-> Toast.makeText(this@ExcerptionAdapter.context, "Saved", Toast.LENGTH_LONG).show()
-                        R.id.action_delete -> {
-                            ad.show()
-                        }
-                        else -> {
-                        }
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_update -> Toast.makeText(this@ExcerptionAdapter.context, "Saved", Toast.LENGTH_LONG).show()
+                    R.id.action_delete -> {
+                        ad.show()
                     }
-                    return false
+                    else -> {
+                    }
                 }
-            })
+                false
+            }
             popupMenu.show()
         }
         view.setOnClickListener { v ->
-            val intent = Intent(context, ReadActivity::class.java)
-            intent.putExtra("id", media.id)
-            context.startActivity(intent)
+            context.startActivity<ReadActivity>("id" to media.id )
         }
     }
 
