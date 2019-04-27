@@ -25,9 +25,8 @@ class NavAdapter (private val context: Context, private val layoutId: Int, priva
         return 0
     }
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-        @Suppress("NAME_SHADOWING")
-        var view = view
+    override fun getView(position: Int, v: View?, parent: ViewGroup): View {
+        var view = v
         val holder: NavAdapter.ViewHolder
 
         if (view != null) {
@@ -47,7 +46,6 @@ class NavAdapter (private val context: Context, private val layoutId: Int, priva
     private fun customizeView(view: View, holder: NavAdapter.ViewHolder, nav: MainActivity.Nav) {
 
         val name = nav.value(context)
-
         holder.textView3.text = name
     }
 

@@ -38,57 +38,71 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bottomNavigationView"
+        android:background="#ffffff"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/addnew"
+            android:background="@drawable/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@android:drawable/ic_input_add" />
 
         <ImageButton
             android:id="@+id/imageButton3"
+            android:background="@drawable/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/addnew"
             app:srcCompat="@android:drawable/ic_media_previous" />
 
         <ImageButton
             android:id="@+id/imageButton4"
+            android:background="@drawable/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageButton3"
             app:srcCompat="@android:drawable/ic_media_pause" />
 
         <ImageButton
             android:id="@+id/imageButton5"
+            android:background="@drawable/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton6"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageButton4"
             app:srcCompat="@android:drawable/ic_media_next" />
 
         <ImageButton
             android:id="@+id/imageButton6"
+            android:background="@drawable/btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="13dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/imageButton5"
             app:srcCompat="@android:drawable/btn_star" />
     </androidx.constraintlayout.widget.ConstraintLayout>

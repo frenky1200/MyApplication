@@ -45,7 +45,7 @@ class AddActivity : AppCompatActivity() {
         editText5!!.setText(c.getMedia1(media, id).name)
     }
 
-    fun onSaveClick() {
+    private fun onSaveClick() {
         media!!.name = editText3.text.toString()
         media!!.tags = editText4.text.toString()
         media!!.insideUri = editText.text.toString()

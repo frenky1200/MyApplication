@@ -20,16 +20,17 @@ import com.example.myapplication.R
 import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.interfaces.IMediable
 import kotlinx.android.synthetic.main.music_present.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
 import java.net.URL
 
 class ReadActivity : AppCompatActivity() {
 
-    internal var s = ""
+    private var s = ""
     internal lateinit var media: Media
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,22 +127,20 @@ class ReadActivity : AppCompatActivity() {
                 val textView2 = TextView(this)
                 textView2.text = s
                 textView2.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                textView2.setBackgroundResource(R.drawable.side_nav_bar)
                 scrollView2.addView(textView2)
             }
             "Excerption" -> {
                 val textView2 = TextView(this)
                 textView2.text = s
-                textView2.setBackgroundResource(R.drawable.side_nav_bar)
                 scrollView2.addView(textView2)
             }
             "Image" -> {
                 //DownloadImageTask(imageView2).execute(media.insideUri)
                 GlobalScope.launch {
-                    val b = GlobalScope.async {
+                    val b = withContext(Dispatchers.Default) {
                         BitmapFactory.decodeStream(URL(media.outsideUri)
                                 .openStream())
-                    }.await()
+                    }
                     runOnUiThread{
                         imageView2.visibility = View.VISIBLE
                         imageView2.setImageBitmap(b)
@@ -165,6 +164,7 @@ class ReadActivity : AppCompatActivity() {
     }
 
     private fun onPlayClick() {
+
         val type: String = when (media.type) {
             "Music" -> "audio/*"
             "Image" -> "image/*"
@@ -172,7 +172,6 @@ class ReadActivity : AppCompatActivity() {
             "Excerption" -> "text/*"
             else -> "image/*"
         }
-
 
         media.insideUri?.play(type)?:media.outsideUri?.play(type)
 

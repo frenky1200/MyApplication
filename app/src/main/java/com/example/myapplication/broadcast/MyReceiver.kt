@@ -7,9 +7,10 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import com.example.myapplication.MyApp.Companion.channel_id2
 import com.example.myapplication.R
 import com.example.myapplication.activities.Add
 
@@ -35,12 +36,11 @@ class MyReceiver : BroadcastReceiver() {
                     intent1.data = Uri.parse(uriLocalString)
                     intent1.putExtra("outsideUri", uriString)
                     val pendingIntent = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_CANCEL_CURRENT)
-                    val notification = Notification.Builder(context)
+                    val notification = NotificationCompat.Builder(context, channel_id2)
                             .setSmallIcon(R.drawable.ic_menu_send)
                             .setContentTitle("downloaded")
                             .setCategory(Notification.CATEGORY_STATUS)
                             .setOngoing(true)
-                            .setColor(Color.argb(125, 242, 72, 63))
                             .setContentIntent(pendingIntent)
                     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     notificationManager.notify(3, notification.build())

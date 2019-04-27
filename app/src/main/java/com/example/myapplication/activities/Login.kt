@@ -1,5 +1,6 @@
 package com.example.myapplication.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +16,10 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 
 
-class login : AppCompatActivity() {
+@SuppressLint("Registered")
+class Login : AppCompatActivity() {
 
-    private val RC_SIGN_IN = 1
+    private val rcSignIn = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +30,10 @@ class login : AppCompatActivity() {
 
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        sign_in_button.setOnClickListener() {
+        sign_in_button.setOnClickListener {
 
             val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
+            startActivityForResult(signInIntent, rcSignIn)
         }
     }
 
@@ -39,7 +41,7 @@ class login : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == rcSignIn) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)

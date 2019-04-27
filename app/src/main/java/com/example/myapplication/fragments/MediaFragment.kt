@@ -1,12 +1,12 @@
 package com.example.myapplication.fragments
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.MyApp.Companion.c
@@ -25,12 +25,12 @@ class MediaFragment : Fragment() {
 
     private fun init() {
         val bundle = arguments
-        types = MainActivity.collectionType.name
-        coll = c.getAlbum( bundle.getInt("album") )
+        coll = c.getAlbum( bundle!!.getInt("album") )
         list = c.getAllMedia(coll.id)
+        types = coll.type
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
         list.sortBy { media -> media.name }
-        adapter = ExcerptionAdapter( activity, list )
+        adapter = ExcerptionAdapter( activity!!, list )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

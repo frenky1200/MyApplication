@@ -2,7 +2,6 @@ package com.example.myapplication.activities
 
 import android.Manifest
 import android.app.AlertDialog
-import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.example.myapplication.MyApp.Companion.prefs
 import com.example.myapplication.R
 import com.example.myapplication.dsl.MainDsl
@@ -81,7 +81,7 @@ lateinit var a: View
             AlertDialog.Builder(this)
                     .setPositiveButton(
                             android.R.string.ok
-                    ) { dialogInterface, i ->
+                    ) { _, _ ->
                         val action: String = if (Build.VERSION.SDK_INT >= 22) {
                             Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
                         } else {
@@ -131,7 +131,7 @@ lateinit var a: View
                 FindFragment()
             }
         }
-        val fragmentManager = fragmentManager
+        val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
                 .replace(R.id.content_main, fr)
                 .addToBackStack("a")
@@ -192,7 +192,7 @@ lateinit var a: View
             }
         }
 
-        val fragmentManager = fragmentManager
+        val fragmentManager = supportFragmentManager
         fragmentManager.beginTransaction()
                 .replace(R.id.content_main, fr)
                 .addToBackStack("a")

@@ -1,6 +1,5 @@
 package com.example.myapplication.fragments
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.activities.MainActivity
 import com.example.myapplication.MyApp.Companion.c
@@ -24,14 +24,14 @@ class CollectionFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate( R.layout.activity_collection, container, false )
-        activity.title = MainActivity.collectionType.toString()
+        activity!!.title = MainActivity.collectionType.toString()
         list = c.getAllAlbum( MainActivity.collectionType.name )
         anim = AnimationUtils.loadAnimation( activity, R.anim.second )
-        adapter = ArrayAdapter( activity, android.R.layout.simple_list_item_1, list )
+        adapter = ArrayAdapter( activity!!, android.R.layout.simple_list_item_1, list )
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ListView.adapter = adapter
         ListView.startAnimation( anim )
@@ -59,7 +59,7 @@ class CollectionFragment : Fragment() {
         val myFragment = MediaFragment()
         myFragment.arguments = bundle
         val fragmentManager = fragmentManager
-        fragmentManager.beginTransaction()
+        fragmentManager!!.beginTransaction()
                 .replace( R.id.content_main, myFragment )
                 .addToBackStack("myStack" )
                 .commit()

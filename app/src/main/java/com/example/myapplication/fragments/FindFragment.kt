@@ -1,12 +1,12 @@
 package com.example.myapplication.fragments
 
-import android.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.fragment.app.Fragment
 import com.example.myapplication.R
 import com.example.myapplication.MyApp.Companion.c
 import com.example.myapplication.adapters.ExcerptionAdapter
@@ -51,12 +51,12 @@ class FindFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.activity_find, container, false)
         list = ArrayList()
-        adapter = ExcerptionAdapter(activity, list)
+        adapter = ExcerptionAdapter(activity!!, list)
 
         return view
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         anim = AnimationUtils.loadAnimation(activity, R.anim.second)
@@ -67,7 +67,7 @@ class FindFragment : Fragment() {
         val types: Array<Finder> = Finder.values()
         for ((i:Int, s) in Finder.values().withIndex())
             types[i] = s
-        adapter2 = SecAdapter( activity, R.layout.ada, types )
+        adapter2 = SecAdapter( activity!!, R.layout.ada, types )
         spinner4.adapter = adapter2
         spinner4.setSelection( 0 )
     }

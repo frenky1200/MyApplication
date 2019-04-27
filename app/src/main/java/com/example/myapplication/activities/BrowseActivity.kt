@@ -4,31 +4,19 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DownloadManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Parcelable
-import android.provider.MediaStore
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
-import android.webkit.ConsoleMessage
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.FrameLayout
 import android.widget.Toast
-import android.graphics.Bitmap
-import android.preference.PreferenceManager
-import android.webkit.URLUtil
-
 import com.example.myapplication.R
-
-import java.io.File
 
 class BrowseActivity : Activity() {
     private var mFullscreenViewCallback: WebChromeClient.CustomViewCallback? = null
@@ -36,8 +24,6 @@ class BrowseActivity : Activity() {
     private var mFullScreenView: View? = null
     private var mWebView: WebView? = null
     private lateinit var urload: String
-    private var mUploadMessage: ValueCallback<Uri>? = null
-    private var mCapturedImageURI: Uri? = null
     private var downloadManager: DownloadManager? = null
 
     private val mWebChromeClient = object : WebChromeClient() {
@@ -70,47 +56,6 @@ class BrowseActivity : Activity() {
             mFullScreenView = null
         }
 
-        fun openFileChooser(uploadMsg: ValueCallback<Uri>, acceptType: String) {
-
-            mUploadMessage = uploadMsg
-
-            try {
-                val imageStorageDir = File(
-                        Environment.getExternalStoragePublicDirectory(
-                                Environment.DIRECTORY_PICTURES), "AndroidExampleFolder")
-
-                if (!imageStorageDir.exists()) {
-                    imageStorageDir.mkdirs()
-                }
-
-                val file = File(
-                        imageStorageDir.toString() + File.separator + "IMG_"
-                                + System.currentTimeMillis().toString()
-                                + ".jpg")
-
-                mCapturedImageURI = Uri.fromFile(file)
-
-                // Камера захвата изображения  intent
-                val captureIntent = Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE)
-
-                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI)
-
-                val i = Intent(Intent.ACTION_GET_CONTENT)
-                i.addCategory(Intent.CATEGORY_OPENABLE)
-                i.type = "image/*"
-
-                val chooserIntent = Intent.createChooser(i, "Image Chooser")
-
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf<Parcelable>(captureIntent))
-
-
-            } catch (e: Exception) {
-                Toast.makeText(baseContext, "Exception:$e",
-                        Toast.LENGTH_LONG).show()
-            }
-
-        }
 
     }
 

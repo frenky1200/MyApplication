@@ -26,9 +26,8 @@ class SecAdapter(private val context: Context, private val layoutId: Int, privat
         return 0
     }
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-        @Suppress("NAME_SHADOWING")
-        var view = view
+    override fun getView(position: Int, v: View?, parent: ViewGroup): View {
+        var view = v
         val holder: SecAdapter.ViewHolder
 
         if (view != null) {
@@ -46,7 +45,6 @@ class SecAdapter(private val context: Context, private val layoutId: Int, privat
 
 
     private fun customizeView(view: View, holder: SecAdapter.ViewHolder, media: FindFragment.Finder) {
-
         holder.textView3.text = media.name
     }
 

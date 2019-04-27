@@ -34,8 +34,8 @@ class ExcerptionAdapter(private val context: Context, private val medias: Mutabl
         return 0
     }
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-        var view = view
+    override fun getView(position: Int, v: View?, parent: ViewGroup): View {
+        var view = v
         val holder: ViewHolder
 
         if (view != null) {
@@ -91,6 +91,7 @@ class ExcerptionAdapter(private val context: Context, private val medias: Mutabl
             }
             popupMenu.show()
         }
+        view.setBackgroundResource(R.drawable.side_nav_bar)
         view.setOnClickListener { v ->
             context.startActivity<ReadActivity>("id" to media.id )
         }
