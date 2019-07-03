@@ -23,7 +23,7 @@ class HistoryDsl : AnkoComponent<HistoryActivity> {
     }
 
     companion object Ids {
-        val listView = 1
+        const val listView = 1
 
     }
 }

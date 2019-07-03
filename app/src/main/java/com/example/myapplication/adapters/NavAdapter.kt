@@ -27,13 +27,13 @@ class NavAdapter (private val context: Context, private val layoutId: Int, priva
 
     override fun getView(position: Int, v: View?, parent: ViewGroup): View {
         var view = v
-        val holder: NavAdapter.ViewHolder
+        val holder: ViewHolder
 
         if (view != null) {
-            holder = view.tag as NavAdapter.ViewHolder
+            holder = view.tag as ViewHolder
         } else {
             view = inflater.inflate(layoutId, parent, false)
-            holder = NavAdapter.ViewHolder(view)
+            holder = ViewHolder(view)
             view!!.tag = holder
         }
 
@@ -43,7 +43,7 @@ class NavAdapter (private val context: Context, private val layoutId: Int, priva
     }
 
 
-    private fun customizeView(view: View, holder: NavAdapter.ViewHolder, nav: MainActivity.Nav) {
+    private fun customizeView(view: View, holder: ViewHolder, nav: MainActivity.Nav) {
 
         val name = nav.value(context)
         holder.textView3.text = name

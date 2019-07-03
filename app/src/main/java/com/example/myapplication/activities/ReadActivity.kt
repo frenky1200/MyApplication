@@ -27,6 +27,12 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
 import java.net.URL
+import java.net.URLEncoder
+import android.provider.MediaStore
+
+
+
+
 
 class ReadActivity : AppCompatActivity() {
 
@@ -41,6 +47,7 @@ class ReadActivity : AppCompatActivity() {
             "Зеленый" -> setTheme(R.style.Green)
             "Синий" -> setTheme(R.style.Blue)
             "Желтый" -> setTheme(R.style.Yellow)
+            "Пурпурный" -> setTheme(R.style.Purple)
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_present)
@@ -60,13 +67,24 @@ class ReadActivity : AppCompatActivity() {
         val id = item.itemId
         when (id) {
             R.id.action_search -> {
-                startActivity<BrowseActivity>("search" to "yandsearch?text=${c.getAlbum(media.album)} ${media.name}")
+
+                startActivity<BrowseActivity>("search" to "yandsearch?text="+ URLEncoder.encode("${c.getAlbum(media.album)} ${media.name}", "UTF-8"))
             }
             R.id.action_update -> {
                 startActivity<AddActivity>("id" to media.id)
             }
             R.id.action_share -> {
-                share(media.outsideUri)
+                if (bitmap == null) {
+                    share(media.outsideUri)
+                }else {
+                    val path = MediaStore.Images.Media.insertImage(contentResolver, bitmap, "SomeText", null)
+                    Log.d("Path", path)
+                    val intent = Intent(Intent.ACTION_SEND)
+                    val screenshotUri = Uri.parse(path)
+                    intent.putExtra(Intent.EXTRA_STREAM, screenshotUri)
+                    intent.type = "image/*"
+                    startActivity(Intent.createChooser(intent, "Share image via..."))
+                }
             }
             else -> {
                 onPlayClick()
@@ -145,6 +163,7 @@ class ReadActivity : AppCompatActivity() {
                         imageView2.visibility = View.VISIBLE
                         imageView2.setImageBitmap(b)
                     }
+                    bitmap = b
                 }
             }
             "Film" -> {
@@ -162,7 +181,7 @@ class ReadActivity : AppCompatActivity() {
         }
 
     }
-
+    private var bitmap: Bitmap? = null
     private fun onPlayClick() {
 
         val type: String = when (media.type) {

@@ -8,14 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.myapplication.data.entity.Album;
-import com.example.myapplication.data.interfaces.IHelper;
 import com.example.myapplication.data.interfaces.IMediable;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @SuppressWarnings("ALL")
-public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
+public class AlbumHelper extends SQLiteOpenHelper{
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "MediaDB.sqlite";
@@ -69,32 +68,26 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         this.onCreate(db);
     }
 
-    @Override
     public Album getById(int id){
         return new Album();
     }
 
-    @Override
     public Album get(int id){
         return new Album();
     }
 
-    @Override
     public List<Album> getAll(String id){
         return new LinkedList<>();
     }
 
-    @Override
     public <T extends IMediable> void add(T t) {
 
     }
 
-    @Override
     public <T extends IMediable> int update(T t) {
         return 0;
     }
 
-    @Override
     public <T extends IMediable> void delete(T t) {
 
     }
@@ -105,8 +98,8 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
         Cursor cursor =
                 db.query(TABLE_ALBUMS, // a. table
                         COLUMNS, // b. column names
-                        " name = ? OR alternate GLOB ?", // c. selections
-                        new String[] {album.getName(), album.getName()}, // d. selections args
+                        " upper(name) = ? OR upper(alternate) GLOB ?", // c. selections
+                        new String[] {album.getName().toUpperCase(), album.getName().toUpperCase()}, // d. selections args
                         null, // e. group by
                         null, // f. having
                         null, // g. order by
@@ -230,7 +223,6 @@ public class AlbumHelper extends SQLiteOpenHelper implements IHelper{
 
     }
 
-    @Override
     public List<Album> findbystr(String str){
         List<Album> albums = new LinkedList<>();
 

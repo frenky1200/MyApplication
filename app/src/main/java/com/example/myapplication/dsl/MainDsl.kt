@@ -17,7 +17,7 @@ class MainDsl : AnkoComponent<MainActivity> {
 
             include<View>(R.layout.content_main).lparams(width = matchParent, height = matchParent)
             relativeLayout{
-                floatingActionButton {
+                /*floatingActionButton {
                     imageResource = android.R.drawable.ic_dialog_email
                     isClickable = true
                     isFocusable = true
@@ -26,7 +26,7 @@ class MainDsl : AnkoComponent<MainActivity> {
                     margin = dip(10)
                     alignParentBottom()
                     alignParentEnd()
-                }
+                }*/
             }
             navigationView {
                 fitsSystemWindows = true
@@ -37,7 +37,7 @@ class MainDsl : AnkoComponent<MainActivity> {
     }
 
     companion object Ids {
-        val drawer_layout = 1
-        val nav_view = 2
+        const val drawer_layout = 1
+        const val nav_view = 2
     }
 }

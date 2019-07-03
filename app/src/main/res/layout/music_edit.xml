@@ -11,14 +11,15 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/editText3"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/name"
@@ -34,7 +35,7 @@
 
             <EditText
                 android:id="@+id/editText4"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/tags"
@@ -50,15 +51,16 @@
 
             <EditText
                 android:id="@+id/editText5"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/text"
                 android:inputType="textMultiLine"
-                android:maxLines="10"
+                android:maxLines="15"
                 android:minLines="1"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/spinner"
+
+                app:layout_constraintBottom_toTopOf="@+id/editText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -69,17 +71,17 @@
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/spinner2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText5" />
+                app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
             <Spinner
                 android:id="@+id/spinner2"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/buttonsave"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,24 +91,41 @@
 
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:ems="10"
+                android:hint="@string/insideuri"
                 android:inputType="textPersonName"
-                android:hint="@string/insideuri" />
+                app:layout_constraintBottom_toTopOf="@+id/editText2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
             <EditText
                 android:id="@+id/editText2"
-                android:layout_width="match_parent"
+                android:layout_width="395dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:ems="10"
+                android:hint="@string/outsideuri"
                 android:inputType="textPersonName"
-                android:hint="@string/outsideuri" />
+                app:layout_constraintBottom_toTopOf="@+id/spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editText" />
 
             <Button
                 android:id="@+id/buttonsave"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/default_btn"
                 android:text="@string/done"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +136,7 @@
                 tools:layout_constraintLeft_creator="1"
                 tools:layout_constraintRight_creator="1" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

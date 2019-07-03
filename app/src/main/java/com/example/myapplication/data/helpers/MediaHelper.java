@@ -163,7 +163,11 @@ public class MediaHelper extends SQLiteOpenHelper {
     public List<Media> findByStr(String s, String str){
         List<Media> medias = new LinkedList<>();
 
-        String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE " + s + " GLOB upper('*" + str + "*'))";
+        String query = "SELECT  media.* FROM media"+
+                " join musics on media.id = musics.idmedia"+
+                " join albums on media.albums = albums.id"+
+                " where "+ s +" LIKE '%" + str + "%'";
+        //String query = "SELECT  * FROM " + TABLE_MEDIA + " WHERE " + s + " GLOB upper('*" + str + "*'))";
         //String query2 = "SELECT  * FROM " + TABLE_MEDIA + " WHERE id == (SELECT idMedia FROM musics where name glob upper())";
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -189,9 +193,10 @@ public class MediaHelper extends SQLiteOpenHelper {
 
     public Media findByName(String name, String album){
 
-        String query = "SELECT * FROM " + TABLE_MEDIA + " WHERE upper(media.name) GLOB upper(\"*"+name+
-                "*\") AND media.albums==(select id from albums WHERE upper(albums.alternate) GLOB upper(\"*"+album+
-                "*\") OR upper(albums.name) GLOB upper(\"*"+album+"*\"))";
+        String query = "SELECT media.* FROM " + TABLE_MEDIA + " JOIN albums on media.albums = albums.id"+
+                " WHERE upper(media.name) = upper('" + name.replaceAll("[\']", "''") + "')"+
+                " AND (albums.name LIKE '%" + album.replaceAll("[\']", "''") + "%'"+
+                " OR albums.alternate LIKE '%" + album.replaceAll("[\']", "''") + "%')";
 
         SQLiteDatabase db = this.getWritableDatabase();
 

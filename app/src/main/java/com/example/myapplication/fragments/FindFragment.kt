@@ -27,22 +27,26 @@ class FindFragment : Fragment() {
 
         Tags{
             override fun toString(): String {
-                return "id in (SELECT id FROM media where upper(tags)"
+                //return "id in (SELECT id FROM media where upper(tags)"
+                return "media.tags"
             }
         },
         Name{
             override fun toString(): String {
-                return "id in (SELECT id FROM media where upper(name)"
+                //return "id in (SELECT id FROM media where upper(name)"
+                return "media.name"
             }
         },
         Descriptions{
             override fun toString(): String {
-                return "id in (SELECT idMedia FROM musics where upper(name)"
+                //return "id in (SELECT idMedia FROM musics where upper(name)"
+                return "musics.name"
             }
         },
         Collections{
             override fun toString(): String {
-                return "id in (SELECT id FROM media where upper(albums)"
+                //return "id in (SELECT id FROM media where upper(albums)"
+                return "albums.name"
             }
         };
     }
@@ -77,7 +81,7 @@ class FindFragment : Fragment() {
         list.clear()
         rew = spinner4.selectedItem as Finder
         list.addAll( c.findTags( rew.toString(), EditTextFind.text.toString() ) )
-        for ( ( i, item) in list.withIndex() )
+        for ( (i, item) in list.withIndex() )
             item.name = "${i + 1}. ${item.name}"
         adapter.notifyDataSetChanged()
     }

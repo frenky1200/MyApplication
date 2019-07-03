@@ -10,6 +10,7 @@
         <item>@string/green</item>
         <item>@string/blue</item>
         <item>@string/yellow</item>
+        <item>@string/purple</item>
     </string-array>
     <string-array name="colorValues">
         <item>Серый</item>
@@ -17,6 +18,7 @@
         <item>Зеленый</item>
         <item>Синий</item>
         <item>Желтый</item>
+        <item>Пурпурный</item>
     </string-array>
     <string-array name="database">
         <item>@string/local</item>

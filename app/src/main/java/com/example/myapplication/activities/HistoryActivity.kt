@@ -25,6 +25,7 @@ class HistoryActivity : AppCompatActivity() {
             "Зеленый" -> setTheme(R.style.Green)
             "Синий" -> setTheme(R.style.Blue)
             "Желтый" -> setTheme(R.style.Yellow)
+            "Пурпурный" -> setTheme(R.style.Purple)
         }
         super.onCreate(savedInstanceState)
         q = HistoryDsl().setContentView(this)

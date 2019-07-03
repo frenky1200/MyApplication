@@ -23,9 +23,6 @@ import com.example.myapplication.fragments.FindFragment
 import com.example.myapplication.services.MyService
 import com.google.android.material.navigation.NavigationView
 import org.jetbrains.anko.*
-import ru.profit_group.scorocode_sdk.Callbacks.CallbackLoginUser
-import ru.profit_group.scorocode_sdk.Responses.user.ResponseLogin
-import ru.profit_group.scorocode_sdk.scorocode_objects.User
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 lateinit var a: View
@@ -37,6 +34,7 @@ lateinit var a: View
             "Зеленый" -> setTheme(R.style.Green)
             "Синий" -> setTheme(R.style.Blue)
             "Желтый" -> setTheme(R.style.Yellow)
+            "Пурпурный" -> setTheme(R.style.Purple)
         }
 
         super.onCreate(savedInstanceState)
@@ -47,30 +45,6 @@ lateinit var a: View
 
         navigationView.setNavigationItemSelectedListener(this)
 
-        val login = prefs.getString("login", "")
-        val pass = prefs.getString("pass", "")
-        User().login(login, pass, object : CallbackLoginUser {
-            override fun onLoginSucceed(responseLogin: ResponseLogin) {
-                toast("Зашел ${responseLogin.result.userInfo.id}")
-            }
-
-            override fun onLoginFailed(errorCode: String, errorMessage: String) {
-                startActivityForResult<LoginActivity>(1)
-            }
-        })
-
-        //if (!prefs.getBoolean("authorization", true)) {
-         //   startActivityForResult<LoginActivity>(1)
-        //}
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (resultCode){
-            1 -> {  }
-            2 -> { finish() }
-        }
     }
 
     override fun onStart() {
@@ -79,9 +53,9 @@ lateinit var a: View
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
         if (!MyService.isNotificationAccessEnabled(this)) {
             AlertDialog.Builder(this)
-                    .setPositiveButton(
-                            android.R.string.ok
-                    ) { _, _ ->
+
+                    .setMessage("Необходмо разрешение!")
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         val action: String = if (Build.VERSION.SDK_INT >= 22) {
                             Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
                         } else {
@@ -89,6 +63,7 @@ lateinit var a: View
                         }
                         startActivity(Intent(action))
                     }
+                    .setNegativeButton("Нет"){_, _ ->}
                     .show()
         } else {
             startService(Intent(this, MyService::class.java))
@@ -122,9 +97,6 @@ lateinit var a: View
                 SettingActivity.SettingsFragment()
             }
             R.id.action_quit -> {
-                prefs.getBoolean("authorization", false)
-                prefs.edit().putBoolean("authorization", false).apply()
-                LoginActivity.logout(this)
                 return super.onOptionsItemSelected(item)
             }
             else -> {
@@ -169,8 +141,8 @@ lateinit var a: View
                 fr = CollectionFragment()
             }
             R.id.setting -> {
-                startActivity<SettingActivity>()//fr = SettingActivity.SettingsFragment()
-                return true
+                fr = SettingActivity.SettingsFragment()//startActivity<SettingActivity>()
+                //return true
             }
             R.id.find -> {
                 fr = FindFragment()

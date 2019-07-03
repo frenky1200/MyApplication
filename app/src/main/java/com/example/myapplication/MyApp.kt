@@ -19,7 +19,6 @@ class MyApp : Application() {
         super.onCreate()
 
         ScorocodeSdk.initWith(APPLICATION_ID, CLIENT_KEY, null, FILE_KEY, MESSAGE_KEY, SCRIPT_KEY, null)
-        instance = this
         c = DBController( applicationContext )
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
         hist = this.database
@@ -62,8 +61,6 @@ class MyApp : Application() {
         lateinit var prefs: SharedPreferences
         lateinit var hist: HisController
 
-        var instance: MyApp? = null
-            private set
     }
 
 }

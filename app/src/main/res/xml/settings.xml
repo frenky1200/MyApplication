@@ -30,7 +30,7 @@
             android:key="database"
             android:title="@string/storage"
             android:summary="change language"
-            android:defaultValue="1"
+            android:defaultValue="@string/local"
             android:entries="@array/database"
             android:entryValues="@array/databaseValues"
             android:dialogTitle="@string/choose" />

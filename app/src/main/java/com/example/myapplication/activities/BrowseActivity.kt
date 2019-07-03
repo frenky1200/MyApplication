@@ -69,6 +69,7 @@ class BrowseActivity : Activity() {
             "Зеленый" -> setTheme(R.style.Green)
             "Синий" -> setTheme(R.style.Blue)
             "Желтый" -> setTheme(R.style.Yellow)
+            "Пурпурный" -> setTheme(R.style.Purple)
         }
 
         super.onCreate(savedInstanceState)
@@ -148,7 +149,7 @@ class BrowseActivity : Activity() {
 
             val downloadDialog = AlertDialog.Builder(this@BrowseActivity)
             downloadDialog.setTitle("Менеджер загрузок")
-            downloadDialog.setMessage("Загрузить этот файл в папку Download ?" + 'n'.toString() + mimetype + 'n'.toString() + url)
+            downloadDialog.setMessage("Загрузить этот файл в папку Download ?\n$mimetype\n$url")
             downloadDialog.setPositiveButton("Да") { dialogInterface, _ ->
                 doDownload(url, fileName, mimetype)
                 dialogInterface.dismiss()

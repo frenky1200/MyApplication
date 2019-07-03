@@ -46,6 +46,7 @@ class Ada : AnkoComponent<ExcerptionAdapter> {
 
             imageButton (android.R.drawable.ic_menu_delete) {
                 id = Ids.imageDelete
+                background = resources.getDrawable(R.drawable.player_btn, context.theme)
             }.lparams(width = dip(45), height = dip(45)){
                 endToEnd = PARENT_ID
                 topToTop = PARENT_ID
@@ -57,9 +58,9 @@ class Ada : AnkoComponent<ExcerptionAdapter> {
     }
 
     private object Ids {
-        val imageDelete = R.id.imageDelete
-        val textView2 = R.id.textView2
-        val textView3 = R.id.textView3
-        val textView5 = R.id.textView5
+        const val imageDelete = R.id.imageDelete
+        const val textView2 = R.id.textView2
+        const val textView3 = R.id.textView3
+        const val textView5 = R.id.textView5
     }
 }

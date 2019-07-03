@@ -9,6 +9,8 @@ import android.media.session.PlaybackState
 import android.os.Bundle
 import android.os.IBinder
 import android.preference.PreferenceManager
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.MyApp.Companion.c
@@ -17,12 +19,16 @@ import com.example.myapplication.data.entity.Media
 import com.example.myapplication.data.entity.Music
 import com.example.myapplication.services.MyService
 import kotlinx.android.synthetic.main.activity_played.*
+import org.jetbrains.anko.share
+import org.jetbrains.anko.startActivity
+import java.net.URLEncoder
 
 class PlayedActivity : AppCompatActivity() {
 
     private lateinit var name:String
     private lateinit var artist:String
     private lateinit var ms: MyService
+    private lateinit var media:Media
 
     private val conn = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, binder: IBinder) {
@@ -48,6 +54,7 @@ class PlayedActivity : AppCompatActivity() {
             "Зеленый" -> setTheme(R.style.Green)
             "Синий" -> setTheme(R.style.Blue)
             "Желтый" -> setTheme(R.style.Yellow)
+            "Пурпурный" -> setTheme(R.style.Purple)
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_played)
@@ -67,6 +74,30 @@ class PlayedActivity : AppCompatActivity() {
         unbindService( conn )
         ms.setAct(null)
         super.onPause()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_readmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.action_search -> {
+                startActivity<BrowseActivity>("search" to "yandsearch?text="+ URLEncoder.encode("${c.getAlbum(media.album)} ${media.name}", "UTF-8"))
+            }
+            R.id.action_update -> {
+                startActivity<AddActivity>("id" to media.id)
+            }
+            R.id.action_share -> {
+                share(media.outsideUri)
+            }
+            else -> {
+                stopStartClick()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun prevSkipClick(){
@@ -103,34 +134,28 @@ class PlayedActivity : AppCompatActivity() {
     }
 
     private fun brouse(){
-        val ii = Intent(this, BrowseActivity::class.java)
-        ii.putExtra("search", "yandsearch?text=$artist - $name")
-        startActivity(ii)
+        startActivity<BrowseActivity>("search" to "yandsearch?text="+ URLEncoder.encode("$artist $name", "UTF-8"))
     }
 
     private fun addClick(){
-        val a = c.addAlbum(artist,"Music")
-        c.addMedia(name, "Music", a.toInt())
+        val albumId = c.addAlbum(artist,"Music")
+        c.addMedia(name, "Music", albumId.toInt())
         //unbindService(conn)
         //bindService(Intent(this, MyService::class.java),conn,Context.BIND_AUTO_CREATE)
     }
 
     private fun reg(str: String):String{
-        var s1 = str.replace("[_+\"]".toRegex()," ").trim()
-        s1 = s1.replace("\\([\\s\\S]*\\)|\\[[\\s\\S]*\\]|\\{[\\s\\S]*\\}".toRegex(),"").trim()
-        val s: Array<String> = s1.split(' ').toTypedArray()
-        s1 = ""
+        val s = str.replace("[_+\"]".toRegex()," ")
+                            .replace("\\([\\s\\S]*\\)|\\[[\\s\\S]*\\]|\\{[\\s\\S]*\\}".toRegex(),"")
+                            .split(' ').toTypedArray()
+        var s1 = ""
         for(a in s){
-            s1 = when (a.length) {
-                1 -> s1 + a.substring(0, 1).toUpperCase() + " "
-                0 -> s1
-                else -> s1 +a.substring(0, 1).toUpperCase() + a.substring(1) + " "
+            if (a.isNotEmpty()){
+                s1 = s1 + a.capitalize() + " "
             }
         }
         return s1.trim()
     }
-
-    lateinit var media:Media
 
     fun doIt(meta: MediaMetadata){
         name = reg(meta.getString(MediaMetadata.METADATA_KEY_TITLE))

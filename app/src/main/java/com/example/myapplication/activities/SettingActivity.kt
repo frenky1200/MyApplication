@@ -2,7 +2,6 @@ package com.example.myapplication.activities
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.preference.ListPreference
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 
@@ -18,7 +17,7 @@ class SettingActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .add(R.id.prefs_content, SettingsFragment())
+                .replace(R.id.prefs_content, SettingsFragment())
                 .commit()
     }
 
@@ -45,18 +44,17 @@ class SettingActivity : AppCompatActivity() {
 
         override fun onResume() {
             super.onResume()
-            /*val list = findPreference("languages") as ListPreference
-            val list2 = findPreference("colors") as ListPreference
-            val list3 = findPreference("database") as ListPreference
+            val list = findPreference("languages")
+            val list2 = findPreference("colors")
+            val list3 = findPreference("database")
             val configuration = Configuration()
             activity!!.title = getString(R.string.action_settings)
 
-            list.summary = list.value
-            list2.summary = list2.entry
-            list3.summary = list3.entry
+            list.summary = list.sharedPreferences.getString(list.key, "")
+            list2.summary = list2.sharedPreferences.getString(list2.key, "")
+            list3.summary = list3.sharedPreferences.getString(list3.key, "")
 
             list.setOnPreferenceChangeListener { _, o ->
-                list.summary = o.toString()
                 if (o.toString() == "Русский") {
                     val loc = Locale("ru")
                     configuration.setLocale(loc)
@@ -72,18 +70,14 @@ class SettingActivity : AppCompatActivity() {
             }
 
             list2.setOnPreferenceChangeListener { _, o ->
-                list2.summary = o.toString()
-                list2.value = o.toString()
                 activity!!.recreate()
-                false
+                true
             }
 
             list3.setOnPreferenceChangeListener { _, o ->
-                list3.summary = o.toString()
-                list3.value = o.toString()
                 activity!!.recreate()
-                false
-            }*/
+                true
+            }
         }
     }
 }

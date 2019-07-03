@@ -10,7 +10,7 @@ import com.example.myapplication.R
 import com.example.myapplication.fragments.FindFragment
 
 
-class SecAdapter(private val context: Context, private val layoutId: Int, private val medias: Array<FindFragment.Finder>) : BaseAdapter() {
+class SecAdapter(context: Context, private val layoutId: Int, private val medias: Array<FindFragment.Finder>) : BaseAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -28,13 +28,13 @@ class SecAdapter(private val context: Context, private val layoutId: Int, privat
 
     override fun getView(position: Int, v: View?, parent: ViewGroup): View {
         var view = v
-        val holder: SecAdapter.ViewHolder
+        val holder: ViewHolder
 
         if (view != null) {
-            holder = view.tag as SecAdapter.ViewHolder
+            holder = view.tag as ViewHolder
         } else {
             view = inflater.inflate(layoutId, parent, false)
-            holder = SecAdapter.ViewHolder(view)
+            holder = ViewHolder(view)
             view!!.tag = holder
         }
 
@@ -44,7 +44,8 @@ class SecAdapter(private val context: Context, private val layoutId: Int, privat
     }
 
 
-    private fun customizeView(view: View, holder: SecAdapter.ViewHolder, media: FindFragment.Finder) {
+    private fun customizeView(view: View, holder: ViewHolder, media: FindFragment.Finder) {
+
         holder.textView3.text = media.name
     }
 

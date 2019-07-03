@@ -47,6 +47,12 @@ class MyService: NotificationListenerService(), MediaSessionManager.OnActiveSess
 
     }
 
+    override fun onDestroy() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(0)
+        super.onDestroy()
+    }
+
     override fun onActiveSessionsChanged(activeMediaControllers: List<MediaController>?) {
 
         for (controller in mediaControllers) {
@@ -56,11 +62,13 @@ class MyService: NotificationListenerService(), MediaSessionManager.OnActiveSess
             }
         }
         controllerCallbacks.clear()
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(0)
 
         if (activeMediaControllers != null) {
             for (controller in activeMediaControllers) {
-                //String packageName = controller.getPackageName();
-
+                //val packageName = controller.packageName
+                //if (packageName == "com.example.myapplication") continue
                 val callback = object : MediaController.Callback() {
                     override fun onPlaybackStateChanged(state: PlaybackState?) {
                         controllerPlaybackStateChanged(controller, state)
@@ -74,7 +82,7 @@ class MyService: NotificationListenerService(), MediaSessionManager.OnActiveSess
                 controllerCallbacks[controller] = callback
                 controller.registerCallback(callback)
 
-                //controllerPlaybackStateChanged(controller, controller.playbackState)
+                controllerPlaybackStateChanged(controller, controller.playbackState)
                 //controllerMetadataChanged(controller, controller.metadata)
             }
         }
@@ -87,7 +95,7 @@ class MyService: NotificationListenerService(), MediaSessionManager.OnActiveSess
         if (state != null && state.state != PlaybackState.STATE_PLAYING) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.cancel(0)
-        }
+        } else notify(controller)
     }
 
     private fun controllerMetadataChanged(controller: MediaController, metadata: MediaMetadata?) {
@@ -115,6 +123,7 @@ class MyService: NotificationListenerService(), MediaSessionManager.OnActiveSess
                         .setContentIntent(pendingIntent)
                 val notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notificationManager.notify(0, notification.build())
+                //startForeground(0, notification.build())
             }
     }
 

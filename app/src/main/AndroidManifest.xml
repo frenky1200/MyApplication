@@ -18,17 +18,12 @@
         android:theme="@style/Theme.AppCompat.DayNight">
 
 
-        <activity android:name=".activities.LoginActivity">
-
-        </activity>
-
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait"
-            android:theme="@style/Red">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,14 +44,12 @@
         <activity
             android:name=".activities.ReadActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            android:theme="@style/Red" />
+            android:launchMode="singleTask" />
         <activity android:name=".activities.SettingActivity" />
         <activity
             android:name=".activities.Add"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
-            android:theme="@style/Red">
+            android:launchMode="singleTask">
             <intent-filter>
                 <!--<action android:name="android.intent.action.CHOOSER" />-->
                 <action android:name="android.intent.action.SEND"/>

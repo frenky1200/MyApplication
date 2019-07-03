@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#aaaaaa</color>
-    <color name="colorPrimaryDark">#CCCCCC</color>
-    <color name="colorAccent">#cccccc</color>
+    <color name="colorPrimaryDark">#7b7b7b</color>
+    <color name="colorAccent">#dcdcdc</color>
+
+<!--    <color name="colorPurple">#673AB7</color>
+    <color name="colorPrimaryPurple">#7E57B2</color>
+    <color name="colorAccentPurple">#B39DDB</color> /-->
+    <color name="colorPurple">#673AB7</color>
+    <color name="colorPrimaryPurple">#320b86</color>
+    <color name="colorAccentPurple">#9a67ea</color>
 
     <color name="colorRed">#aa0000</color>
-    <color name="colorPrimaryRed">#cc0000</color>
-    <color name="colorAccentRed">#ff0000</color>
+    <color name="colorPrimaryRed">#740000</color>
+    <color name="colorAccentRed">#e4472c</color>
+<!--
     <color name="colorGreen">#00aa00</color>
     <color name="colorPrimaryGreen">#00CC00</color>
     <color name="colorAccentGreen">#00ff33</color>
+/-->
+    <color name="colorGreen">#00aa00</color>
+    <color name="colorPrimaryGreen">#008000</color>
+    <color name="colorAccentGreen">#59dd44</color>
+<!--
     <color name="colorBlue">#0000aa</color>
     <color name="colorPrimaryBlue">#0000CC</color>
     <color name="colorAccentBlue">#0044ff</color>
-    <color name="colorYellow">#dddd00</color>
-    <color name="colorPrimaryYellow">#eeee00</color>
-    <color name="colorAccentYellow">#eeee00</color>
+/-->
+
+    <color name="colorBlue">#304fff</color>
+    <color name="colorPrimaryBlue">#0026ca</color>
+    <color name="colorAccentBlue">#7b7cff</color>
+    
+    <color name="colorYellow">#eeee00</color>
+    <color name="colorPrimaryYellow">#b7bc00</color>
+    <color name="colorAccentYellow">#ffff56</color>
 </resources>
