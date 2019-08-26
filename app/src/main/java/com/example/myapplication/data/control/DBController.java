@@ -1,6 +1,5 @@
 package com.example.myapplication.data.control;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.example.myapplication.data.entity.Album;
@@ -12,8 +11,8 @@ import com.example.myapplication.data.entity.Media;
 import com.example.myapplication.data.entity.Music;
 import com.example.myapplication.data.helpers.AlbumHelper;
 import com.example.myapplication.data.helpers.AnimeHelper;
-import com.example.myapplication.data.helpers.FilmHelper;
 import com.example.myapplication.data.helpers.ExcerptionHelper;
+import com.example.myapplication.data.helpers.FilmHelper;
 import com.example.myapplication.data.helpers.ImageHelper;
 import com.example.myapplication.data.helpers.MediaHelper;
 import com.example.myapplication.data.helpers.MusicHelper;
@@ -44,29 +43,20 @@ public class DBController {
 
     public List<Album> getAllAlbum(String a){
         List<Album> list = q.getAllAlbums(a);
-        //List<Album> list2 = DocumentController.Companion.getAllAlbums(a);
-        //list.removeAll(list2);
-        //list.addAll(list2);
         return list;
     }
 
     public Album getAlbum(int a){
-
-        //List<Album> list2 = DocumentController.Companion.getAllAlbums(a);
-        //list.removeAll(list2);
-        //list.addAll(list2);
         return q.getAlbum(a);
     }
 
     public long addAlbum(String newColl, String type){
         return
         q.addAlbum(new Album(newColl, type));
-        //DocumentController.Companion.addAlbum(newColl, type, id);
     }
 
     public void deleteAlbum(Album album){
         q.deleteAlbum(album);
-        //DocumentController.Companion.deleteAlbum(album);
     }
 
 

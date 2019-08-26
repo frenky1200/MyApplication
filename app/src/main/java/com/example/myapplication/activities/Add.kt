@@ -2,15 +2,17 @@ package com.example.myapplication.activities
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.example.myapplication.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.MyApp.Companion.c
+import com.example.myapplication.R
 import com.example.myapplication.adapters.NavAdapter
 import com.example.myapplication.data.entity.Album
 import com.example.myapplication.data.interfaces.IMediable
@@ -18,12 +20,12 @@ import kotlinx.android.synthetic.main.music_edit.*
 
 class Add : AppCompatActivity() {
 
-    private lateinit var adapter : NavAdapter
     private lateinit var adapter2 : ArrayAdapter<Album>
-    private lateinit var type : String
-    private lateinit var album : Album
-    private lateinit var name : String
+    private lateinit var adapter : NavAdapter
     private lateinit var albums : List<Album>
+    private lateinit var album : Album
+    private lateinit var type : String
+    private lateinit var name : String
     private lateinit var uri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,7 @@ class Add : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.music_edit)
 
+        buttonsave.setOnClickListener { addClick() }
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(3)
         val intent = intent
@@ -73,6 +76,19 @@ class Add : AppCompatActivity() {
             }
         }*/
 
+        if (intent?.clipData?.description?.getMimeType(0)=="image/*"){
+                var text = ""
+                intent.extras?.keySet()?.forEach {
+                    if (it.contains("url", true)){
+                        text = intent.getStringExtra(it)
+                    }
+                }
+            editText2.setText(text)
+
+            (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as? Uri)?.let {
+//                editText2.setText(it.encodedPath)
+            }
+        }
         if (intent.hasExtra("outsideUri")) editText2.setText(intent.getStringExtra("outsideUri"))
         if (intent.data!=null){
             uri = intent.data!!
@@ -82,7 +98,6 @@ class Add : AppCompatActivity() {
             editText5.setText(text)
         }
 
-        buttonsave.setOnClickListener { addClick() }
         val types = MainActivity.Nav.values()
 
         val pref = getPreferences(MODE_PRIVATE)

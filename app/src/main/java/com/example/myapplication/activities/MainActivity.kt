@@ -22,10 +22,14 @@ import com.example.myapplication.fragments.CollectionFragment
 import com.example.myapplication.fragments.FindFragment
 import com.example.myapplication.services.MyService
 import com.google.android.material.navigation.NavigationView
-import org.jetbrains.anko.*
+import org.jetbrains.anko.find
+import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-lateinit var a: View
+
+    lateinit var a: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         when (prefs.getString("colors", "Зеленый")) {

@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -28,14 +29,10 @@ import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
 import java.net.URL
 import java.net.URLEncoder
-import android.provider.MediaStore
-
-
-
-
 
 class ReadActivity : AppCompatActivity() {
 
+    private var bitmap: Bitmap? = null
     private var s = ""
     internal lateinit var media: Media
 
@@ -181,7 +178,7 @@ class ReadActivity : AppCompatActivity() {
         }
 
     }
-    private var bitmap: Bitmap? = null
+
     private fun onPlayClick() {
 
         val type: String = when (media.type) {
@@ -194,20 +191,6 @@ class ReadActivity : AppCompatActivity() {
 
         media.insideUri?.play(type)?:media.outsideUri?.play(type)
 
-
-        /*if ((media.insideUri == null || media.insideUri == "") && (media.outsideUri == "" || media.outsideUri == null)) {
-            Toast.makeText(this, "Вы не сохранили источник", Toast.LENGTH_SHORT).show()
-        } else {
-            if (media.insideUri != null && media.insideUri != "") {
-                val playAudioIntent = Intent(Intent.ACTION_VIEW)
-                playAudioIntent.setDataAndType(Uri.parse(media.insideUri), type)
-                startActivity(playAudioIntent)
-            } else {
-                val playAudioIntent = Intent(Intent.ACTION_VIEW)
-                playAudioIntent.setDataAndType(Uri.parse(media.outsideUri), type)
-                startActivity(playAudioIntent)
-            }
-        }*/
     }
 
     private fun String.play(type: String):Boolean {

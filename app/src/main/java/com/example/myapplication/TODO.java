@@ -13,3 +13,5 @@
 //TODO: Tag Editor?
 //TODO: Кастомныные уведомления
 //TODO: Как отказаться от браузера?
+
+//Picasso Retrofit okhttp

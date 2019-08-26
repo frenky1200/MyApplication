@@ -25,10 +25,10 @@ import java.net.URLEncoder
 
 class PlayedActivity : AppCompatActivity() {
 
-    private lateinit var name:String
     private lateinit var artist:String
     private lateinit var ms: MyService
     private lateinit var media:Media
+    private lateinit var name:String
 
     private val conn = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, binder: IBinder) {
